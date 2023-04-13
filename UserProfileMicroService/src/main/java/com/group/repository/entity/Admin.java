@@ -24,6 +24,7 @@ public class Admin extends BaseEntity{
     private String birthDate;
     private String birthPlace;
     private String identity;
+    private String gender;
     private String phone;
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Adress adress;
