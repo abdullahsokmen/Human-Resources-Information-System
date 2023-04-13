@@ -1,0 +1,43 @@
+ext{
+
+    versions = [
+            springBoot          : "2.7.9",//s
+            springCloud         : "3.1.6",
+            lombok              : "1.18.26",
+            mapstruct           : "1.5.3.Final",
+            postgresql          : "42.5.4",
+            swaggerui           : "1.6.14",//+
+            jwt                 : "4.3.0",
+            circuitbreaker      : "2.1.6"
+    ]
+
+    libs = [
+            springBootWeb           : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
+            springBootDataJpa       : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
+            springBootValidation    : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
+            springBootAmqp          : "org.springframework.boot:spring-boot-starter-amqp:$versions.springBoot",
+            springBootStarterRedis  : "org.springframework.boot:spring-boot-starter-data-redis:$versions.springBoot",
+            springBootStarterElasticsearch  : "org.springframework.boot:spring-boot-starter-data-elasticsearch:$versions.springBoot",
+            springBootStarterSecurity       : "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
+            springCloudOpenFeign    : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
+            springCloudStarterConfig : "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
+            springCloudConfigServer : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
+            springCloudConfigClient : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
+
+
+            springCloudStarterGateway : "org.springframework.cloud:spring-cloud-starter-gateway:$versions.springCloud",
+            springCloudCircuitBreaker : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:$versions.circuitbreaker",
+            springCloudCircuitBreakerReactor : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:$versions.circuitbreaker",
+
+            springCloudStarterSleuth : "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
+            springCloudZipkin        : "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
+
+            lombok                  : "org.projectlombok:lombok:$versions.lombok",
+            postgresql              : "org.postgresql:postgresql:$versions.postgresql",
+            mapstruct               : "org.mapstruct:mapstruct:$versions.mapstruct",
+            mapstructProcessor      : "org.mapstruct:mapstruct-processor:$versions.mapstruct",
+            swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swaggerui",
+            jwt                     : "com.auth0:java-jwt:$versions.jwt",
+
+    ]
+}
