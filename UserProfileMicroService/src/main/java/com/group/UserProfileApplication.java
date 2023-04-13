@@ -7,8 +7,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UserProfileApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserProfileApplication.class);
-
-        System.out.println("Denemeasda");
-
     }
 }
