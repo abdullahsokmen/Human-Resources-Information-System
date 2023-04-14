@@ -11,8 +11,6 @@ public class EndPoints {
     public static final String API = "/api";
 
     public static final String AUTH = "/auth";
-    public static final String SATIS = "/satis";
-    public static final String URUN = "/urun";
     public static final String SAVE = "/save";
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";
