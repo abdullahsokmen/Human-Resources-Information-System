@@ -12,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Getter
 public class ServiceManager<T extends BaseEntity,ID> implements IService<T,ID> {
+    //kaan
 
     private final JpaRepository<T,ID> repository;
     @Override
