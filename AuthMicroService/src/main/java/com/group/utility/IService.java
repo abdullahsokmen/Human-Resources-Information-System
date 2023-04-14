@@ -11,5 +11,6 @@ public interface IService<T,ID> {
     void deleteById(ID id);
     List<T> findAll();
     Optional<T> findById(ID id);
+    //kaan
 
 }
