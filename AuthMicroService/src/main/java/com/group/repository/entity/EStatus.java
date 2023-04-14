@@ -1,5 +1,5 @@
 package com.group.repository.entity;
 
 public enum EStatus {
-    PENDING,ACTIVE,DELETED
+    PENDING,ACTIVE,NOT_ACTIVE
 }

@@ -31,9 +31,19 @@ public class AuthController {
     @PostMapping(REGISTER)
     public ResponseEntity<Auth>register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.saveDto(dto));
+
     }
     @GetMapping(FINDBYID)
     public ResponseEntity<FindByIdResponseDto> findById(@RequestParam Long id){
         return ResponseEntity.ok(authService.findByIdResponseDto(id));
     }
+    @PatchMapping(DEACTIVATE+BYID)
+    public ResponseEntity<Boolean> deactivateById(@PathVariable Long id){
+        return ResponseEntity.ok(authService.deactivateById(id));
+    }
+    @DeleteMapping(DELETE+BYID)
+    public ResponseEntity<Boolean> deleteByAuthId(@PathVariable Long id){
+        return ResponseEntity.ok(authService.deleteByAuthId(id));
+    }
+
 }
