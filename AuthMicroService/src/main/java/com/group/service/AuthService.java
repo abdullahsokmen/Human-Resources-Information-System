@@ -10,6 +10,7 @@ import com.group.mapper.IAuthMapper;
 
 import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
+import com.group.repository.entity.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,21 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
         return save(auth);
 
+    }
+
+    public Boolean deactivateById(Long id) {
+        Optional<Auth> auth = findById(id);
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        auth.get().setStatus(EStatus.DELETED);
+        update(auth.get());
+        return true;
+    }
+    public Boolean deleteByAuthId(Long id) {
+        Optional<Auth> auth = findById(id);
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        deleteById(id);
+        return true;
     }
 }
