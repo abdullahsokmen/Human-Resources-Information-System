@@ -1,5 +1,7 @@
 package com.group.mapper;
 
+import com.group.dto.request.RegisterRequestDto;
+import com.group.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -8,5 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface IAuthMapper {
     IAuthMapper INSTANCE= Mappers.getMapper(IAuthMapper.class);
 
+    Auth toAuth(final RegisterRequestDto dto);
 
 }
