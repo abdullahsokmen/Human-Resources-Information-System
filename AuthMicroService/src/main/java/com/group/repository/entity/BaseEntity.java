@@ -13,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder
 @MappedSuperclass
 public class BaseEntity {
-    private Long createDate;
-    private Long updateDate;
+    Long createDate;
+    Long updateDate;
+
 }

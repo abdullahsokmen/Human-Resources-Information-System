@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ToString
+@Entity
 @Table(name = "tbladress")
 public class Adress {
     @Id
@@ -22,5 +22,5 @@ public class Adress {
     private String description;
     @OneToOne
     @JsonIgnore
-    private Admin admin;
+    private Auth auth;
 }

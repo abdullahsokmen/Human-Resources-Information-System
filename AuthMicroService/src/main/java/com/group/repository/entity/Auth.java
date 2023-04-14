@@ -9,10 +9,10 @@ import javax.persistence.*;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ToString
-@Table(name = "tbladmin")
-public class Admin extends BaseEntity{
+@Entity
+@Table(name = "tblauth")
+public class Auth extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +24,13 @@ public class Admin extends BaseEntity{
     private String birthDate;
     private String birthPlace;
     private String identity;
-
     private String phone;
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Adress adress;
+    @Enumerated(EnumType.STRING)
+    private ERole role;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EStatus status=EStatus.PENDING;
+    private String password;
 }
