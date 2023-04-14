@@ -32,7 +32,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         auth.get().setPassword(dto.getPassword());
         update(auth.get());
         return true;
-
+    }
     public Auth saveDto(RegisterRequestDto dto) {
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
         return save(auth);
