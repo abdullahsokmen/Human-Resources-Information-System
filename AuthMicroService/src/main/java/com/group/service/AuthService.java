@@ -44,7 +44,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<Auth> auth = findById(id);
         if (auth.isEmpty())
             throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
-        auth.get().setStatus(EStatus.DELETED);
+        auth.get().setStatus(EStatus.NOT_ACTIVE);
         update(auth.get());
         return true;
     }
