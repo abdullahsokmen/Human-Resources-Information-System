@@ -1,11 +1,19 @@
 package com.group.service;
 
+
+import com.group.dto.request.UpdatePasswordRequestDto;
+import com.group.exception.AuthServiceException;
+import com.group.exception.EErrorType;
+
 import com.group.dto.request.RegisterRequestDto;
 import com.group.mapper.IAuthMapper;
+
 import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService extends ServiceManager<Auth,Long> {
@@ -16,8 +24,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
         this.authRepository = authRepository;
     }
 
+
+    public Boolean updatePassword(UpdatePasswordRequestDto dto) {
+        Optional<Auth> auth = findById(dto.getId());
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        auth.get().setPassword(dto.getPassword());
+        update(auth.get());
+        return true;
+
     public Auth saveDto(RegisterRequestDto dto) {
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
         return save(auth);
+
     }
 }
