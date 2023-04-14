@@ -17,6 +17,8 @@ public class EndPoints {
     public static final String FINDALL = "/getall";
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
+    public static final String DEACTIVATE = "/deactivate";
+    public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
 
 
