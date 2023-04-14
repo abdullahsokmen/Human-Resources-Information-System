@@ -18,6 +18,7 @@ public class Auth extends BaseEntity{
     private Long id;
 
     private String name;
+    private String mail;
     private String photoUrl;
     private String secondName;
     private String surname;
