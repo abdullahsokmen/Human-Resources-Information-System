@@ -1,7 +1,9 @@
 package com.group.service;
 
 
+import com.group.dto.request.FindByIdRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
+import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 
@@ -36,6 +38,11 @@ public class AuthService extends ServiceManager<Auth,Long> {
     public Auth saveDto(RegisterRequestDto dto) {
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
         return save(auth);
-
+    }
+    public FindByIdResponseDto findByIdResponseDto(Long id){
+        Optional<Auth> auth = findById(id);
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        return  IAuthMapper.INSTANCE.fromAuth(auth.get());
     }
 }

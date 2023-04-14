@@ -1,7 +1,9 @@
 package com.group.controller;
 
 
+import com.group.dto.request.FindByIdRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
+import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
@@ -10,10 +12,8 @@ import com.group.repository.entity.Auth;
 import com.group.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import static com.group.constants.EndPoints.*;
 @RequestMapping(AUTH)
 @RequiredArgsConstructor
@@ -31,7 +31,9 @@ public class AuthController {
     @PostMapping(REGISTER)
     public ResponseEntity<Auth>register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.saveDto(dto));
-
-
+    }
+    @GetMapping(FINDBYID)
+    public ResponseEntity<FindByIdResponseDto> findById(@RequestParam Long id){
+        return ResponseEntity.ok(authService.findByIdResponseDto(id));
     }
 }
