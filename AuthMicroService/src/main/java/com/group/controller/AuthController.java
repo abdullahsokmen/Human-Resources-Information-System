@@ -1,7 +1,9 @@
 package com.group.controller;
 
 
+import com.group.dto.request.FindByIdRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
+import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
@@ -29,6 +31,11 @@ public class AuthController {
     @PostMapping(REGISTER)
     public ResponseEntity<Auth>register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.saveDto(dto));
+
+    }
+    @GetMapping(FINDBYID)
+    public ResponseEntity<FindByIdResponseDto> findById(@RequestParam Long id){
+        return ResponseEntity.ok(authService.findByIdResponseDto(id));
     }
     @PatchMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deactivateById(@PathVariable Long id){

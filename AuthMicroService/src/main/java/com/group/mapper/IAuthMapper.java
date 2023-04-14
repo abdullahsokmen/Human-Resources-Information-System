@@ -1,6 +1,8 @@
 package com.group.mapper;
 
+import com.group.dto.request.FindByIdRequestDto;
 import com.group.dto.request.RegisterRequestDto;
+import com.group.dto.response.FindByIdResponseDto;
 import com.group.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,4 +14,5 @@ public interface IAuthMapper {
 
     Auth toAuth(final RegisterRequestDto dto);
 
+    FindByIdResponseDto fromAuth(final Auth auth);
 }
