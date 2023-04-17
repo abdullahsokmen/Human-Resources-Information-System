@@ -22,5 +22,5 @@ public class Adress {
     private String description;
     @OneToOne
     @JsonIgnore
-    private Auth auth;
+    private Admin admin;
 }
