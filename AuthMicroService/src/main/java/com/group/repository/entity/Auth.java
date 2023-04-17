@@ -19,15 +19,22 @@ public class Auth extends BaseEntity{
     private Long id;
 
     private String name;
-    private String mail;
+    @Column(unique = true)
+    private String email;
     private String photoUrl;
     private String secondName;
     private String surname;
     private Date birthDate;
     private String birthPlace;
+    @Column(unique = true)
     private String identity;
+    @Column(unique = true)
     private String phone;
+
+    private String activationCode;
+
     private String activatonCode;
+
 
     @Enumerated(EnumType.STRING)
     private ERole role;

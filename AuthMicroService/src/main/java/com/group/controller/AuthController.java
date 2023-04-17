@@ -1,13 +1,15 @@
 package com.group.controller;
 
 
+
+
 import com.group.dto.request.ActivateRequestDto;
+
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
-import com.group.repository.entity.Auth;
 
 import com.group.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +31,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.updatePassword(dto));
     }
     @PostMapping(REGISTER)
-    public ResponseEntity<Auth>register(@RequestBody RegisterRequestDto dto){
-        return ResponseEntity.ok(authService.saveDto(dto));
+    public ResponseEntity<Boolean>register(@RequestBody RegisterRequestDto dto){
+        return ResponseEntity.ok(authService.register(dto));
 
     }
     @GetMapping(FINDBYID)

@@ -26,9 +26,10 @@ public class AdminService extends ServiceManager<Admin,Long> {
         this.adminRepository=adminRepository;
     }
 
-    public Admin saveDto(SaveRequestDto dto) {
+    public Boolean saveDto(SaveRequestDto dto) {
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
-        return save(admin);
+        save(admin);
+        return true;
     }
 
     public Admin getAllDetail(Long id) {
