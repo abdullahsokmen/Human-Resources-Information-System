@@ -14,4 +14,5 @@ public class AdminService extends ServiceManager<Admin,Long> {
         super(adminRepository);
         this.adminRepository=adminRepository;
     }
+
 }
