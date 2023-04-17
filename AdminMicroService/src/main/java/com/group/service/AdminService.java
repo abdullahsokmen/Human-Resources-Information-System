@@ -25,10 +25,10 @@ public class AdminService extends ServiceManager<Admin,Long> {
         return save(admin);
     }
 
-    public Optional<Admin> getAllDetail(Long id) {
-        Optional<Admin> admin=findById(id);
+    public Admin getAllDetail(Long id) {
+      Optional<Admin> admin=findById(id);
         if (admin.isEmpty())
-            throw new AdminServiceException(EErrorType.USER_NOT_FOUND);
-        return admin;
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        return admin.get();
     }
 }
