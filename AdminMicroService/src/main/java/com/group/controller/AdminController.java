@@ -25,7 +25,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.saveDto(dto));
     }
     @GetMapping(GETALLDETAIL)
-    public ResponseEntity<Optional<Admin>>getAllDetail(@RequestParam Long id){
+    public ResponseEntity<Admin>getAllDetail(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getAllDetail(id));
     }
 
