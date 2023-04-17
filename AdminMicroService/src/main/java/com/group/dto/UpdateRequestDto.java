@@ -1,5 +1,6 @@
 package com.group.dto;
 
+import com.group.repository.entity.Adress;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveRequestDto {
-    private String name;
-    private String surname;
-    private String mail;
-    private String password;
+public class UpdateRequestDto {
+    private Long id;
+    private String phone;
+    private String photoUrl;
+    private Adress adress;
+
 }

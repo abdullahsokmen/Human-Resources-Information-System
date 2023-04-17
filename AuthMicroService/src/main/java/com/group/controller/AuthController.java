@@ -1,6 +1,10 @@
 package com.group.controller;
 
 
+
+
+import com.group.dto.request.ActivateRequestDto;
+
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
@@ -43,5 +47,10 @@ public class AuthController {
     public ResponseEntity<Boolean> deleteByAuthId(@PathVariable Long id){
         return ResponseEntity.ok(authService.deleteByAuthId(id));
     }
+    @PostMapping(ACTIVATESTATUS)
+    public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dto){
+        return ResponseEntity.ok(authService.activateStatus(dto));
+    }
+
 
 }

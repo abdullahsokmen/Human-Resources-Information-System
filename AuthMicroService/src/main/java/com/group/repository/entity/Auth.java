@@ -30,7 +30,12 @@ public class Auth extends BaseEntity{
     private String identity;
     @Column(unique = true)
     private String phone;
+
     private String activationCode;
+
+    private String activatonCode;
+
+
     @Enumerated(EnumType.STRING)
     private ERole role;
     @Enumerated(EnumType.STRING)

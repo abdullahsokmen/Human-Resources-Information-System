@@ -20,8 +20,12 @@ public enum EErrorType {
     METHOD_NOT_VALID_ARGUMENT_ERROR(2003,"URL içinde eksik parametre gönderimi",BAD_REQUEST),
     INVALID_PARAMETER(3001,"Geçersiz parametre giriş yaptınız", BAD_REQUEST),
     USER_NOT_FOUND(3001,"User not found", BAD_REQUEST),
+
     EMAIL_ALREADY_TAKEN(3001,"User not found", BAD_REQUEST),
     PHONE_ALREADY_TAKEN(3001,"User not found", BAD_REQUEST),
+
+    ACTIVATE_CODE_ERROR(4113,"Aktivasyon kod hatası",HttpStatus.BAD_REQUEST),
+
 
     ;
 

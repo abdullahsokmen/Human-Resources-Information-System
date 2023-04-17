@@ -1,6 +1,10 @@
 package com.group.service;
 
 
+
+
+import com.group.dto.request.ActivateRequestDto;
+
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.exception.AuthServiceException;
@@ -78,4 +82,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
         deleteById(id);
         return true;
     }
-}
+   public Boolean activateStatus(ActivateRequestDto dto) {
+        Optional<Auth> auth=findById(dto.getId());
+        if (auth.isEmpty()){
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        }
+        if (dto.getActivationCode().equals(auth.get().getActivatonCode())){
+            auth.get().setStatus(EStatus.ACTIVE);
+            update(auth.get());
+            return true;
+        }else {
+            throw new AuthServiceException(EErrorType.ACTIVATE_CODE_ERROR);
+        }
+
+    }}
+
