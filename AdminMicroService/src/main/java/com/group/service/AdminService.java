@@ -1,9 +1,8 @@
 package com.group.service;
 
 import com.group.repository.entity.Admin;
-import com.group.repository.entity.IAdminRepository;
+import com.group.repository.IAdminRepository;
 import com.group.utility.ServiceManager;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
