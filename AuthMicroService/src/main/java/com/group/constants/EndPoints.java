@@ -22,5 +22,7 @@ public class EndPoints {
     public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
 
+    public static final String ACTIVATESTATUS ="/activatestatus";
+
 
 }
