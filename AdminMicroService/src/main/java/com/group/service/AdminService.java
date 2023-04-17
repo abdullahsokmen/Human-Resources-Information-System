@@ -1,5 +1,7 @@
 package com.group.service;
 
+import com.group.dto.SaveRequestDto;
+import com.group.mapper.IAdminMapper;
 import com.group.repository.entity.Admin;
 import com.group.repository.IAdminRepository;
 import com.group.utility.ServiceManager;
@@ -14,4 +16,8 @@ public class AdminService extends ServiceManager<Admin,Long> {
         this.adminRepository=adminRepository;
     }
 
+    public Admin saveDto(SaveRequestDto dto) {
+        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
+        return save(admin);
+    }
 }
