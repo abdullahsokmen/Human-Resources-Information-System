@@ -1,10 +1,15 @@
 package com.group.service;
 
+import com.group.dto.SaveRequestDto;
+import com.group.exception.AdminServiceException;
+import com.group.exception.EErrorType;
+import com.group.mapper.IAdminMapper;
 import com.group.repository.entity.Admin;
-import com.group.repository.entity.IAdminRepository;
+import com.group.repository.IAdminRepository;
 import com.group.utility.ServiceManager;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AdminService extends ServiceManager<Admin,Long> {
@@ -15,4 +20,15 @@ public class AdminService extends ServiceManager<Admin,Long> {
         this.adminRepository=adminRepository;
     }
 
+    public Admin saveDto(SaveRequestDto dto) {
+        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
+        return save(admin);
+    }
+
+    public Admin getAllDetail(Long id) {
+      Optional<Admin> admin=findById(id);
+        if (admin.isEmpty())
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        return admin.get();
+    }
 }
