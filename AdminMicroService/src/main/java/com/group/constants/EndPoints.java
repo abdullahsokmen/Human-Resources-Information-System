@@ -10,7 +10,7 @@ public class EndPoints {
     public static final String DEV = "/dev";
     public static final String API = "/api";
 
-    public static final String ADMIN = "/admin";
+    public static final String ADMIN = API+VERSION+"/admin";
     public static final String SAVE = "/save";
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";

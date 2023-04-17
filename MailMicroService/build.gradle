@@ -4,9 +4,6 @@ buildscript{
     }
 }
 dependencies {
-    implementation libs.postgresql
-    implementation libs.springBootDataJpa
     implementation libs.springBootAmqp
-    implementation libs.springCloudOpenFeign
-
+    implementation libs.springBootMailSender
 }
