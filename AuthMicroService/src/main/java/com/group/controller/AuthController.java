@@ -51,6 +51,11 @@ public class AuthController {
     public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dto){
         return ResponseEntity.ok(authService.activateStatus(dto));
     }
+    @GetMapping(RESENDMAIL)
+    public ResponseEntity<String> reSendMail(@RequestParam String email){
+        authService.reSendMail(email);
+        return ResponseEntity.ok("Activation code has been sent, Please chech your email...");
+    }
 
 
 }
