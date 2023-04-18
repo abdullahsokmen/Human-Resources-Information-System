@@ -60,6 +60,12 @@ public class AuthService extends ServiceManager<Auth,Long> {
         adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
         return true;
     }
+
+    public Boolean reSendMail(String email){
+        registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
+                .activationCode(Generator.randomActivationCode()).email(email).build());
+        return true;
+    }
     public FindByIdResponseDto findByIdResponseDto(Long id){
         Optional<Auth> auth = findById(id);
         if (auth.isEmpty())
