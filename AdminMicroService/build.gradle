@@ -6,5 +6,6 @@ buildscript{
 dependencies {
     implementation libs.postgresql
     implementation libs.springBootDataJpa
-
+    implementation libs.springBootStarterSecurity
+    implementation libs.jwt
 }

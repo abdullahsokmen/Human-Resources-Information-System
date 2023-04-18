@@ -8,5 +8,7 @@ dependencies {
     implementation libs.springBootDataJpa
     implementation libs.springBootAmqp
     implementation libs.springCloudOpenFeign
+    implementation libs.springBootStarterSecurity
+    implementation libs.jwt
 
 }
