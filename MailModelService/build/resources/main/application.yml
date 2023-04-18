@@ -1,0 +1,20 @@
+server:
+  port: 9099
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: root
+  mail:
+    username: ${mailUsername}
+    password: ${mailPassword}
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
