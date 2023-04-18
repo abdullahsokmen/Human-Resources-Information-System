@@ -28,7 +28,7 @@ public class AuthController {
 
     @PostMapping(UPDATE)
     public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePasswordRequestDto dto) {
-        if (dto.getPassword().equals(dto.getRepassword()))
+        if (!dto.getPassword().equals(dto.getRepassword()))
             throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
         return ResponseEntity.ok(authService.updatePassword(dto));
     }

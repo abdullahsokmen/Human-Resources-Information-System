@@ -1,6 +1,5 @@
 package com.group.config.security;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -10,7 +9,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class AuthServiceSecurityConfig {
+public class AdminServiceSecurityConfig {
 
     @Bean
     JwtTokenFilter getJwtTokenFilter(){
@@ -20,7 +19,7 @@ public class AuthServiceSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf().disable();
-        httpSecurity.authorizeRequests().antMatchers("/api/v1/**","/swagger-ui/**")
+        httpSecurity.authorizeRequests().antMatchers("/v3/api-docs/**","/swagger-ui/**","/api/v1/admin/**")
                 .permitAll().anyRequest().authenticated();
         httpSecurity.addFilterBefore(getJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
