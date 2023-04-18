@@ -30,7 +30,7 @@ public class AuthServiceSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf().disable();
-        httpSecurity.authorizeRequests().antMatchers("/api/v1/**","/swagger-ui/**")
+        httpSecurity.authorizeRequests().antMatchers("/v3/api-docs/**","/swagger-ui/**","/api/v1/auth/**")
                 .permitAll().anyRequest().authenticated();
         //httpSecurity.formLogin();
 
