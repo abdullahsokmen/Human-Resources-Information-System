@@ -20,6 +20,7 @@ import com.group.rabbitmq.model.ActivateStatusModel;
 import com.group.rabbitmq.producer.RegisterMailProducer;
 import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
+import com.group.repository.entity.ERole;
 import com.group.repository.entity.EStatus;
 import com.group.utility.Generator;
 import com.group.utility.JwtTokenManager;
@@ -52,7 +53,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<Auth> auth = findById(dto.getId());
         if (auth.isEmpty())
             throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
-        auth.get().setPassword(dto.getPassword());
+        auth.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(auth.get());
         return true;
     }
@@ -60,13 +61,15 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if (authRepository.existsByEmail(dto.getEmail()))
             throw new AuthServiceException(EErrorType.EMAIL_ALREADY_TAKEN);
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-        auth.setActivationCode(Generator.randomActivationCode());
+        String activationCode=Generator.randomActivationCode();
+        auth.setActivationCode(activationCode);
         auth.setPassword(passwordEncoder.encode(dto.getPassword()));
+        auth.setRole(ERole.valueOf(dto.getRole()));
         save(auth);
         adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
         try {
             registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
-                    .activationCode(Generator.randomActivationCode()).email(dto.getEmail()).build());
+                    .activationCode(activationCode).email(dto.getEmail()).build());
         }catch (Exception exception){
             throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
         }
@@ -74,8 +77,14 @@ public class AuthService extends ServiceManager<Auth,Long> {
     }
 
     public Boolean reSendMail(String email){
+        Optional<Auth>auth=authRepository.findByEmail(email);
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        String activationCode=Generator.randomActivationCode();
+        auth.get().setActivationCode(activationCode);
+        update(auth.get());
         registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
-                .activationCode(Generator.randomActivationCode()).email(email).build());
+                .activationCode(activationCode).email(email).build());
         return true;
     }
     public FindByIdResponseDto findByIdResponseDto(Long id){

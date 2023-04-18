@@ -14,7 +14,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/AuthDB
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 jwt:
   secretkey: ${secretkey}
   audience: ${audience}
