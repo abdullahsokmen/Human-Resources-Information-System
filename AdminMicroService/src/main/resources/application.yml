@@ -9,4 +9,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/AdminDB
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
+
+

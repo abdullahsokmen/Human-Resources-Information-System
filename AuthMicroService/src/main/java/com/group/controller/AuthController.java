@@ -5,8 +5,10 @@ package com.group.controller;
 
 import com.group.dto.request.ActivateRequestDto;
 
+import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
+import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
@@ -26,7 +28,7 @@ public class AuthController {
 
     @PostMapping(UPDATE)
     public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePasswordRequestDto dto) {
-        if (dto.getPassword().equals(dto.getRepassword()))
+        if (!dto.getPassword().equals(dto.getRepassword()))
             throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
         return ResponseEntity.ok(authService.updatePassword(dto));
     }
@@ -54,8 +56,12 @@ public class AuthController {
     @GetMapping(RESENDMAIL)
     public ResponseEntity<String> reSendMail(@RequestParam String email){
         authService.reSendMail(email);
-        return ResponseEntity.ok("Activation code has been sent, Please chech your email...");
+        return ResponseEntity.ok("Activation code has been sent, Please check your email...");
     }
 
+    @PostMapping(LOGIN)
+    public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequestDto dto){
+        return ResponseEntity.ok(authService.doLogin(dto));
+    }
 
 }
