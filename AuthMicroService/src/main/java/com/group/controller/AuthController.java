@@ -5,8 +5,10 @@ package com.group.controller;
 
 import com.group.dto.request.ActivateRequestDto;
 
+import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
+import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
@@ -57,5 +59,9 @@ public class AuthController {
         return ResponseEntity.ok("Activation code has been sent, Please check your email...");
     }
 
+    @PostMapping(LOGIN)
+    public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequestDto dto){
+        return ResponseEntity.ok(authService.doLogin(dto));
+    }
 
 }
