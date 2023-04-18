@@ -10,7 +10,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: root
+    password: 1316
     url: jdbc:postgresql://localhost:5432/AuthDB
   jpa:
     hibernate:
