@@ -4,7 +4,7 @@ package com.group.service;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
-import com.group.dto.SaveRequestDto;
+
 import com.group.dto.UpdateRequestDto;
 
 import com.group.exception.AdminServiceException;
@@ -42,19 +42,21 @@ public class AdminService extends ServiceManager<Admin,Long> {
 
     public GetMinorInfoResponseDto getMinorInformation(Long id) {
         Optional<Admin> admin = findById(id);
-        if(admin.isEmpty())
-            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
-        return IAdminMapper.INSTANCE.fromAdmin(admin.get());
-
-    public Boolean update(UpdateRequestDto dto){
-        Optional<Admin> admin =adminRepository.findById(dto.getId());
         if (admin.isEmpty())
             throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
-        admin.get().setAdress(dto.getAdress());
-        admin.get().setPhotoUrl(dto.getPhotoUrl());
-        admin.get().setPhone(dto.getPhone());
-        update(admin.get());
-        return true;
+        return IAdminMapper.INSTANCE.fromAdmin(admin.get());
+    }
+
+    public Boolean updateDto(UpdateRequestDto dto){
+            Optional<Admin> admin = adminRepository.findById(dto.getId());
+            if (admin.isEmpty())
+                throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+            admin.get().setAdress(dto.getAdress());
+            admin.get().setPhotoUrl(dto.getPhotoUrl());
+            admin.get().setPhone(dto.getPhone());
+            update(admin.get());
+            return true;
+
 
 
 

@@ -4,7 +4,7 @@ package com.group.controller;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
-import com.group.dto.SaveRequestDto;
+
 import com.group.dto.UpdateRequestDto;
 
 import com.group.repository.entity.Admin;
@@ -38,7 +38,7 @@ public class AdminController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<Boolean> update(@RequestBody UpdateRequestDto dto){
-        return ResponseEntity.ok(adminService.update(dto));
+        return ResponseEntity.ok(adminService.updateDto(dto));
     }
 
 
