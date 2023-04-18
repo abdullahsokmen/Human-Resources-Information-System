@@ -10,3 +10,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
