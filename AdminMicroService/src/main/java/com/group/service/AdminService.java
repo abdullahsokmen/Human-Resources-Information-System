@@ -56,7 +56,7 @@ public class AdminService extends ServiceManager<Admin,Long> {
             admin.get().setPhone(dto.getPhone());
             update(admin.get());
             return true;
-            //s
+
 
 
 
