@@ -10,6 +10,7 @@
         </processorPath>
         <module name="humanResourcesInformationSystem.AdminMicroService.main" />
         <module name="humanResourcesInformationSystem.main" />
+        <module name="humanResourcesInformationSystem.MailMicroService.main" />
         <module name="humanResourcesInformationSystem.AuthMicroService.main" />
       </profile>
     </annotationProcessing>
