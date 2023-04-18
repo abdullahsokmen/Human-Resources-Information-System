@@ -7,3 +7,4 @@ spring:
   application:
     name: admin-micro-service-application
 
+
