@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RegisterMailConsumer {
-
     private final MailSenderService mailSenderService;
 
     @RabbitListener(queues = "register-mail-queue")
-    public void sendActivationCode(ActivateStatusModel model){
+    public void sendMail(ActivateStatusModel model){
         mailSenderService.sendMail(model);
     }
 }

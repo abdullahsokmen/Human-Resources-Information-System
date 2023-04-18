@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitmqConfig {
-
+    private String registerMailQueue = "register-mail-queue";
     @Bean
-    Queue registerMailQueue(){
-        return new Queue("register-mail-queue");
+    Queue mailQueue(){
+        return new Queue(registerMailQueue);
     }
 }
