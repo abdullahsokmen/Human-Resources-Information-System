@@ -22,7 +22,9 @@ import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
 import com.group.repository.entity.EStatus;
 import com.group.utility.Generator;
+import com.group.utility.JwtTokenManager;
 import com.group.utility.ServiceManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,13 +34,17 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
     private final RegisterMailProducer registerMailProducer;
     private final IAdminManager adminManager;
+    private final JwtTokenManager jwtTokenManager;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthService(IAuthRepository authRepository, RegisterMailProducer registerMailProducer,
-                       IAdminManager adminManager) {
+                       IAdminManager adminManager, JwtTokenManager jwtTokenManager, PasswordEncoder passwordEncoder) {
         super(authRepository);
         this.authRepository = authRepository;
         this.registerMailProducer = registerMailProducer;
         this.adminManager = adminManager;
+        this.jwtTokenManager = jwtTokenManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -53,14 +59,17 @@ public class AuthService extends ServiceManager<Auth,Long> {
     public Boolean register(RegisterRequestDto dto) {
         if (authRepository.existsByEmail(dto.getEmail()))
             throw new AuthServiceException(EErrorType.EMAIL_ALREADY_TAKEN);
+        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+        auth.setActivationCode(Generator.randomActivationCode());
+        auth.setPassword(passwordEncoder.encode(dto.getPassword()));
+        save(auth);
+        adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
         try {
             registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
                     .activationCode(Generator.randomActivationCode()).email(dto.getEmail()).build());
         }catch (Exception exception){
             throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
         }
-        Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
-        adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
         return true;
     }
 
@@ -106,5 +115,15 @@ public class AuthService extends ServiceManager<Auth,Long> {
 
     }
 
+    public LoginResponse doLogin(LoginRequestDto dto) {
+        Optional<Auth> optionalAuth= authRepository.findByEmail(dto.getEmail());
+        if (optionalAuth.isEmpty() || !passwordEncoder.matches(dto.getPassword(), optionalAuth.get().getPassword()))
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        Auth auth = optionalAuth.get();
+        Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole());
+        if (token.isEmpty())
+            throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
+        return LoginResponse.builder().id(auth.getId()).token(token.get()).build();
+    }
 }
 
