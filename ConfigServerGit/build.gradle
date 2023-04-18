@@ -1,9 +1,0 @@
-buildscript {
-    dependencies {
-        classpath("org.springframework.boot:org.springframework.boot.gradle.plugin:${versions.springBoot}")
-    }
-}
-dependencies {
-    implementation libs.springCloudStarterConfig
-    implementation libs.springCloudConfigServer
-}

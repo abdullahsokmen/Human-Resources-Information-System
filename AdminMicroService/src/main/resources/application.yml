@@ -1,10 +1,19 @@
+server:
+  port: 9091
+
 spring:
-  cloud:
-    config:
-      uri: ${CONFIG_URL}
-  config:
-    import: "configserver:"
-  application:
-    name: admin-micro-service-application
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/AdminDB
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
 
 
