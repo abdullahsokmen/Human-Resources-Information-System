@@ -2,4 +2,6 @@ rootProject.name = 'humanResourcesInformationSystem'
 include 'AuthMicroService'
 include 'AdminMicroService'
 include 'MailModelService'
+include 'ConfigServerGit'
+include 'ConfigServerGit'
 
