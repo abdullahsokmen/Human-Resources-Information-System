@@ -5,8 +5,10 @@ package com.group.service;
 
 import com.group.dto.request.ActivateRequestDto;
 
+import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
+import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 
@@ -20,6 +22,7 @@ import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
 import com.group.repository.entity.EStatus;
 import com.group.utility.Generator;
+import com.group.utility.JwtTokenManager;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +33,15 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
     private final RegisterMailProducer registerMailProducer;
     private final IAdminManager adminManager;
+    private final JwtTokenManager jwtTokenManager;
 
-    public AuthService(IAuthRepository authRepository, RegisterMailProducer registerMailProducer, IAdminManager adminManager) {
+    public AuthService(IAuthRepository authRepository, RegisterMailProducer registerMailProducer,
+                       IAdminManager adminManager, JwtTokenManager jwtTokenManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.registerMailProducer = registerMailProducer;
         this.adminManager = adminManager;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
 
@@ -93,7 +99,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if (auth.isEmpty()){
             throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
         }
-        if (dto.getActivationCode().equals(auth.get().getActivatonCode())){
+        if (dto.getActivationCode().equals(auth.get().getActivationCode())){
             auth.get().setStatus(EStatus.ACTIVE);
             update(auth.get());
             return true;
@@ -101,5 +107,17 @@ public class AuthService extends ServiceManager<Auth,Long> {
             throw new AuthServiceException(EErrorType.ACTIVATE_CODE_ERROR);
         }
 
-    }}
+    }
+
+    public LoginResponse doLogin(LoginRequestDto dto) {
+        Optional<Auth> auth=authRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
+        if (auth.isEmpty())
+            throw new AuthServiceException(EErrorType.USER_NOT_FOUND);
+        Auth foundAuth = auth.get();
+        Optional<String> token = jwtTokenManager.createToken(foundAuth.getId(), foundAuth.getRole());
+        if (token.isEmpty())
+            throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
+        return LoginResponse.builder().id(foundAuth.getId()).token(token.get()).build();
+    }
+}
 
