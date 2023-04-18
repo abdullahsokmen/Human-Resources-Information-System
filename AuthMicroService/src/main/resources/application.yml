@@ -1,7 +1,5 @@
-server:
-  port: 9090
-
 spring:
+
   rabbitmq:
     host: localhost
     port: 5672
@@ -15,3 +13,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
+
+  cloud:
+    config:
+      uri: ${CONFIG_URL}
+  config:
+    import: "configserver:"
+  application:
+    name: auth-micro-service-application
+

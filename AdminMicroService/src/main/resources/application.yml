@@ -1,7 +1,5 @@
-server:
-  port: 9091
-
 spring:
+
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -10,3 +8,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
+
+  cloud:
+    config:
+      uri: ${CONFIG_URL}
+  config:
+    import: "configserver:"
+  application:
+    name: admin-micro-service-application
+

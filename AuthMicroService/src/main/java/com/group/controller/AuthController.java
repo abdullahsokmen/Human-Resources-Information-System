@@ -56,7 +56,7 @@ public class AuthController {
     @GetMapping(RESENDMAIL)
     public ResponseEntity<String> reSendMail(@RequestParam String email){
         authService.reSendMail(email);
-        return ResponseEntity.ok("Activation code has been sent, Please chech your email...");
+        return ResponseEntity.ok("Activation code has been sent, Please check your email...");
     }
 
     @PostMapping(LOGIN)

@@ -17,6 +17,7 @@ public enum EErrorType {
     LOGIN_ERROR_USERNAME_PASSWORD(1006,"Kullanıcı adı yada şifre hatalıdır", BAD_REQUEST),
     METHOD_MIS_MATCH_ERROR(2002,"Giriş yaptığınız değer, istenilen değerle uyuşmamaktadır", BAD_REQUEST),
     METHOD_NOT_VALID_ARGUMENT_ERROR(2003,"URL içinde eksik parametre gönderimi",BAD_REQUEST),
+    INVALID_TOKEN(4114,"Geçersiz token",HttpStatus.BAD_REQUEST),
     INVALID_PARAMETER(3001,"Geçersiz parametre giriş yaptınız", BAD_REQUEST),
     USER_NOT_FOUND(3001,"User not found", BAD_REQUEST),
     ADMIN_NOT_FOUND(3002,"Admin not found", BAD_REQUEST)
