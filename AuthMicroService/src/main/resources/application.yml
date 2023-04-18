@@ -1,9 +1,21 @@
-spring:
-  cloud:
-    config:
-      uri: ${CONFIG_URL}
-  config:
-    import: "configserver:"
-  application:
-    name: auth-micro-service-application
+server:
+  port: 9090
 
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: root
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/AuthDB
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+jwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
