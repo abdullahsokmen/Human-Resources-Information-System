@@ -2,6 +2,7 @@ package com.group.controller;
 
 
 import com.group.dto.request.SaveRequestDto;
+import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
 
@@ -30,7 +31,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.saveDto(dto));
     }
     @GetMapping(GETALLDETAIL)
-    public ResponseEntity<Admin>getAllDetail(@RequestParam Long id){
+    public ResponseEntity<GetAllResponseDto>getAllDetail(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getAllDetail(id));
     }
     @GetMapping(GETMINOR)
