@@ -16,5 +16,5 @@ public interface IAdminMapper {
 
     GetMinorInfoResponseDto fromAdmin(final Admin admin);
 
-    GetAllResponseDto toGetAllResponse(final Admin admin);
+    GetAllResponseDto toGetAllResponseDto(final Admin admin);
 }

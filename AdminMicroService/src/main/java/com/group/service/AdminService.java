@@ -39,8 +39,8 @@ public class AdminService extends ServiceManager<Admin,Long> {
         Optional<Admin> admin = findById(id);
         if (admin.isEmpty())
             throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
-        GetAllResponseDto dto = IAdminMapper.INSTANCE.toGetAllResponse(admin.get());
-        dto.setCreateDate(new Date(admin.get().getCreateDate()));
+        GetAllResponseDto dto = IAdminMapper.INSTANCE.toGetAllResponseDto(admin.get());
+        dto.setCreateAt(new Date(admin.get().getCreateDate()));
         return dto;
     }
 
