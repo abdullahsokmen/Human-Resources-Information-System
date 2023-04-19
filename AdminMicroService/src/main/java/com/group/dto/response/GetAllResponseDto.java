@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Data
@@ -27,6 +24,6 @@ public class GetAllResponseDto {
     private String email;
     private Address address;
     private String phone;
-    private Date createDate;
+    private Date createAt;
 
 }
