@@ -3,6 +3,7 @@ package com.group.config.security;
 import com.group.exception.AuthServiceException;
 import com.group.exception.EErrorType;
 import com.group.repository.entity.Auth;
+import com.group.repository.entity.EStatus;
 import com.group.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +36,7 @@ public class JwtUserDetails implements UserDetailsService {
         if (auth.isPresent()){
             List<GrantedAuthority> authorityList =new ArrayList<>();
             authorityList.add(new SimpleGrantedAuthority(auth.get().getRole().toString()));
-
+            //boolean status = auth.get().getStatus().equals(EStatus.ACTIVE) ? false : true;
             return User.builder()
                     .username(auth.get().getName())
                     .password("")

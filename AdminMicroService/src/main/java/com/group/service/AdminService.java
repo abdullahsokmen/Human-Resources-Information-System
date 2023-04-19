@@ -5,7 +5,7 @@ import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
 
-import com.group.dto.UpdateRequestDto;
+import com.group.dto.request.UpdateRequestDto;
 
 import com.group.exception.AdminServiceException;
 import com.group.exception.EErrorType;

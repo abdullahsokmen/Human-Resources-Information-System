@@ -36,6 +36,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Optional<Long>id=jwtTokenManager.getIdFromToken(token);
             if (id.isPresent()){
                 UserDetails userDetails=jwtUserDetails.loadUserByUserId(id.get());
+                if (!userDetails.isAccountNonLocked())
+                    throw new AuthServiceException(EErrorType.INVALID_TOKEN);
                 UsernamePasswordAuthenticationToken authenticationToken=
                         new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);

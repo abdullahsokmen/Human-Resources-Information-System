@@ -66,7 +66,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
         auth.setPassword(passwordEncoder.encode(dto.getPassword()));
         auth.setRole(ERole.valueOf(dto.getRole()));
         save(auth);
-        adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
+        if(dto.getRole().equals(ERole.ADMIN.name()))
+            adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
         try {
             registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
                     .activationCode(activationCode).email(dto.getEmail()).build());

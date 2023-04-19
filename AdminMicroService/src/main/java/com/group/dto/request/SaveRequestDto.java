@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SaveRequestDto {
     private String name;
     private String surname;
-    private String mail;
+    private String email;
     private String password;
 }
