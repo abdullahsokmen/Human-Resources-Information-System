@@ -1,6 +1,6 @@
 package com.group.dto.request;
 
-import com.group.repository.entity.Adress;
+import com.group.repository.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +21,6 @@ public class UpdateRequestDto {
     private String phone;
     private String photoUrl;
     @NotNull(message = "Adress can not be blank")
-    private Adress adress;
+    private AddressUpdateRequestDto address;
 
 }

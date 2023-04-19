@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class IAdminMapperImpl implements IAdminMapper {
 
     @Override
-    public Admin toAdmin(SaveRequestDto dto) {
+    public Admin toGetAllResponse(SaveRequestDto dto) {
         if ( dto == null ) {
             return null;
         }
