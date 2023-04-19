@@ -16,7 +16,10 @@ import com.group.dto.request.RegisterRequestDto;
 import com.group.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static com.group.constants.EndPoints.*;
 @RequestMapping(AUTH)
@@ -27,13 +30,13 @@ public class AuthController {
 
 
     @PostMapping(UPDATE)
-    public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePasswordRequestDto dto) {
+    public ResponseEntity<Boolean> updatePassword(@RequestBody @Valid UpdatePasswordRequestDto dto) {
         if (!dto.getPassword().equals(dto.getRepassword()))
             throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
         return ResponseEntity.ok(authService.updatePassword(dto));
     }
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean>register(@RequestBody RegisterRequestDto dto){
+    public ResponseEntity<Boolean>register(@RequestBody @Valid RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
 
     }
@@ -49,6 +52,7 @@ public class AuthController {
     public ResponseEntity<Boolean> deleteByAuthId(@PathVariable Long id){
         return ResponseEntity.ok(authService.deleteByAuthId(id));
     }
+
     @PostMapping(ACTIVATESTATUS)
     public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dto){
         return ResponseEntity.ok(authService.activateStatus(dto));
@@ -60,7 +64,7 @@ public class AuthController {
     }
 
     @PostMapping(LOGIN)
-    public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequestDto dto){
+    public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }
 
