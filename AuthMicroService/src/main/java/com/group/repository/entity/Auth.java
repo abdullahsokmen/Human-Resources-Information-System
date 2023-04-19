@@ -17,24 +17,16 @@ public class Auth extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
-    private String photoUrl;
-    private String secondName;
-    private String surname;
-    private Date birthDate;
-    private String birthPlace;
-    @Column(unique = true)
-    private String identity;
-    @Column(unique = true)
-    private String phone;
     private String activationCode;
+    private String name;
+    private String surname;
     @Enumerated(EnumType.STRING)
     private ERole role;
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status=EStatus.PENDING;
+    @Column(nullable = false)
     private String password;
 }

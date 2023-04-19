@@ -5,7 +5,7 @@ import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
 
-import com.group.dto.UpdateRequestDto;
+import com.group.dto.request.UpdateRequestDto;
 
 import com.group.repository.entity.Admin;
 import com.group.service.AdminService;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import static com.group.constants.EndPoints.*;
 
@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<Boolean> update(@RequestBody UpdateRequestDto dto){
+    public ResponseEntity<Boolean> update(@RequestBody @Valid UpdateRequestDto dto){
         return ResponseEntity.ok(adminService.updateDto(dto));
     }
 
