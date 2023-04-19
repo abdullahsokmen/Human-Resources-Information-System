@@ -17,6 +17,7 @@ import com.group.repository.IAdminRepository;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -35,8 +36,12 @@ public class AdminService extends ServiceManager<Admin,Long> {
     }
 
     public GetAllResponseDto getAllDetail(Long id) {
-      return IAdminMapper.INSTANCE.toGetAllResponse(findById(id)
-              .orElseThrow(()->new AdminServiceException(EErrorType.ADMIN_NOT_FOUND)));
+        Optional<Admin> admin = findById(id);
+        if (admin.isEmpty())
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        GetAllResponseDto dto = IAdminMapper.INSTANCE.toGetAllResponse(admin.get());
+        dto.setCreateDate(new Date(admin.get().getCreateDate()));
+        return dto;
     }
 
 
