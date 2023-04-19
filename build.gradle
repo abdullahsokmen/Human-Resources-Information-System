@@ -37,6 +37,7 @@ allprojects{
         annotationProcessor libs.mapstructProcessor
         implementation libs.mapstruct
         implementation libs.swaggerui
+        implementation libs.springCloudConfigClient
 
        /* implementation libs.jwt//       */
     }
