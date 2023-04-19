@@ -15,6 +15,7 @@ import com.group.repository.IAdminRepository;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,11 +57,8 @@ public class AdminService extends ServiceManager<Admin,Long> {
             admin.get().setPhone(dto.getPhone());
             update(admin.get());
             return true;
-
-
-
-
-
-
     }
+
+
+
 }
