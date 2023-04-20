@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class SaveRequestDto {
-    private String name;
-    private String surname;
-    private String email;
-    private String password;
+@NoArgsConstructor
+public class AddressUpdateRequestDto {
+    private String town;
+    private String city;
+    private String country;
+    private String description;
 }

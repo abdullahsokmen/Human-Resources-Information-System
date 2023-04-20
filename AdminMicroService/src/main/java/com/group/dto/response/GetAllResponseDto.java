@@ -1,23 +1,19 @@
-package com.group.repository.entity;
+package com.group.dto.response;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import com.group.repository.entity.Address;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Entity
-@Table(name = "tbladmin")
-public class Admin extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GetAllResponseDto {
     private Long id;
-
     private String photoUrl;
     private String name;
     private String secondName;
@@ -26,7 +22,8 @@ public class Admin extends BaseEntity{
     private String birthPlace;
     private String identity;
     private String email;
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Address address;
     private String phone;
+    private Date createAt;
+
 }
