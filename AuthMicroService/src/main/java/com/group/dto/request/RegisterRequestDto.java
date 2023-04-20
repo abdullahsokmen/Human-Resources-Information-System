@@ -19,7 +19,7 @@ public class RegisterRequestDto {
     @NotBlank(message = "Surname can not be blank")
     @Size(min = 2,max = 20)
     private String surname;
-    @Email
+    @Email(message = "Email must be correct")
     private String email;
     @NotBlank(message = "Password cannot be blank!")
     @Pattern(message = "Password must be at least 8 characters, with at least one capital letter and a special character!",
