@@ -38,13 +38,9 @@ public class JwtTokenManager {
                     .sign(Algorithm.HMAC512(secretKey));
             return Optional.of(token);
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return Optional.empty();
         }
     }
-
-
-
 
     public Boolean validateToken(String token){
         try {
@@ -67,12 +63,11 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
-                throw new AdminServiceException(EErrorType.INVALID_TOKEN);
+                throw new AdminServiceException(EErrorType.NOT_DECODED);
             }
             Long id=decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
         }catch (Exception exception){
-            System.out.println(exception.getMessage());
             throw new AdminServiceException(EErrorType.INVALID_TOKEN);
         }
 
@@ -84,7 +79,7 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
-                throw new AdminServiceException(EErrorType.INVALID_TOKEN);
+                throw new AdminServiceException(EErrorType.NOT_DECODED);
             }
             String role=decodedJWT.getClaim("role").asString();
             return Optional.of(role);

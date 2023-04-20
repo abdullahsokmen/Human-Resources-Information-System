@@ -9,14 +9,13 @@ import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.dto.response.LoginResponse;
-import com.group.exception.AuthServiceException;
+import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 import com.group.dto.request.RegisterRequestDto;
 
 import com.group.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,7 +31,7 @@ public class AuthController {
     @PostMapping(UPDATE)
     public ResponseEntity<Boolean> updatePassword(@RequestBody @Valid UpdatePasswordRequestDto dto) {
         if (!dto.getPassword().equals(dto.getRepassword()))
-            throw new AuthServiceException(EErrorType.INVALID_PARAMETER);
+            throw new AuthManagerException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);
         return ResponseEntity.ok(authService.updatePassword(dto));
     }
     @PostMapping(REGISTER)
