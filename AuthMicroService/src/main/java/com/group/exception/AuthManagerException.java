@@ -3,15 +3,15 @@ package com.group.exception;
 import lombok.Getter;
 
 @Getter
-public class AuthServiceException extends RuntimeException{
+public class AuthManagerException extends RuntimeException{
     private final EErrorType errorType;
 
-    public AuthServiceException(EErrorType errorType){
+    public AuthManagerException(EErrorType errorType){
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public AuthServiceException(EErrorType errorType, String message){
+    public AuthManagerException(EErrorType errorType, String message){
         super(message);
         this.errorType = errorType;
     }
