@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICompanyRepository extends MongoRepository<Company,String >{
+    boolean existsByEmail(String email);
+    boolean existsByCompanyName(String companyName);
 }
