@@ -20,6 +20,7 @@ ext{
             springBootStarterElasticsearch  : "org.springframework.boot:spring-boot-starter-data-elasticsearch:$versions.springBoot",
             springBootStarterSecurity       : "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
             springBootMailSender            : "org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
+            springBootDataMongo: "org.springframework.boot:spring-boot-starter-data-mongodb:$versions.springBoot",
 
             springCloudOpenFeign            : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
 

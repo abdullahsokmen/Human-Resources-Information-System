@@ -1,6 +1,7 @@
 package com.group.service;
 
 
+import com.group.dto.request.EditProfileRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
@@ -61,11 +62,16 @@ public class AdminService extends ServiceManager<Admin,Long> {
             admin.get().setPhone(dto.getPhone());
             update(admin.get());
             return true;
-
-
-
-
-
-
+    }
+    public Boolean editProfile(EditProfileRequestDto dto){
+        Optional<Admin> admin=adminRepository.findById(dto.getId());
+        if (admin.isEmpty())
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        admin.get().setBirthDate(dto.getBirthDate());
+        admin.get().setBirthPlace(dto.getBirthPlace());
+        admin.get().setIdentity(dto.getIdentity());
+        admin.get().setPhone(dto.getPhone());
+        update(admin.get());
+        return true;
     }
 }
