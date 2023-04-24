@@ -6,10 +6,10 @@ buildscript{
 dependencies {
     implementation libs.springBootDataMongo
 
-    implementation libs.springBootAmqp
-    implementation libs.springCloudOpenFeign
-    /*implementation libs.springBootStarterSecurity*/
-    implementation libs.jwt
 
+    implementation libs.springCloudOpenFeign
+    implementation libs.springBootStarterSecurity
+    implementation libs.jwt
+    implementation libs.springBootStarterRedis
 
 }
