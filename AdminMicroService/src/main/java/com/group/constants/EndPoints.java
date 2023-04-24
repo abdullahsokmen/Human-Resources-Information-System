@@ -17,6 +17,7 @@ public class EndPoints {
     public static final String FINDALL = "/getall";
     public static final String GETALLDETAIL = "/getalldetail";
     public static final String GETMINOR = "/getminor";
+    public static final String EDITPROFILE = "/editprofile";
 
     public static final String FINDBYID = "/getbyid";
     public static final String LOGIN = "/login";

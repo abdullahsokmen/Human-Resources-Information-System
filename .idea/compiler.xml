@@ -11,7 +11,8 @@
         <module name="humanResourcesInformationSystem.AdminMicroService.main" />
         <module name="com.group.humanResourcesInformationSystem.MailModelService.main" />
         <module name="humanResourcesInformationSystem.main" />
-        <module name="humanResourcesInformationSystem.ConfigServer.main" />
+        <module name="humanResourcesInformationSystem.ConfigServerGit.main" />
+        <module name="humanResourcesInformationSystem.CompanyMicroService.main" />
         <module name="humanResourcesInformationSystem.AuthMicroService.main" />
       </profile>
     </annotationProcessing>

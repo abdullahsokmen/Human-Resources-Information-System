@@ -1,9 +1,8 @@
 package com.group.config.security;
 
-import com.group.exception.AuthServiceException;
+import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 import com.group.repository.entity.Auth;
-import com.group.repository.entity.EStatus;
 import com.group.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +44,7 @@ public class JwtUserDetails implements UserDetailsService {
                     .authorities(authorityList)
                     .build();
         }
-        throw new AuthServiceException(EErrorType.REGISTER_ERROR_USERNAME);
+        throw new AuthManagerException(EErrorType.REGISTER_ERROR_USERNAME);
     }
 
 

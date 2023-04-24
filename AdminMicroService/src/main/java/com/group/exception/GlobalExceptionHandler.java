@@ -1,80 +1,92 @@
 package com.group.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-@ControllerAdvice
-public class GlobalExceptionHandler {
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * Tüm ististanların üzerinden geçtiği bir method oluşturuyorum ve Hata mesajını burada
-     * dönüyorum.
-     */
-    private ErrorMessage createErrorMessage(EErrorType errorType,Exception exception){
-        System.out.println("HAta oluştu....: "+ exception.getMessage());
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    private ErrorMessage createErrorMessage(EErrorType errorType, Exception exception){
         return ErrorMessage.builder()
                 .code(errorType.getCode())
                 .message(errorType.getMessage())
                 .build();
     }
 
-    /**
-     * @ExceptionHandler -> Uygulama içinde oluşacak hatanını türünü bizden alarak
-     * onun yakalanmasını sağlar, böylece yakaladığı istisnayı methoda geçer.
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseEntity<String> handleException(Exception exception){
-        System.out.println("Tespit edilmeyen hata oluştu....: "+ exception.getMessage());
-        return ResponseEntity.badRequest().body("Uygulamada beklenmeyen bir hata oluştu...: "+ exception.getMessage());
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorMessage> handleRuntimeException(RuntimeException exception){
+        EErrorType errorType = EErrorType.UNEXPECTED_ERROR;
+        return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
     }
-
-    @ResponseBody
     @ExceptionHandler(AdminServiceException.class)
-    public ResponseEntity<ErrorMessage> handleSatisManagerExcetion(AdminServiceException exception){
-        EErrorType errorType = exception.getErrorType();
+    public ResponseEntity<ErrorMessage> handleManagerException(AdminServiceException ex){
+        EErrorType errorType=ex.getErrorType();
         HttpStatus httpStatus = errorType.getHttpStatus();
-        return new ResponseEntity<>(createErrorMessage(errorType,exception),httpStatus);
+        return new ResponseEntity<>(createErrorMessage(errorType,ex),httpStatus);
     }
 
-    @ResponseBody
-    @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<ErrorMessage> handleInvalidFormatException(InvalidFormatException exception){
-        EErrorType errorType = EErrorType.INVALID_PARAMETER;
-        return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
-    }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception){
-        EErrorType errorType = EErrorType.METHOD_MIS_MATCH_ERROR;
-        return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public final ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+        EErrorType errorType=EErrorType.INVALID_PARAMETER;
+        List<String> fields=new ArrayList<>();
+        exception.getBindingResult().getFieldErrors().forEach(e->fields.add(e.getField()+": "+e.getDefaultMessage()));
+        ErrorMessage errorMessage=createErrorMessage(errorType,exception);
+        errorMessage.setFields(fields);
+        return new ResponseEntity<>(errorMessage,errorType.getHttpStatus());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
+    public final ResponseEntity<ErrorMessage> handleMessageNotReadableException(
+            HttpMessageNotReadableException exception) {
+        EErrorType errorType = EErrorType.HTTP_MESSAGE_NOT_READABLE;
+        return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+    @ExceptionHandler(InvalidFormatException.class)
+    public final ResponseEntity<ErrorMessage> handleInvalidFormatException(
+            InvalidFormatException exception) {
+        EErrorType errorType = EErrorType.INVALID_PARAMETER;
+        return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
+            MethodArgumentTypeMismatchException exception) {
         EErrorType errorType = EErrorType.METHOD_MIS_MATCH_ERROR;
+        return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+    @ExceptionHandler(MissingPathVariableException.class)
+    public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
+            MissingPathVariableException exception) {
+        EErrorType errorType = EErrorType.INVALID_PARAMETER;
+        return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public final ResponseEntity<ErrorMessage> handlePsqlException(DataIntegrityViolationException exception){
+        EErrorType errorType=EErrorType.INVALID_PARAMETER;
         return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
     }
 
-    /**
-     * http://localhost:9090/urun/findbyid/234/sort/desc
-     * http://localhost:9090/urun/findbyid/sort/desc
-     */
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
-        EErrorType errorType = EErrorType.METHOD_NOT_VALID_ARGUMENT_ERROR;
-        return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception exception) {
+        EErrorType errorType = EErrorType.UNEXPECTED_ERROR;
+        List<String> fields = new ArrayList<>();
+        fields.add(exception.getMessage());
+        ErrorMessage errorMessage = createErrorMessage(errorType, exception);
+        errorMessage.setFields(fields);
+        return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
     }
 }
