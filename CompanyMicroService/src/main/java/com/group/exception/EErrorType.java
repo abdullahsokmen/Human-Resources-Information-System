@@ -15,7 +15,7 @@ public enum EErrorType {
     INVALID_PARAMETER(3001,"Invalid parameter entered", BAD_REQUEST),
     METHOD_MIS_MATCH_ERROR(2002,"The value you entered does not match the desired value.", BAD_REQUEST),
     METHOD_NOT_VALID_ARGUMENT_ERROR(2003,"Missing parameter submission in URL",BAD_REQUEST),
-    USER_NOT_FOUND(3001,"User not found", BAD_REQUEST),
+    COMPANY_NOT_FOUND(3001,"Company not found", BAD_REQUEST),
     INVALID_TOKEN(3002,"Invalid token",HttpStatus.BAD_REQUEST),
     NOT_DECODED(3002,"Token can not decoded", INTERNAL_SERVER_ERROR),
     HTTP_MESSAGE_NOT_READABLE(3001,"Http message not readable",BAD_REQUEST),
@@ -26,6 +26,8 @@ public enum EErrorType {
 
     REGISTER_ERROR_PASSWORD_UNMATCH(1004,"Passwords not matched", BAD_REQUEST),
     REGISTER_ERROR_USERNAME(1005,"This Username already taken", BAD_REQUEST),
+    REGISTER_ERROR_COMPANYEMAIL(1007,"This company mail already taken", BAD_REQUEST),
+    REGISTER_ERROR_COMPANYNAME(1008,"This company name already taken", BAD_REQUEST),
     LOGIN_ERROR_USERNAME_PASSWORD(1006,"Username or Password are incorrect", BAD_REQUEST),
 
 
