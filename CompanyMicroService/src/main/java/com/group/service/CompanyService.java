@@ -11,19 +11,22 @@ import com.group.repository.ICompanyRepository;
 import com.group.repository.entity.Company;
 import com.group.repository.entity.EStatus;
 import com.group.utility.ServiceManager;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CompanyService extends ServiceManager<Company,String > {
     private final ICompanyRepository companyRepository;
+    private final CacheManager cacheManager;
 
-    public CompanyService(ICompanyRepository companyRepository) {
+    public CompanyService(ICompanyRepository companyRepository, CacheManager cacheManager) {
         super(companyRepository);
         this.companyRepository = companyRepository;
+        this.cacheManager = cacheManager;
     }
 
     public Boolean saveCompany(CompanySaveRequestDto dto) {
@@ -40,11 +43,14 @@ public class CompanyService extends ServiceManager<Company,String > {
         Optional<Company> company = companyRepository.findById(dto.getId());
         if(company.isEmpty())
             throw new CompanyManagerException(EErrorType.COMPANY_NOT_FOUND);
+        Company toUpdate = company.get();
+        cacheManager.getCache("getminor").evict(toUpdate.getId());
+
         if(companyRepository.existsByEmail(dto.getEmail()))
             throw new CompanyManagerException(EErrorType.REGISTER_ERROR_COMPANYEMAIL);
         if(companyRepository.existsByCompanyName(dto.getCompanyName()))
             throw new CompanyManagerException(EErrorType.REGISTER_ERROR_COMPANYNAME);
-        Company toUpdate = company.get();
+
         toUpdate.setCompanyName(dto.getCompanyName());
         toUpdate.setEmail(dto.getEmail());
         toUpdate.setTitle(dto.getTitle());
@@ -66,6 +72,7 @@ public class CompanyService extends ServiceManager<Company,String > {
         return true;
     }
 
+    @Cacheable(value = "getminor", key = "#id")
     public CompanyResponseDto findCompanyById(String id) {
         Optional<Company> company = companyRepository.findById(id);
         if(company.isEmpty())
