@@ -15,6 +15,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,7 @@ public class CompanyService extends ServiceManager<Company,String > {
             throw new CompanyManagerException(EErrorType.REGISTER_ERROR_COMPANYEMAIL);
         if(companyRepository.existsByCompanyName(dto.getCompanyName()))
             throw new CompanyManagerException(EErrorType.REGISTER_ERROR_COMPANYNAME);
+        company.setContractStartDate(new Date());
         companyRepository.save(company);
         return true;
     }

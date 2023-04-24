@@ -19,7 +19,7 @@ import static com.group.constants.EndPoints.*;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @PutMapping(SAVE)
+    @PostMapping(SAVE)
     public ResponseEntity<Boolean> saveCompany(@RequestBody CompanySaveRequestDto dto){
         return ResponseEntity.ok(companyService.saveCompany(dto));
     }
