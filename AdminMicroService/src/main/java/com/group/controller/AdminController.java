@@ -1,6 +1,7 @@
 package com.group.controller;
 
 
+import com.group.dto.request.EditProfileRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
@@ -42,6 +43,10 @@ public class AdminController {
     @PutMapping(UPDATE)
     public ResponseEntity<Boolean> update(@RequestBody @Valid UpdateRequestDto dto){
         return ResponseEntity.ok(adminService.updateDto(dto));
+    }
+    @PutMapping(EDITPROFILE)
+    public ResponseEntity<Boolean>editProfile(@RequestBody EditProfileRequestDto dto){
+        return ResponseEntity.ok(adminService.editProfile(dto));
     }
 
 
