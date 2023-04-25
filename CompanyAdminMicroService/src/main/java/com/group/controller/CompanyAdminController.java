@@ -1,14 +1,13 @@
 package com.group.controller;
 
 import com.group.CompanyAdminService;
+import com.group.dto.request.CompanyAdminUpdateRequestDto;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.service.CompanyAdminServiceClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import static com.group.constants.EndPoints.*;
 @RestController
 @RequestMapping(COMPANYADMIN)
@@ -19,5 +18,10 @@ public class CompanyAdminController {
     @PostMapping(REGISTER)
     public ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(companyAdminService.register(dto));
+    }
+
+    @PutMapping(UPDATE)
+    public ResponseEntity<Boolean>update(@RequestBody CompanyAdminUpdateRequestDto dto){
+        return ResponseEntity.ok(companyAdminService.updateAdmin(dto));
     }
 }

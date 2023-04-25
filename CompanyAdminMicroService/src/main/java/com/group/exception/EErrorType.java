@@ -21,6 +21,7 @@ public enum EErrorType {
     HTTP_MESSAGE_NOT_READABLE(3001,"Http message not readable",BAD_REQUEST),
     TOKEN_NOT_CREATED(4113,"Token can not be created", INTERNAL_SERVER_ERROR),
     UNEXPECTED_ERROR(4113,"Unexpected Error Occured", INTERNAL_SERVER_ERROR),
+    COMPANY_ADMIN_NOT_EXIST(4113,"Company Admin Not Exist", INTERNAL_SERVER_ERROR),
 
 
 
