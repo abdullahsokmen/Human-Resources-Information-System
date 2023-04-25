@@ -4,10 +4,11 @@ buildscript{
     }
 }
 dependencies {
-    implementation libs.springBootDataMongo
+    implementation libs.postgresql
     implementation libs.springCloudOpenFeign
     implementation libs.springBootStarterSecurity
     implementation libs.jwt
     implementation libs.springBootStarterRedis
-
+    implementation libs.springBootDataJpa
+    implementation libs.springBootAmqp
 }
