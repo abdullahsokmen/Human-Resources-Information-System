@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.group.constants.EndPoints.*;
@@ -21,12 +22,12 @@ public class CompanyAdminController {
     private final CompanyAdminServiceClass companyAdminService;
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto){
+    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestDto dto){
         return ResponseEntity.ok(companyAdminService.register(dto));
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<Boolean>update(@RequestBody CompanyAdminUpdateRequestDto dto){
+    public ResponseEntity<Boolean>update(@RequestBody @Valid CompanyAdminUpdateRequestDto dto){
         return ResponseEntity.ok(companyAdminService.updateAdmin(dto));
     }
     @DeleteMapping(DELETE)
