@@ -17,6 +17,7 @@ import com.group.repository.entity.Personal;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
     private final IPersonalRepository personalRepository;
 
     private final ICompanyManager companyManager;
+
 
     public PersonalService(IPersonalRepository personalRepository, ICompanyManager companyManager) {
         super(personalRepository);
@@ -37,7 +39,6 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         if(personal.isEmpty())
             throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         return IPersonalMapper.INSTANCE.fromPersonal(personal.get());
-
     }
 
     public Boolean createPersonal(PersonalSaveRequestDto dto) {
@@ -50,5 +51,10 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         if (companyManager.exitsById(dto.getCompanyId()).getBody())
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         return true;
+    }
+
+    public List<PersonalMinorDetailsResponseDto> getPersonalList() {
+        return findAll().stream().map(x ->
+                IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
     }
 }
