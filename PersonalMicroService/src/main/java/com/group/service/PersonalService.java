@@ -24,6 +24,7 @@ import com.group.utility.ServiceManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,6 +70,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
                 .email(personal.getEmail()).password(password).build());
         return true;
     }
+
 
     public Boolean updatePersonal(PersonalUpdateRequestDto dto) {
         Optional<Personal> personal = findById(dto.getId());
@@ -122,5 +124,9 @@ public class PersonalService extends ServiceManager<Personal,Long> {
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         deleteById(id);
         return true;
+
+    public List<PersonalMinorDetailsResponseDto> getPersonalList() {
+        return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
+
     }
 }

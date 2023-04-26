@@ -13,6 +13,11 @@ import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+
+
+import java.util.List;
+
+
 import static com.group.constants.EndPoints.*;
 
 @RestController
@@ -24,7 +29,7 @@ public class PersonalController {
 
 
     @GetMapping(GETMINORDETAILS)
-    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(Long id) {
+    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(@RequestParam Long id) {
         return ResponseEntity.ok(personalService.getMinorDetails(id));
     }
     @PostMapping(SAVE)
@@ -46,5 +51,9 @@ public class PersonalController {
     @DeleteMapping(DELETE+BYID)
     public ResponseEntity<Boolean> hardDeleteById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.hardDeleteById(id));
+    }
+    @GetMapping(GETALLPERSONAL)
+    public ResponseEntity<List<PersonalMinorDetailsResponseDto>> getPersonalList(){
+        return ResponseEntity.ok(personalService.getPersonalList());
     }
 }
