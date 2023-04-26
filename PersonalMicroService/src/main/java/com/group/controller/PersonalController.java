@@ -27,9 +27,9 @@ public class PersonalController {
 
 
     @GetMapping(GETMINORDETAILS)
-    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(Long id){
+    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(Long id) {
         return ResponseEntity.ok(personalService.getMinorDetails(id));
-
+    }
     @PostMapping(SAVE)
     public ResponseEntity<Boolean> createPersonal(@RequestBody PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
