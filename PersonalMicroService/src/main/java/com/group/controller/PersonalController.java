@@ -5,17 +5,15 @@ import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.group.dto.request.PersonalSaveRequestDto;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
 import static com.group.constants.EndPoints.*;
 
 @RestController
@@ -27,12 +25,16 @@ public class PersonalController {
 
 
     @GetMapping(GETMINORDETAILS)
-    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(Long id) {
+    public ResponseEntity<PersonalMinorDetailsResponseDto> getMinorDetails(@RequestParam Long id) {
         return ResponseEntity.ok(personalService.getMinorDetails(id));
     }
     @PostMapping(SAVE)
     public ResponseEntity<Boolean> createPersonal(@RequestBody PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
 
+    }
+    @GetMapping(GETALLPERSONAL)
+    public ResponseEntity<List<PersonalMinorDetailsResponseDto>> getPersonalList(){
+        return ResponseEntity.ok(personalService.getPersonalList());
     }
 }
