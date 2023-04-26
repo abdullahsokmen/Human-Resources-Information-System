@@ -1,12 +1,10 @@
 package com.group.controller;
 
-import com.group.CompanyAdminService;
 import com.group.dto.request.CompanyAdminUpdateRequestDto;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
-import com.group.repository.entity.CompanyAdmin;
-import com.group.service.CompanyAdminServiceClass;
+import com.group.service.CompanyAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(COMPANYADMIN)
 @RequiredArgsConstructor
 public class CompanyAdminController {
-    private final CompanyAdminServiceClass companyAdminService;
+    private final CompanyAdminService companyAdminService;
 
     @PostMapping(REGISTER)
     public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestDto dto){
