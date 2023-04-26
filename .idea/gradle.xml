@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/CompanyMicroService" />
             <option value="$PROJECT_DIR$/ConfigServerGit" />
             <option value="$PROJECT_DIR$/MailModelService" />
+            <option value="$PROJECT_DIR$/PersonalMicroService" />
           </set>
         </option>
       </GradleProjectSettings>

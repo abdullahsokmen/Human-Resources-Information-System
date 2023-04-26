@@ -1,16 +1,15 @@
 package com.group.controller;
 
-import com.group.CompanyAdminService;
 import com.group.dto.request.CompanyAdminUpdateRequestDto;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
-import com.group.repository.entity.CompanyAdmin;
-import com.group.service.CompanyAdminServiceClass;
+import com.group.service.CompanyAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.group.constants.EndPoints.*;
@@ -18,15 +17,15 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(COMPANYADMIN)
 @RequiredArgsConstructor
 public class CompanyAdminController {
-    private final CompanyAdminServiceClass companyAdminService;
+    private final CompanyAdminService companyAdminService;
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto){
+    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestDto dto){
         return ResponseEntity.ok(companyAdminService.register(dto));
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<Boolean>update(@RequestBody CompanyAdminUpdateRequestDto dto){
+    public ResponseEntity<Boolean>update(@RequestBody @Valid CompanyAdminUpdateRequestDto dto){
         return ResponseEntity.ok(companyAdminService.updateAdmin(dto));
     }
     @DeleteMapping(DELETE)

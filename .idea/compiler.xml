@@ -9,10 +9,11 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.5.3.Final/dce418bedafd71ff8dd2cef15006c0fee788b073/mapstruct-processor-1.5.3.Final.jar" />
         </processorPath>
         <module name="humanResourcesInformationSystem.AdminMicroService.main" />
-        <module name="com.group.humanResourcesInformationSystem.MailModelService.main" />
         <module name="humanResourcesInformationSystem.ConfigServerGit.main" />
         <module name="humanResourcesInformationSystem.CompanyAdminMicroService.main" />
         <module name="humanResourcesInformationSystem.main" />
+        <module name="humanResourcesInformationSystem.MailModelService.main" />
+        <module name="humanResourcesInformationSystem.PersonalMicroService.main" />
         <module name="humanResourcesInformationSystem.CompanyMicroService.main" />
         <module name="humanResourcesInformationSystem.AuthMicroService.main" />
       </profile>
