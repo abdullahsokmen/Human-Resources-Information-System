@@ -107,4 +107,22 @@ public class CompanyService extends ServiceManager<Company,String > {
     public Boolean exitsById(String id) {
         return findById(id).isPresent();
     }
+
+    public Boolean addPersonal(String  id) {
+        Optional<Company>company=findById(id);
+        if(company.isEmpty())
+            throw new CompanyManagerException(EErrorType.COMPANY_NOT_FOUND);
+        company.get().setNumberOfEmployees(company.get().getNumberOfEmployees()+1);
+        update(company.get());
+        return true;
+    }
+
+    public Boolean deletePersonal(String id) {
+        Optional<Company>company=findById(id);
+        if(company.isEmpty())
+            throw new CompanyManagerException(EErrorType.COMPANY_NOT_FOUND);
+        company.get().setNumberOfEmployees(company.get().getNumberOfEmployees()-1);
+        update(company.get());
+        return true;
+    }
 }
