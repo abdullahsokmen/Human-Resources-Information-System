@@ -8,8 +8,6 @@ import com.group.mapper.IPersonalMapper;
 
 import com.group.dto.request.PersonalSaveRequestDto;
 
-import com.group.exception.EErrorType;
-import com.group.exception.PersonalException;
 import com.group.manager.ICompanyManager;
 
 
@@ -31,12 +29,8 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         super(personalRepository);
         this.personalRepository = personalRepository;
         this.companyManager = companyManager;
-
-
-    public PersonalService(IPersonalRepository personalRepository) {
-        super(personalRepository);
-        this.personalRepository = personalRepository;
     }
+
 
     public PersonalMinorDetailsResponseDto getMinorDetails(Long id) {
         Optional<Personal> personal = personalRepository.findById(id);
