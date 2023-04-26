@@ -1,21 +1,18 @@
 package com.group.controller;
 
 
+import com.group.dto.request.PersonalUpdateRequestDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.group.dto.request.PersonalSaveRequestDto;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import static com.group.constants.EndPoints.*;
 
 @RestController
@@ -33,6 +30,21 @@ public class PersonalController {
     @PostMapping(SAVE)
     public ResponseEntity<Boolean> createPersonal(@RequestBody PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
-
+    }
+    @PutMapping(UPDATE)
+    public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
+        return ResponseEntity.ok(personalService.updatePersonal(dto));
+    }
+    @PatchMapping(DEACTIVATE+BYID)
+    public ResponseEntity<Boolean> deActivateById(@PathVariable Long id){
+        return ResponseEntity.ok(personalService.deActivateById(id));
+    }
+    @PatchMapping(DELETE+BYID)
+    public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
+        return ResponseEntity.ok(personalService.deletePersonalById(id));
+    }
+    @DeleteMapping(DELETE+BYID)
+    public ResponseEntity<Boolean> hardDeleteById(@PathVariable Long id){
+        return ResponseEntity.ok(personalService.hardDeleteById(id));
     }
 }
