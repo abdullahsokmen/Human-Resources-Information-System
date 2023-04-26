@@ -118,7 +118,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         return true;
     }
 
-    public List<PersonalMinorDetailsResponseDto> hardDeleteById(Long id) {
+    public Boolean hardDeleteById(Long id) {
         Optional<Personal> personal = findById(id);
         if (personal.isEmpty())
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
@@ -127,7 +127,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
     }
 
     public List<PersonalMinorDetailsResponseDto> getPersonalList() {
-            return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
-        }
+        return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
+
     }
 }
