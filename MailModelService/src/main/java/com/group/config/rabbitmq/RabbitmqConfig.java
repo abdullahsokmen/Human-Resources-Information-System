@@ -7,8 +7,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitmqConfig {
     private String registerMailQueue = "register-mail-queue";
+    private String personalPasswordQueue = "personal-password-queue";
     @Bean
     Queue mailQueue(){
         return new Queue(registerMailQueue);
+    }
+    @Bean
+    Queue personalPasswordQueue(){
+        return new Queue(personalPasswordQueue);
     }
 }
