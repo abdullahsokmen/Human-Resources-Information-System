@@ -1,25 +1,17 @@
-package com.group.repository.entity;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "tblpersonal")
-public class Personal extends BaseEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String password;
+public class PersonalSaveRequestDto {
     private String photoUrl;
     private String name;
     private String secondName;
@@ -34,9 +26,5 @@ public class Personal extends BaseEntity{
     private String email;
     private String phone;
     private String companyId;
-    private EStatus status = EStatus.ACTIVE;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Address address;
-
-
+    private AddressCreateRequestDto address;
 }
