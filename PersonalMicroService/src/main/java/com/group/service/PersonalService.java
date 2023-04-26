@@ -126,7 +126,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         return true;
     }
 
-    public List<PersonalMinorDetailsResponseDto> getPersonalList() {
+    public List<PersonalMinorDetailsResponseDto> getAllPersonals() {
         return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
 
     }

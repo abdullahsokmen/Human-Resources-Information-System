@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.group.dto.request.PersonalSaveRequestDto;
-import com.group.service.PersonalService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 
 
 
@@ -54,6 +51,6 @@ public class PersonalController {
     }
     @GetMapping(GETALLPERSONAL)
     public ResponseEntity<List<PersonalMinorDetailsResponseDto>> getPersonalList(){
-        return ResponseEntity.ok(personalService.getPersonalList());
+        return ResponseEntity.ok(personalService.getAllPersonals());
     }
 }
