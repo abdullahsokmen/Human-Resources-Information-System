@@ -21,13 +21,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CompanyAdminServiceClass extends ServiceManager<CompanyAdmin,Long> {
+public class CompanyAdminService extends ServiceManager<CompanyAdmin,Long> {
 
     private final ICompanyMicroServiceRepository companyMicroServiceRepository;
     private final CacheManager cacheManager;
     private final RegisterMailProducer registerMailProducer;
 
-    public CompanyAdminServiceClass(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, RegisterMailProducer registerMailProducer) {
+    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, RegisterMailProducer registerMailProducer) {
         super(companyMicroServiceRepository);
         this.companyMicroServiceRepository = companyMicroServiceRepository;
         this.cacheManager = cacheManager;
