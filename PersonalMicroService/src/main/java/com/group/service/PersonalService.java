@@ -125,6 +125,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         deleteById(id);
         return true;
     }
+
     public List<PersonalMinorDetailsResponseDto> getPersonalList() {
         return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
 
