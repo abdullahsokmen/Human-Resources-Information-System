@@ -11,19 +11,19 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqConfig {
 
     private String companyAdminDirectExchange = "company-admin-direct-exchange";
-    private String registerMailBindingKey = "register-mail-binding-key";
-    private String registerMailQueue = "register-mail-queue";
+    private String companyAdminPasswordBindingKey = "company-admin-password-binding-key";
+    private String companyAdminMailQueue = "company-admin-mail-queue";
 
     @Bean
-    DirectExchange authDirectExchange(){
+    DirectExchange companyAdminDirectExchange(){
         return new DirectExchange(companyAdminDirectExchange);
     }
     @Bean
-    Queue registerMailQueue(){
-        return new Queue(registerMailQueue);
+    Queue companyAdminMailQueue(){
+        return new Queue(companyAdminMailQueue);
     }
     @Bean
-    public Binding registerMailBindingKey(final Queue registerMailQueue, final DirectExchange authDirectExchange){
-        return BindingBuilder.bind(registerMailQueue).to(authDirectExchange).with(registerMailBindingKey);
+    public Binding companyAdminPasswordBindingKey(final Queue companyAdminMailQueue, final DirectExchange companyAdminDirectExchange){
+        return BindingBuilder.bind(companyAdminMailQueue).to(companyAdminDirectExchange).with(companyAdminPasswordBindingKey);
     }
 }

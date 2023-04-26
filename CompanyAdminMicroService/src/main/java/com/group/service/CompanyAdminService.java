@@ -8,7 +8,7 @@ import com.group.exception.CompanyAdminException;
 import com.group.exception.EErrorType;
 import com.group.mapper.ICompanyAdminMapper;
 import com.group.rabbitmq.model.ActivateStatusModel;
-import com.group.rabbitmq.producer.RegisterMailProducer;
+import com.group.rabbitmq.producer.CompanyAdminMailProducer;
 import com.group.repository.ICompanyMicroServiceRepository;
 import com.group.repository.entity.CompanyAdmin;
 import com.group.utility.Generator;
@@ -25,13 +25,13 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin,Long> {
 
     private final ICompanyMicroServiceRepository companyMicroServiceRepository;
     private final CacheManager cacheManager;
-    private final RegisterMailProducer registerMailProducer;
+    private final CompanyAdminMailProducer companyAdminMailProducer;
 
-    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, RegisterMailProducer registerMailProducer) {
+    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, CompanyAdminMailProducer companyAdminMailProducer) {
         super(companyMicroServiceRepository);
         this.companyMicroServiceRepository = companyMicroServiceRepository;
         this.cacheManager = cacheManager;
-        this.registerMailProducer = registerMailProducer;
+        this.companyAdminMailProducer = companyAdminMailProducer;
     }
 
     public Boolean register(RegisterRequestDto dto) {
@@ -42,7 +42,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin,Long> {
         companyAdmin.setActivationCode(activationCode);
         save(companyAdmin);
         try {
-            registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
+            companyAdminMailProducer.sendActivationCode(ActivateStatusModel.builder()
                             .activationCode(activationCode).email(dto.getEmail())
                     .build());
         }catch (Exception e){

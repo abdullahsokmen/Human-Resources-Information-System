@@ -18,6 +18,8 @@ public class EndPoints {
     public static final String FINDALL = "/getall";
     public static final String GETALLDETAILS = "/getalldetails";
     public static final String GETALLPERSONAL = "/getallpersonal";
+    public static final String ADDPERSONAL = "/addpersonal";
+    public static final String DELETEPERSONAL = "/deletepersonal";
     public static final String GETMINORDETAILS = "/getminordetails";
     public static final String FINDBYID = "/getbyid";
     public static final String LOGIN = "/login";

@@ -1,7 +1,9 @@
 package com.group.controller;
 
 
+import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.PersonalUpdateRequestDto;
+import com.group.dto.response.LoginResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,10 @@ public class PersonalController {
     public ResponseEntity<Boolean> createPersonal(@RequestBody PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
     }
+
+
+
+
     @PutMapping(UPDATE)
     public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
         return ResponseEntity.ok(personalService.updatePersonal(dto));

@@ -56,5 +56,13 @@ public class CompanyController {
     public ResponseEntity<Boolean> exitsById(@PathVariable String id){
         return ResponseEntity.ok(companyService.exitsById(id));
     }
+    @PutMapping(ADDPERSONAL)
+    public ResponseEntity<Boolean>addPersonal(@RequestParam String id){
+        return ResponseEntity.ok(companyService.addPersonal(id));
+    }
+    @PutMapping(DELETEPERSONAL)
+    public ResponseEntity<Boolean>deletePersonal(@RequestParam String id){
+        return ResponseEntity.ok(companyService.deletePersonal(id));
+    }
 
 }
