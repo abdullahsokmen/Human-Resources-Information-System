@@ -103,4 +103,8 @@ public class CompanyService extends ServiceManager<Company,String > {
     public List<CompanyResponseDto> getAllCompanies() {
         return findAll().stream().map(x -> ICompanyMapper.INSTANCE.fromCompany(x)).toList();
     }
+
+    public Boolean exitsById(String id) {
+        return findById(id).isPresent();
+    }
 }
