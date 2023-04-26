@@ -30,5 +30,5 @@ public class CompanyAdmin extends BaseEntity{
     private String email;
     private String phone;
     private String companyName;
-    private String activationCode;
+    private String password;
 }

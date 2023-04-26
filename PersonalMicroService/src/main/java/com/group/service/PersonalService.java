@@ -1,7 +1,9 @@
 package com.group.service;
 
 
+import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.PersonalUpdateRequestDto;
+import com.group.dto.response.LoginResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -20,6 +22,7 @@ import com.group.repository.entity.Address;
 import com.group.repository.entity.EStatus;
 import com.group.repository.entity.Personal;
 import com.group.utility.Generator;
+import com.group.utility.JwtTokenManager;
 import com.group.utility.ServiceManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,13 +37,16 @@ public class PersonalService extends ServiceManager<Personal,Long> {
     private final ICompanyManager companyManager;
     private final PersonalPasswordProducer personalPasswordProducer;
 
+    private final JwtTokenManager jwtTokenManager;
+
     public PersonalService(IPersonalRepository personalRepository, PasswordEncoder passwordEncoder,
-                           ICompanyManager companyManager, PersonalPasswordProducer personalPasswordProducer) {
+                           ICompanyManager companyManager, PersonalPasswordProducer personalPasswordProducer, JwtTokenManager jwtTokenManager) {
         super(personalRepository);
         this.personalRepository = personalRepository;
         this.passwordEncoder = passwordEncoder;
         this.companyManager = companyManager;
         this.personalPasswordProducer = personalPasswordProducer;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
 
@@ -59,13 +65,14 @@ public class PersonalService extends ServiceManager<Personal,Long> {
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         if (personalRepository.existsByPhone(dto.getPhone()))
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
-        if (companyManager.exitsById(dto.getCompanyId()).getBody())
+        if (!companyManager.exitsById(dto.getCompanyId()).getBody())
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         Personal personal = IPersonalMapper.INSTANCE.toPersonal(dto);
         personal.setAddress(IAddressMapper.INSTANCE.toAddress(dto.getAddress()));
         String password = Generator.randomPassword();
         personal.setPassword(passwordEncoder.encode(password));
         save(personal);
+        companyManager.addPersonal(personal.getCompanyId());
         personalPasswordProducer.sendPersonalPassword(PersonalPasswordModel.builder()
                 .email(personal.getEmail()).password(password).build());
         return true;
@@ -115,6 +122,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         personal.get().setStatus(EStatus.DELETED);
         update(personal.get());
+        companyManager.deletePersonal(personal.get().getCompanyId());
         return true;
     }
 
@@ -123,6 +131,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         if (personal.isEmpty())
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         deleteById(id);
+        companyManager.deletePersonal(personal.get().getCompanyId());
         return true;
     }
 
@@ -130,4 +139,6 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         return findAll().stream().map(x -> IPersonalMapper.INSTANCE.fromPersonal(x)).toList();
 
     }
+
+
 }

@@ -35,6 +35,8 @@ public class Personal extends BaseEntity{
     private String email;
     private String phone;
     private String companyId;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
     private EStatus status = EStatus.ACTIVE;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
