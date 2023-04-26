@@ -23,6 +23,7 @@ public class EndPoints {
     public static final String REGISTER = "/register";
     public static final String RESENDMAIL = "/resendmail";
     public static final String DEACTIVATE = "/deactivate";
+    public static final String EXIST = "/exist";
     public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
 

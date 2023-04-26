@@ -52,5 +52,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getAllCompanies());
     }
 
+    @GetMapping(EXIST+BYID)
+    public ResponseEntity<Boolean> exitsById(@PathVariable String id){
+        return ResponseEntity.ok(companyService.exitsById(id));
+    }
 
 }
