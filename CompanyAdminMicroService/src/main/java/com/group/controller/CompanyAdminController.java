@@ -57,7 +57,7 @@ public class CompanyAdminController {
     public ResponseEntity<Boolean> hardDeleteById(@RequestParam Long id){
         return ResponseEntity.ok(companyAdminService.hardDeleteById(id));
     }
-    @GetMapping(UPDATEPASSWORD)
+    @PostMapping(UPDATEPASSWORD)
     public ResponseEntity<Boolean> updatePassword(@RequestBody UpdateCompanyAdminPasswordRequestDto dto){
         if(! dto.getPassword().equals(dto.getRepassword()))
             throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);

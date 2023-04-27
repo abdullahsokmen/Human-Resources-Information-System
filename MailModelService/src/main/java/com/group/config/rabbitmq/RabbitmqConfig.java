@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqConfig {
     private String adminPasswordQueue = "admin-password-queue";
     private String personalPasswordQueue = "personal-password-queue";
+    private String companyAdminMailQueue = "company-admin-mail-queue";
 
     @Bean
     Queue adminPasswordQueue(){
@@ -17,6 +18,10 @@ public class RabbitmqConfig {
     @Bean
     Queue personalPasswordQueue(){
         return new Queue(personalPasswordQueue);
+    }
+    @Bean
+    Queue companyAdminMailQueue(){
+        return new Queue(companyAdminMailQueue);
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.group.constants.EndPoints.*;
 
-@FeignClient(url = "http://localhost:9092/api/v1/company",decode404 = true,name = "companyAdmin - personal")
+@FeignClient(url = "http://localhost:9092/api/v1/company",decode404 = true,name = "companyadmin-company")
 public interface ICompanyManager {
 
     @GetMapping(EXIST+BYID)
