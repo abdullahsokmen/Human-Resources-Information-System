@@ -12,9 +12,16 @@ public class EndPoints {
 
 
     public static final String COMPANYADMIN = API+VERSION+"/companyadmin";
+    public static final String MAIL = "/mail";
+    public static final String EXIST = "/exist";
+    public static final String BYID = "/{id}";
+    public static final String ADDPERSONAL = "/addpersonal";
+    public static final String DELETEPERSONAL = "/deletepersonal";
     public static final String SAVE = "/save";
     public static final String UPDATE = "/update";
+    public static final String UPDATEPASSWORD = "/updatepassword";
     public static final String DELETE = "/delete";
+    public static final String HARDDELETE = "/harddelete";
     public static final String FINDALL = "/getall";
     public static final String GETALLDETAILS = "/getalldetails";
     public static final String GETMINORDETAILS = "/getminordetails";
@@ -23,7 +30,6 @@ public class EndPoints {
     public static final String REGISTER = "/register";
     public static final String RESENDMAIL = "/resendmail";
     public static final String DEACTIVATE = "/deactivate";
-    public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
 
     public static final String ACTIVATESTATUS ="/activatestatus";

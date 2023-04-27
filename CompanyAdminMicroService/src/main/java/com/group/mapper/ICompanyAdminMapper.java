@@ -1,5 +1,6 @@
 package com.group.mapper;
 
+import com.group.dto.request.CompanyAdminRegisterRequestDto;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
@@ -13,7 +14,8 @@ public interface ICompanyAdminMapper {
 
     ICompanyAdminMapper INSTANCE= Mappers.getMapper(ICompanyAdminMapper.class);
 
-    CompanyAdmin toCompanyAdmin(final RegisterRequestDto dto);
+    CompanyAdmin toCompanyAdmin(final CompanyAdminRegisterRequestDto dto);
+    RegisterRequestDto toRegisterRequestDto(final CompanyAdmin companyAdmin);
 
     CompanyAdminResponseDto fromCompanyAdmin(final CompanyAdmin companyAdmin);
 
