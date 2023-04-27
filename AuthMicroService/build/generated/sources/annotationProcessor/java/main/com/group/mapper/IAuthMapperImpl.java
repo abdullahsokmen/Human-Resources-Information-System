@@ -4,13 +4,12 @@ import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.repository.entity.Auth;
-import com.group.repository.entity.ERole;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-20T12:05:35+0300",
+    date = "2023-04-27T12:42:09+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -27,9 +26,6 @@ public class IAuthMapperImpl implements IAuthMapper {
         auth.email( dto.getEmail() );
         auth.name( dto.getName() );
         auth.surname( dto.getSurname() );
-        if ( dto.getRole() != null ) {
-            auth.role( Enum.valueOf( ERole.class, dto.getRole() ) );
-        }
         auth.password( dto.getPassword() );
 
         return auth.build();

@@ -21,6 +21,7 @@ import com.group.repository.entity.Admin;
 import com.group.repository.IAdminRepository;
 import com.group.utility.Generator;
 import com.group.utility.ServiceManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,11 +33,14 @@ public class AdminService extends ServiceManager<Admin,Long> {
     private final AdminPasswordProducer adminPasswordProducer;
     private final IAuthManager authManager;
 
-    public AdminService(IAdminRepository adminRepository, AdminPasswordProducer adminPasswordProducer, IAuthManager authManager) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AdminService(IAdminRepository adminRepository, AdminPasswordProducer adminPasswordProducer, IAuthManager authManager, PasswordEncoder passwordEncoder) {
         super(adminRepository);
         this.adminRepository=adminRepository;
         this.adminPasswordProducer = adminPasswordProducer;
         this.authManager = authManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -85,10 +89,11 @@ public class AdminService extends ServiceManager<Admin,Long> {
             throw new AdminServiceException(EErrorType.INVALID_PARAMETER);
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
         String password = Generator.randomPassword();
-        admin.setPassword(password);
+        admin.setPassword(passwordEncoder.encode(password));
         save(admin);
         adminPasswordProducer.sendAdminPassword(PasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
         RegisterRequestDto register = IAdminMapper.INSTANCE.toRegisterRequestDto(admin);
+        register.setPassword(password);
         register.setUserRole("ADMIN");
         authManager.register(register);
         return true;
