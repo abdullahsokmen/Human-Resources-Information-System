@@ -67,14 +67,14 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole());
         if (token.isEmpty())
             throw new AuthManagerException(EErrorType.TOKEN_NOT_CREATED);
-        return LoginResponse.builder().id(auth.getId()).token(token.get()).build();
+        return LoginResponse.builder().id(auth.getId()).token(token.get()).role(auth.getRole().name()).build();
     }
 
     public Boolean register(RegisterRequestDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setPassword(passwordEncoder.encode(dto.getPassword()));
         auth.setRole(ERole.valueOf(dto.getUserRole()));
-        save(IAuthMapper.INSTANCE.toAuth(dto));
+        save(auth);
         return true;
     }
 }
