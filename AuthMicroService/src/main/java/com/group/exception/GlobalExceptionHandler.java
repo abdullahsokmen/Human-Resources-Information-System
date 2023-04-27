@@ -26,11 +26,11 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(RuntimeException.class)
+  /*  @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessage> handleRuntimeException(RuntimeException exception){
         EErrorType errorType = EErrorType.UNEXPECTED_ERROR;
         return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
-    }
+    }*/
     @ExceptionHandler(AuthManagerException.class)
     public ResponseEntity<ErrorMessage> handleManagerException(AuthManagerException ex){
         EErrorType errorType=ex.getErrorType();
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception exception) {
         EErrorType errorType = EErrorType.UNEXPECTED_ERROR;
         List<String> fields = new ArrayList<>();
@@ -91,5 +91,5 @@ public class GlobalExceptionHandler {
         ErrorMessage errorMessage = createErrorMessage(errorType, exception);
         errorMessage.setFields(fields);
         return new ResponseEntity<>(createErrorMessage(errorType, exception), errorType.getHttpStatus());
-    }
+    }*/
 }

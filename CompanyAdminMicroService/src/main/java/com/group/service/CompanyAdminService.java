@@ -61,6 +61,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         RegisterRequestDto registerRequestDto = ICompanyAdminMapper.INSTANCE.toRegisterRequestDto(companyAdmin);
         registerRequestDto.setUserRole("COMPANYADMIN");
         registerRequestDto.setPassword(password);
+        registerRequestDto.setSurname(dto.getLastname());
         Long authId = authManager.register(registerRequestDto).getBody();
         companyAdmin.setAuthId(authId);
         save(companyAdmin);
@@ -105,7 +106,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         companyAdmin.get().setStatus(EStatus.DELETED);
         update(companyAdmin.get());
         companyManager.deletePersonal(companyAdmin.get().getCompanyId());
-        authManager.deleteByAuthId(companyAdmin.get().getAuthId());
+        authManager.deactivateById(companyAdmin.get().getAuthId());
         return true;
     }
 
@@ -135,7 +136,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
             throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
         companyAdmin.get().setStatus(EStatus.NOT_ACTIVE);
         update(companyAdmin.get());
-        authManager.deleteByAuthId(companyAdmin.get().getAuthId());
+        authManager.deactivateById(companyAdmin.get().getAuthId());
         return true;
     }
     public Boolean hardDeleteById(Long id) {
@@ -151,7 +152,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         Optional<CompanyAdmin> companyAdmin = findById(dto.getId());
         if (companyAdmin.isEmpty())
             throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
-        if(passwordEncoder.matches(companyAdmin.get().getPassword(),dto.getPassword()))
+        if(!passwordEncoder.matches(companyAdmin.get().getPassword(),dto.getPassword()))
             throw new CompanyAdminException(EErrorType.METHOD_NOT_VALID_ARGUMENT_ERROR);
         companyAdmin.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(companyAdmin.get());

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.group.constants.EndPoints.*;
 
-@FeignClient(url = "http://localhost:9090/api/v1/auth",decode404 = true,name = "personal-auth")
+@FeignClient(url = "http://localhost:9090/api/v1/auth",decode404 = true,name = "companyadmin-auth")
 
 public interface IAuthManager {
 
