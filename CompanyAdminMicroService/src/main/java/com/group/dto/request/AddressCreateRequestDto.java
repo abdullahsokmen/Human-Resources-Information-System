@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestDto {
-
-    private String name;
-    private String surname;
-    private String email;
-    private String password;
-    private String userRole;
+public class AddressCreateRequestDto {
+    private String town;
+    private String city;
+    private String country;
+    private String description;
 }

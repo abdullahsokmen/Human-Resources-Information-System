@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICompanyMicroServiceRepository extends JpaRepository<CompanyAdmin,Long> {
     boolean existsByEmail(String email);
+    boolean existsByIdentity(String identity);
+    boolean existsByPhone(String phone);
 }
