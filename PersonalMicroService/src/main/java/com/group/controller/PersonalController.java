@@ -41,11 +41,11 @@ public class PersonalController {
     public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
         return ResponseEntity.ok(personalService.updatePersonal(dto));
     }
-    @PatchMapping(DEACTIVATE+BYID)
+    @PostMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deActivateById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deActivateById(id));
     }
-    @PatchMapping(DELETE+BYID)
+    @PutMapping(DELETE+BYID)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deletePersonalById(id));
     }

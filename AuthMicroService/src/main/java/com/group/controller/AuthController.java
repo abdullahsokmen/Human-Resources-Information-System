@@ -28,7 +28,7 @@ public class AuthController {
     public ResponseEntity<Long> register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
-    @PatchMapping(DEACTIVATE+BYID)
+    @PostMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deactivateById(@PathVariable Long id){
         return ResponseEntity.ok(authService.deactivateById(id));
     }
