@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-27T12:42:52+0300",
+    date = "2023-04-27T14:11:29+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -58,7 +58,6 @@ public class IAdminMapperImpl implements IAdminMapper {
         getMinorInfoResponseDto.photoUrl( admin.getPhotoUrl() );
         getMinorInfoResponseDto.name( admin.getName() );
         getMinorInfoResponseDto.surname( admin.getSurname() );
-        getMinorInfoResponseDto.password( admin.getPassword() );
 
         return getMinorInfoResponseDto.build();
     }

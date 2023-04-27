@@ -49,5 +49,9 @@ public class AdminController {
         return ResponseEntity.ok(adminService.editProfile(dto));
     }
 
+    @DeleteMapping(DELETE+BYID)
+    public ResponseEntity<Boolean> deleteAdminById(@PathVariable Long id){
+        return ResponseEntity.ok(adminService.deleteAdminById(id));
+    }
 
 }

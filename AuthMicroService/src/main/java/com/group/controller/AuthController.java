@@ -3,15 +3,12 @@ package com.group.controller;
 
 
 
-import com.group.dto.request.ActivateRequestDto;
+import com.group.dto.request.*;
 
-import com.group.dto.request.LoginRequestDto;
-import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
-import com.group.dto.request.RegisterRequestDto;
 
 import com.group.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +25,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto){
+    public ResponseEntity<Long> register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
-    @PatchMapping(DEACTIVATE+BYID) // diğer servislerden silinen kullanıcılarda bu metod çalıştırılacak
+    @PostMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deactivateById(@PathVariable Long id){
         return ResponseEntity.ok(authService.deactivateById(id));
     }
@@ -39,7 +36,14 @@ public class AuthController {
     public ResponseEntity<Boolean> deleteByAuthId(@PathVariable Long id){
         return ResponseEntity.ok(authService.deleteByAuthId(id));
     }
-
+    @PostMapping(UPDATE+PASSWORD)
+    public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePasswordRequestDto dto){
+        return ResponseEntity.ok(authService.updatePassword(dto));
+    }
+    @PostMapping(UPDATE+MAIL)
+    public ResponseEntity<Boolean> updateMail(@RequestBody UpdateMailRequestDto dto){
+        return ResponseEntity.ok(authService.updateMail(dto));
+    }
     @PostMapping(LOGIN) // login response a role eklenecek
     public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));

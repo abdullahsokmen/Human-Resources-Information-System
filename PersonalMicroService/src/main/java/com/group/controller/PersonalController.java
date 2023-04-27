@@ -1,10 +1,11 @@
 package com.group.controller;
 
 
-import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.PersonalUpdateRequestDto;
-import com.group.dto.response.LoginResponseDto;
+import com.group.dto.request.UpdatePersonalPasswordRequestDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
+import com.group.exception.EErrorType;
+import com.group.exception.PersonalException;
 import com.group.service.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +41,11 @@ public class PersonalController {
     public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
         return ResponseEntity.ok(personalService.updatePersonal(dto));
     }
-    @PatchMapping(DEACTIVATE+BYID)
+    @PostMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deActivateById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deActivateById(id));
     }
-    @PatchMapping(DELETE+BYID)
+    @PutMapping(DELETE+BYID)
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deletePersonalById(id));
     }
@@ -55,5 +56,11 @@ public class PersonalController {
     @GetMapping(GETALLPERSONAL)
     public ResponseEntity<List<PersonalMinorDetailsResponseDto>> getPersonalList(){
         return ResponseEntity.ok(personalService.getAllPersonals());
+    }
+    @PostMapping(UPDATE+PASSWORD)
+    public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePersonalPasswordRequestDto dto){
+        if (!dto.getPassword().equals(dto.getRepassword()))
+            throw new PersonalException(EErrorType.INVALID_PARAMETER);//*
+        return ResponseEntity.ok(personalService.updatePassword(dto));
     }
 }
