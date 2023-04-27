@@ -1,6 +1,6 @@
 package com.group.mapper;
 
-import com.group.dto.request.RegisterRequestDto;
+import com.group.dto.request.CompanyAdminRegisterRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
 import com.group.repository.entity.CompanyAdmin;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class ICompanyAdminMapperImpl implements ICompanyAdminMapper {
 
     @Override
-    public CompanyAdmin toCompanyAdmin(RegisterRequestDto dto) {
+    public CompanyAdmin toCompanyAdmin(CompanyAdminRegisterRequestDto dto) {
         if ( dto == null ) {
             return null;
         }

@@ -29,8 +29,7 @@ public class CompanyAdminUpdateRequestDto {
     private Date birthDate;
     @NotNull(message = "Birth Place can not null")
     private String birthPlace;
-    @NotNull(message = "Date of Start can not null")
-    private Date dateOfStart;
+    private String identity;
     @NotNull(message = "Major not null")
     private String major;
     @NotNull(message = "Department can not null")
@@ -41,6 +40,6 @@ public class CompanyAdminUpdateRequestDto {
     @NotNull(message = "Phone can not null")
     @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
     private String phone;
-    @NotNull(message = "Company name can not null")
-    private String companyName;
+    private AddressCreateRequestDto address;
+
 }

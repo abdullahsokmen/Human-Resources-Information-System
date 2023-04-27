@@ -1,6 +1,6 @@
 package com.group.rabbitmq.producer;
 
-import com.group.rabbitmq.model.ActivateStatusModel;
+import com.group.rabbitmq.model.CompanyAdminPasswordModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class CompanyAdminMailProducer {
     private String companyAdminDirectExchange = "company-admin-direct-exchange";
     private String companyAdminPasswordBindingKey = "company-admin-password-binding-key";
 
-    public void sendActivationCode(ActivateStatusModel model){
+    public void sendCompanyAdminPassword(CompanyAdminPasswordModel model){
         rabbitTemplate.convertAndSend(companyAdminDirectExchange,companyAdminPasswordBindingKey,model);
     }
 

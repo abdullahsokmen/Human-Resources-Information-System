@@ -15,7 +15,7 @@ import com.group.exception.EErrorType;
 import com.group.manager.IAuthManager;
 import com.group.mapper.IAddressMapper;
 import com.group.mapper.IAdminMapper;
-import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.model.AdminPasswordSenderModel;
 import com.group.rabbitmq.producer.AdminPasswordProducer;
 import com.group.repository.entity.Admin;
 import com.group.repository.IAdminRepository;
@@ -96,7 +96,7 @@ public class AdminService extends ServiceManager<Admin,Long> {
         Long authId = authManager.register(register).getBody();
         admin.setAuthId(authId);
         save(admin);
-        adminPasswordProducer.sendAdminPassword(PasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
+        adminPasswordProducer.sendAdminPassword(AdminPasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
 
         return true;
     }

@@ -12,7 +12,7 @@ import com.group.mapper.IPersonalMapper;
 import com.group.manager.ICompanyManager;
 
 
-import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.model.PersonalPasswordSenderModel;
 import com.group.rabbitmq.producer.PersonalPasswordProducer;
 import com.group.repository.IPersonalRepository;
 import com.group.repository.entity.Address;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonalService extends ServiceManager<Personal,Long> {
+public class PersonalService extends ServiceManager<Personal, Long> {
     private final IPersonalRepository personalRepository;
     private final PasswordEncoder passwordEncoder;
     private final ICompanyManager companyManager;
@@ -50,7 +50,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
 
     public PersonalMinorDetailsResponseDto getMinorDetails(Long id) {
         Optional<Personal> personal = personalRepository.findById(id);
-        if(personal.isEmpty())
+        if (personal.isEmpty())
             throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         return IPersonalMapper.INSTANCE.fromPersonal(personal.get());
 
@@ -76,7 +76,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         personal.setAuthId(authId);
         save(personal);
         companyManager.addPersonal(personal.getCompanyId());
-        personalPasswordProducer.sendPersonalPassword(PasswordSenderModel.builder()
+        personalPasswordProducer.sendPersonalPassword(PersonalPasswordSenderModel.builder()
                 .email(personal.getEmail()).password(password).build());
         return true;
     }
@@ -151,6 +151,8 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         Optional<Personal> personal = findById(dto.getId());
         if (personal.isEmpty())
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
+        if(passwordEncoder.matches(personal.get().getPassword(),dto.getPassword()))
+            throw new PersonalException(EErrorType.METHOD_NOT_VALID_ARGUMENT_ERROR);
         personal.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(personal.get());
         authManager.updatePassword(UpdatePasswordRequestDto.builder().id(personal.get().getAuthId()).password(dto.getPassword()).build());
