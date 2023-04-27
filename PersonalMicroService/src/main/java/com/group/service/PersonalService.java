@@ -12,7 +12,7 @@ import com.group.mapper.IPersonalMapper;
 import com.group.manager.ICompanyManager;
 
 
-import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.model.PersonalPasswordSenderModel;
 import com.group.rabbitmq.producer.PersonalPasswordProducer;
 import com.group.repository.IPersonalRepository;
 import com.group.repository.entity.Address;
@@ -76,7 +76,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         personal.setAuthId(authId);
         save(personal);
         companyManager.addPersonal(personal.getCompanyId());
-        personalPasswordProducer.sendPersonalPassword(PasswordSenderModel.builder()
+        personalPasswordProducer.sendPersonalPassword(PersonalPasswordSenderModel.builder()
                 .email(personal.getEmail()).password(password).build());
         return true;
     }
