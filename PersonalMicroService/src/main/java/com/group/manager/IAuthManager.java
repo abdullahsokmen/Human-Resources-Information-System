@@ -18,7 +18,7 @@ public interface IAuthManager {
     @PostMapping(SAVE)
     public ResponseEntity<Long> register(@RequestBody RegisterRequestDto dto);
 
-    @PatchMapping(DEACTIVATE+BYID)
+    @PostMapping(DEACTIVATE+BYID)
     public ResponseEntity<Boolean> deactivateById(@PathVariable Long id);
 
     @DeleteMapping(DELETE+BYID)
