@@ -1,6 +1,6 @@
 package com.group.rabbitmq.producer;
 
-import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.model.PersonalPasswordSenderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class PersonalPasswordProducer {
     private String personalDirectExchange = "personal-direct-exchange";
     private String personalPasswordBindingKey = "personal-password-binding-key";
 
-    public void sendPersonalPassword(PasswordSenderModel model){
+    public void sendPersonalPassword(PersonalPasswordSenderModel model){
         rabbitTemplate.convertAndSend(personalDirectExchange,personalPasswordBindingKey,model);
     }
 }

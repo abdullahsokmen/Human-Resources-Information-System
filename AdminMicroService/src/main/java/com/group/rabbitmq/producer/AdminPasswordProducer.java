@@ -1,6 +1,6 @@
 package com.group.rabbitmq.producer;
 
-import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.model.AdminPasswordSenderModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class AdminPasswordProducer {
     private String adminDirectExchange = "admin-direct-exchange";
     private String adminPasswordBindingKey = "admin-password-binding-key";
 
-    public void sendAdminPassword(PasswordSenderModel model){
+    public void sendAdminPassword(AdminPasswordSenderModel model){
         rabbitTemplate.convertAndSend(adminDirectExchange,adminPasswordBindingKey,model);
     }
 }
