@@ -36,9 +36,6 @@ public class PersonalController {
         return ResponseEntity.ok(personalService.createPersonal(dto));
     }
 
-
-
-
     @PutMapping(UPDATE)
     public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
         return ResponseEntity.ok(personalService.updatePersonal(dto));

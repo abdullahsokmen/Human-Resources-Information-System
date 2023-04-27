@@ -1,9 +1,7 @@
 package com.group.service;
 
 
-import com.group.dto.request.LoginRequestDto;
 import com.group.dto.request.PersonalUpdateRequestDto;
-import com.group.dto.response.LoginResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -15,7 +13,7 @@ import com.group.dto.request.PersonalSaveRequestDto;
 import com.group.manager.ICompanyManager;
 
 
-import com.group.rabbitmq.model.PersonalPasswordModel;
+import com.group.rabbitmq.model.PasswordSenderModel;
 import com.group.rabbitmq.producer.PersonalPasswordProducer;
 import com.group.repository.IPersonalRepository;
 import com.group.repository.entity.Address;
@@ -73,7 +71,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         personal.setPassword(passwordEncoder.encode(password));
         save(personal);
         companyManager.addPersonal(personal.getCompanyId());
-        personalPasswordProducer.sendPersonalPassword(PersonalPasswordModel.builder()
+        personalPasswordProducer.sendPersonalPassword(PasswordSenderModel.builder()
                 .email(personal.getEmail()).password(password).build());
         return true;
     }

@@ -1,18 +1,19 @@
-package com.group.rabbitmq.model;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivateStatusModel implements Serializable {
+public class RegisterRequestDto {
 
+    private String name;
+    private String surname;
     private String email;
-    private String activationCode;
+    private String password;
+    private String userRole;
 }

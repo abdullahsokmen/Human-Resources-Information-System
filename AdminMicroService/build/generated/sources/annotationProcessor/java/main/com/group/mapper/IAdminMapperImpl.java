@@ -1,5 +1,6 @@
 package com.group.mapper;
 
+import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
@@ -9,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-26T11:17:58+0300",
-    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
+    date = "2023-04-27T12:42:52+0300",
+    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
 public class IAdminMapperImpl implements IAdminMapper {
 
     @Override
-    public Admin toGetAllResponse(SaveRequestDto dto) {
+    public Admin toAdmin(SaveRequestDto dto) {
         if ( dto == null ) {
             return null;
         }
@@ -31,6 +32,22 @@ public class IAdminMapperImpl implements IAdminMapper {
     }
 
     @Override
+    public RegisterRequestDto toRegisterRequestDto(Admin admin) {
+        if ( admin == null ) {
+            return null;
+        }
+
+        RegisterRequestDto.RegisterRequestDtoBuilder registerRequestDto = RegisterRequestDto.builder();
+
+        registerRequestDto.name( admin.getName() );
+        registerRequestDto.surname( admin.getSurname() );
+        registerRequestDto.email( admin.getEmail() );
+        registerRequestDto.password( admin.getPassword() );
+
+        return registerRequestDto.build();
+    }
+
+    @Override
     public GetMinorInfoResponseDto fromAdmin(Admin admin) {
         if ( admin == null ) {
             return null;
@@ -41,6 +58,7 @@ public class IAdminMapperImpl implements IAdminMapper {
         getMinorInfoResponseDto.photoUrl( admin.getPhotoUrl() );
         getMinorInfoResponseDto.name( admin.getName() );
         getMinorInfoResponseDto.surname( admin.getSurname() );
+        getMinorInfoResponseDto.password( admin.getPassword() );
 
         return getMinorInfoResponseDto.build();
     }

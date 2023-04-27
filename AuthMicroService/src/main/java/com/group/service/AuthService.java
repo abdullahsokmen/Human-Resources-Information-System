@@ -6,18 +6,15 @@ package com.group.service;
 import com.group.dto.request.ActivateRequestDto;
 
 import com.group.dto.request.LoginRequestDto;
+import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 
-import com.group.dto.request.RegisterRequestDto;
-import com.group.manager.IAdminManager;
 import com.group.mapper.IAuthMapper;
 
-import com.group.rabbitmq.model.ActivateStatusModel;
-import com.group.rabbitmq.producer.RegisterMailProducer;
 import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
 import com.group.repository.entity.ERole;
@@ -28,73 +25,20 @@ import com.group.utility.ServiceManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @Service
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
-    private final RegisterMailProducer registerMailProducer;
-    private final IAdminManager adminManager;
     private final JwtTokenManager jwtTokenManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(IAuthRepository authRepository, RegisterMailProducer registerMailProducer,
-                       IAdminManager adminManager, JwtTokenManager jwtTokenManager, PasswordEncoder passwordEncoder) {
+    public AuthService(IAuthRepository authRepository,
+                       JwtTokenManager jwtTokenManager, PasswordEncoder passwordEncoder) {
         super(authRepository);
         this.authRepository = authRepository;
-        this.registerMailProducer = registerMailProducer;
-        this.adminManager = adminManager;
         this.jwtTokenManager = jwtTokenManager;
         this.passwordEncoder = passwordEncoder;
-    }
-
-
-    public Boolean updatePassword(UpdatePasswordRequestDto dto) {
-        Optional<Auth> auth = findById(dto.getId());
-        if (auth.isEmpty())
-            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
-        auth.get().setPassword(passwordEncoder.encode(dto.getPassword()));
-        update(auth.get());
-        return true;
-    }
-    public Boolean register(RegisterRequestDto dto) {
-        if (authRepository.existsByEmail(dto.getEmail()))
-            throw new AuthManagerException(EErrorType.EMAIL_ALREADY_TAKEN);
-        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-//        if(Arrays.stream(ERole.values()).anyMatch(ERole.valueOf(dto.getRole())))
-        String activationCode=Generator.randomActivationCode();
-        auth.setActivationCode(activationCode);
-        auth.setPassword(passwordEncoder.encode(dto.getPassword()));
-        auth.setRole(ERole.valueOf(dto.getRole()));
-        save(auth);
-        if(dto.getRole().equals(ERole.ADMIN.name()))
-            adminManager.save(IAuthMapper.INSTANCE.toSaveRequestDto(auth));
-        try {
-            registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
-                    .activationCode(activationCode).email(dto.getEmail()).build());
-        }catch (Exception exception){
-            throw new AuthManagerException(EErrorType.MAIL_SEND_ERROR);
-        }
-        return true;
-    }
-
-    public Boolean reSendMail(String email){
-        Optional<Auth>auth=authRepository.findByEmail(email);
-        if (auth.isEmpty())
-            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
-        String activationCode=Generator.randomActivationCode();
-        auth.get().setActivationCode(activationCode);
-        update(auth.get());
-        registerMailProducer.sendActivationCode(ActivateStatusModel.builder()
-                .activationCode(activationCode).email(email).build());
-        return true;
-    }
-    public FindByIdResponseDto findByIdResponseDto(Long id){
-        Optional<Auth> auth = findById(id);
-        if (auth.isEmpty())
-            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
-        return  IAuthMapper.INSTANCE.fromAuth(auth.get());
     }
 
     public Boolean deactivateById(Long id) {
@@ -112,20 +56,6 @@ public class AuthService extends ServiceManager<Auth,Long> {
         deleteById(id);
         return true;
     }
-   public Boolean activateStatus(ActivateRequestDto dto) {
-        Optional<Auth> auth=findById(dto.getId());
-        if (auth.isEmpty()){
-            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
-        }
-        if (dto.getActivationCode().equals(auth.get().getActivationCode())){
-            auth.get().setStatus(EStatus.ACTIVE);
-            update(auth.get());
-            return true;
-        }else {
-            throw new AuthManagerException(EErrorType.ACTIVATE_CODE_ERROR);
-        }
-
-    }
 
     public LoginResponse doLogin(LoginRequestDto dto) {
         Optional<Auth> optionalAuth= authRepository.findByEmail(dto.getEmail());
@@ -137,7 +67,15 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole());
         if (token.isEmpty())
             throw new AuthManagerException(EErrorType.TOKEN_NOT_CREATED);
-        return LoginResponse.builder().id(auth.getId()).token(token.get()).build();
+        return LoginResponse.builder().id(auth.getId()).token(token.get()).role(auth.getRole().name()).build();
+    }
+
+    public Boolean register(RegisterRequestDto dto) {
+        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+        auth.setPassword(passwordEncoder.encode(dto.getPassword()));
+        auth.setRole(ERole.valueOf(dto.getUserRole()));
+        save(auth);
+        return true;
     }
 }
 

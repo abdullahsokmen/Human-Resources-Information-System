@@ -1,5 +1,5 @@
 package com.group.repository.entity;
 
 public enum ERole {
-    ADMIN,USER
+    ADMIN,PERSONAL,COMPANYADMIN
 }
