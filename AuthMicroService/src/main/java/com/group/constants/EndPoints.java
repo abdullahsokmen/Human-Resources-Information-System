@@ -14,14 +14,12 @@ public class EndPoints {
     public static final String SAVE = "/save";
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";
-    public static final String FINDALL = "/getall";
-    public static final String FINDBYID = "/getbyid";
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
-    public static final String RESENDMAIL = "/resendmail";
     public static final String DEACTIVATE = "/deactivate";
     public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
+    public static final String MAIL = "/mail";
 
     public static final String ACTIVATESTATUS ="/activatestatus";
 

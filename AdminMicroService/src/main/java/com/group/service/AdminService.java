@@ -73,7 +73,7 @@ public class AdminService extends ServiceManager<Admin,Long> {
             return true;
     }
     public Boolean editProfile(EditProfileRequestDto dto){
-        Optional<Admin> admin=adminRepository.findById(dto.getId());
+        Optional<Admin> admin=findById(dto.getId());
         if (admin.isEmpty())
             throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
         admin.get().setBirthDate(dto.getBirthDate());
@@ -90,12 +90,23 @@ public class AdminService extends ServiceManager<Admin,Long> {
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
         String password = Generator.randomPassword();
         admin.setPassword(passwordEncoder.encode(password));
-        save(admin);
-        adminPasswordProducer.sendAdminPassword(PasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
         RegisterRequestDto register = IAdminMapper.INSTANCE.toRegisterRequestDto(admin);
         register.setPassword(password);
         register.setUserRole("ADMIN");
-        authManager.register(register);
+        Long authId = authManager.register(register).getBody();
+        admin.setAuthId(authId);
+        save(admin);
+        adminPasswordProducer.sendAdminPassword(PasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
+
+        return true;
+    }
+
+    public Boolean deleteAdminById(Long id) {
+        Optional<Admin> admin=findById(id);
+        if (admin.isEmpty())
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        authManager.deleteByAuthId(admin.get().getAuthId());
+        deleteById(id);
         return true;
     }
 }

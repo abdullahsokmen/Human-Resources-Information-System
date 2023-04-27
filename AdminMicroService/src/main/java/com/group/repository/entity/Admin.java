@@ -27,6 +27,7 @@ public class Admin extends BaseEntity{
     private String identity;
     private String email;
     private String password;
+    private Long authId;
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Address address;
     private String phone;

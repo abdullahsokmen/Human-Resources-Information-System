@@ -57,7 +57,7 @@ public class JwtTokenManager {
         return true;
     }
 
-    public Optional<Long>getIdFromToken(String token){
+    public Optional<Long> getIdFromToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(secretKey);
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();

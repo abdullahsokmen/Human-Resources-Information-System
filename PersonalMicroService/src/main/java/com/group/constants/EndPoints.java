@@ -29,6 +29,8 @@ public class EndPoints {
     public static final String EXIST = "/exist";
     public static final String BYID = "/{id}";
     public static final String PASSWORD = "/password";
+    public static final String MAIL = "/mail";
+
 
     public static final String ACTIVATESTATUS ="/activatestatus";
 
