@@ -38,7 +38,7 @@ public class CompanyAdminUpdateRequestDto {
     @Email
     private String email;
     @NotNull(message = "Phone can not null")
-    @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
+
     private String phone;
     private AddressCreateRequestDto address;
 

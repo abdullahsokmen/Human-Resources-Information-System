@@ -23,7 +23,7 @@ public class CompanyAdminRegisterRequestDto {
     @Email
     private String email;
     @NotBlank(message = "Phone can not be blank")
-    @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
+
     private String phone;
     private String photoUrl;
     private Date birthDate;
