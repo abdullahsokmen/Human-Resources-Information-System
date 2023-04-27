@@ -28,8 +28,8 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> save(@RequestBody SaveRequestDto dto){
-        return ResponseEntity.ok(adminService.saveDto(dto));
+    public ResponseEntity<Boolean> createAdmin(@RequestBody SaveRequestDto dto){
+        return ResponseEntity.ok(adminService.createAdmin(dto));
     }
     @GetMapping(GETALLDETAIL)
     public ResponseEntity<GetAllResponseDto>getAllDetail(@RequestParam Long id){

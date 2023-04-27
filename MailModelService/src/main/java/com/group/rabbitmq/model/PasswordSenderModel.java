@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonalPasswordModel implements Serializable {
+public class PasswordSenderModel implements Serializable {
 
     private String email;
     private String password;
