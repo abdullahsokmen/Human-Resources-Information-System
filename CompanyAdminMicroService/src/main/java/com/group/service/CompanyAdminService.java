@@ -106,7 +106,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         companyAdmin.get().setStatus(EStatus.DELETED);
         update(companyAdmin.get());
         companyManager.deletePersonal(companyAdmin.get().getCompanyId());
-        authManager.deleteByAuthId(companyAdmin.get().getAuthId());
+        authManager.deactivateById(companyAdmin.get().getAuthId());
         return true;
     }
 
