@@ -1,14 +1,13 @@
 package com.group.service;
 
 
-import com.group.dto.request.PersonalUpdateRequestDto;
+import com.group.dto.request.*;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
+import com.group.manager.IAuthManager;
 import com.group.mapper.IAddressMapper;
 import com.group.mapper.IPersonalMapper;
-
-import com.group.dto.request.PersonalSaveRequestDto;
 
 import com.group.manager.ICompanyManager;
 
@@ -34,16 +33,17 @@ public class PersonalService extends ServiceManager<Personal,Long> {
     private final PasswordEncoder passwordEncoder;
     private final ICompanyManager companyManager;
     private final PersonalPasswordProducer personalPasswordProducer;
-
+    private final IAuthManager authManager;
     private final JwtTokenManager jwtTokenManager;
 
     public PersonalService(IPersonalRepository personalRepository, PasswordEncoder passwordEncoder,
-                           ICompanyManager companyManager, PersonalPasswordProducer personalPasswordProducer, JwtTokenManager jwtTokenManager) {
+                           ICompanyManager companyManager, PersonalPasswordProducer personalPasswordProducer, IAuthManager authManager, JwtTokenManager jwtTokenManager) {
         super(personalRepository);
         this.personalRepository = personalRepository;
         this.passwordEncoder = passwordEncoder;
         this.companyManager = companyManager;
         this.personalPasswordProducer = personalPasswordProducer;
+        this.authManager = authManager;
         this.jwtTokenManager = jwtTokenManager;
     }
 
@@ -69,6 +69,11 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         personal.setAddress(IAddressMapper.INSTANCE.toAddress(dto.getAddress()));
         String password = Generator.randomPassword();
         personal.setPassword(passwordEncoder.encode(password));
+        RegisterRequestDto register = IPersonalMapper.INSTANCE.toRegisterRequestDto(personal);
+        register.setUserRole("PERSONAL");
+        register.setPassword(password);
+        Long authId = authManager.register(register).getBody();
+        personal.setAuthId(authId);
         save(personal);
         companyManager.addPersonal(personal.getCompanyId());
         personalPasswordProducer.sendPersonalPassword(PasswordSenderModel.builder()
@@ -102,6 +107,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         toUpdate.setPhone(dto.getPhone());
         toUpdate.setAddress(newAddress);
         update(toUpdate);
+        authManager.updateMail(UpdateMailRequestDto.builder().id(toUpdate.getAuthId()).email(toUpdate.getEmail()).build());
         return true;
     }
 
@@ -111,6 +117,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         personal.get().setStatus(EStatus.NOT_ACTIVE);
         update(personal.get());
+        authManager.deactivateById(personal.get().getAuthId());
         return true;
     }
 
@@ -121,6 +128,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
         personal.get().setStatus(EStatus.DELETED);
         update(personal.get());
         companyManager.deletePersonal(personal.get().getCompanyId());
+        authManager.deactivateById(personal.get().getAuthId());
         return true;
     }
 
@@ -130,6 +138,7 @@ public class PersonalService extends ServiceManager<Personal,Long> {
             throw new PersonalException(EErrorType.INVALID_PARAMETER);
         deleteById(id);
         companyManager.deletePersonal(personal.get().getCompanyId());
+        authManager.deleteByAuthId(personal.get().getAuthId());
         return true;
     }
 
@@ -138,5 +147,13 @@ public class PersonalService extends ServiceManager<Personal,Long> {
 
     }
 
-
+    public Boolean updatePassword(UpdatePersonalPasswordRequestDto dto) {
+        Optional<Personal> personal = findById(dto.getId());
+        if (personal.isEmpty())
+            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+        personal.get().setPassword(passwordEncoder.encode(dto.getPassword()));
+        update(personal.get());
+        authManager.updatePassword(UpdatePasswordRequestDto.builder().id(personal.get().getAuthId()).password(dto.getPassword()).build());
+        return true;
+    }
 }

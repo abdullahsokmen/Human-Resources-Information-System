@@ -2,6 +2,7 @@ package com.group.mapper;
 
 import com.group.dto.request.PersonalSaveRequestDto;
 import com.group.dto.request.PersonalUpdateRequestDto;
+import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.repository.entity.Personal;
 import org.mapstruct.Mapper;
@@ -16,5 +17,6 @@ public interface IPersonalMapper {
 
     Personal toPersonal(final PersonalSaveRequestDto dto);
     Personal toPersonal(final PersonalUpdateRequestDto dto);
+    RegisterRequestDto toRegisterRequestDto(final Personal personal);
 
 }

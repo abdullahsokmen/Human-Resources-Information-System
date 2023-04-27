@@ -3,11 +3,8 @@ package com.group.service;
 
 
 
-import com.group.dto.request.ActivateRequestDto;
+import com.group.dto.request.*;
 
-import com.group.dto.request.LoginRequestDto;
-import com.group.dto.request.RegisterRequestDto;
-import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
 import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthManagerException;
@@ -70,11 +67,29 @@ public class AuthService extends ServiceManager<Auth,Long> {
         return LoginResponse.builder().id(auth.getId()).token(token.get()).role(auth.getRole().name()).build();
     }
 
-    public Boolean register(RegisterRequestDto dto) {
+    public Long register(RegisterRequestDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setPassword(passwordEncoder.encode(dto.getPassword()));
         auth.setRole(ERole.valueOf(dto.getUserRole()));
         save(auth);
+        return auth.getId();
+    }
+
+    public Boolean updatePassword(UpdatePasswordRequestDto dto) {
+        Optional<Auth> auth = findById(dto.getId());
+        if (auth.isEmpty())
+            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
+        auth.get().setPassword(passwordEncoder.encode(dto.getPassword()));
+        update(auth.get());
+        return true;
+    }
+
+    public Boolean updateMail(UpdateMailRequestDto dto) {
+        Optional<Auth> auth = findById(dto.getId());
+        if (auth.isEmpty())
+            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
+        auth.get().setEmail(dto.getEmail());
+        update(auth.get());
         return true;
     }
 }
