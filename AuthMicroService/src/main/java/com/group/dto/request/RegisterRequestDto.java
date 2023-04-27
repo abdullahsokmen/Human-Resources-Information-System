@@ -13,17 +13,9 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class RegisterRequestDto {
 
-    @NotBlank(message = "Name cannot be blank!")
-    @Size(min = 3,max = 20)
     private String name;
-    @NotBlank(message = "Surname can not be blank")
-    @Size(min = 2,max = 20)
     private String surname;
-    @Email(message = "Email must be correct")
     private String email;
-    @NotBlank(message = "Password cannot be blank!")
-    @Pattern(message = "Password must be at least 8 characters, with at least one capital letter and a special character!",
-            regexp = "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=*!])(?=\\S+$).{8,}$")
     private String password;
-    private String role;
+    private String userRole;
 }

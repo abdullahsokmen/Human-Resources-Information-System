@@ -2,6 +2,7 @@ package com.group.service;
 
 
 import com.group.dto.request.EditProfileRequestDto;
+import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
@@ -11,10 +12,14 @@ import com.group.dto.request.UpdateRequestDto;
 
 import com.group.exception.AdminServiceException;
 import com.group.exception.EErrorType;
+import com.group.manager.IAuthManager;
 import com.group.mapper.IAddressMapper;
 import com.group.mapper.IAdminMapper;
+import com.group.rabbitmq.model.PasswordSenderModel;
+import com.group.rabbitmq.producer.AdminPasswordProducer;
 import com.group.repository.entity.Admin;
 import com.group.repository.IAdminRepository;
+import com.group.utility.Generator;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +29,17 @@ import java.util.Optional;
 @Service
 public class AdminService extends ServiceManager<Admin,Long> {
     private final IAdminRepository adminRepository;
+    private final AdminPasswordProducer adminPasswordProducer;
+    private final IAuthManager authManager;
 
-    public AdminService(IAdminRepository adminRepository) {
+    public AdminService(IAdminRepository adminRepository, AdminPasswordProducer adminPasswordProducer, IAuthManager authManager) {
         super(adminRepository);
         this.adminRepository=adminRepository;
+        this.adminPasswordProducer = adminPasswordProducer;
+        this.authManager = authManager;
     }
 
-    public Boolean saveDto(SaveRequestDto dto) {
-        Admin admin = IAdminMapper.INSTANCE.toGetAllResponse(dto);
-        save(admin);
-        return true;
-    }
+
 
     public GetAllResponseDto getAllDetail(Long id) {
         Optional<Admin> admin = findById(id);
@@ -72,6 +77,20 @@ public class AdminService extends ServiceManager<Admin,Long> {
         admin.get().setIdentity(dto.getIdentity());
         admin.get().setPhone(dto.getPhone());
         update(admin.get());
+        return true;
+    }
+
+    public Boolean createAdmin(SaveRequestDto dto) {
+        if (adminRepository.existsByEmail(dto.getEmail()))
+            throw new AdminServiceException(EErrorType.INVALID_PARAMETER);
+        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
+        String password = Generator.randomPassword();
+        admin.setPassword(password);
+        save(admin);
+        adminPasswordProducer.sendAdminPassword(PasswordSenderModel.builder().email(admin.getEmail()).password(password).build());
+        RegisterRequestDto register = IAdminMapper.INSTANCE.toRegisterRequestDto(admin);
+        register.setUserRole("ADMIN");
+        authManager.register(register);
         return true;
     }
 }

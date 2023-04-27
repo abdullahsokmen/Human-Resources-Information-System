@@ -27,23 +27,11 @@ import static com.group.constants.EndPoints.*;
 public class AuthController {
     private final AuthService authService;
 
-
-    @PostMapping(UPDATE)
-    public ResponseEntity<Boolean> updatePassword(@RequestBody @Valid UpdatePasswordRequestDto dto) {
-        if (!dto.getPassword().equals(dto.getRepassword()))
-            throw new AuthManagerException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);
-        return ResponseEntity.ok(authService.updatePassword(dto));
-    }
-    @PostMapping(REGISTER)
-    public ResponseEntity<Boolean>register(@RequestBody @Valid RegisterRequestDto dto){
+    @PostMapping(SAVE)
+    public ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
-
     }
-    @GetMapping(FINDBYID)
-    public ResponseEntity<FindByIdResponseDto> findById(@RequestParam Long id){
-        return ResponseEntity.ok(authService.findByIdResponseDto(id));
-    }
-    @PatchMapping(DEACTIVATE+BYID)
+    @PatchMapping(DEACTIVATE+BYID) // diğer servislerden silinen kullanıcılarda bu metod çalıştırılacak
     public ResponseEntity<Boolean> deactivateById(@PathVariable Long id){
         return ResponseEntity.ok(authService.deactivateById(id));
     }
@@ -52,19 +40,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.deleteByAuthId(id));
     }
 
-    @PostMapping(ACTIVATESTATUS)
-    public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dto){
-        return ResponseEntity.ok(authService.activateStatus(dto));
-    }
-    @GetMapping(RESENDMAIL)
-    public ResponseEntity<String> reSendMail(@RequestParam String email){
-        authService.reSendMail(email);
-        return ResponseEntity.ok("Activation code has been sent, Please check your email...");
-    }
-
-    @PostMapping(LOGIN)
+    @PostMapping(LOGIN) // login response a role eklenecek
     public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }
-
 }

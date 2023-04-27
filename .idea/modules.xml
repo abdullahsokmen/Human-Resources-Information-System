@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CompanyAdminMicroService/humanResourcesInformationSystem.CompanyAdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CompanyAdminMicroService/humanResourcesInformationSystem.CompanyAdminMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CompanyMicroService/humanResourcesInformationSystem.CompanyMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CompanyMicroService/humanResourcesInformationSystem.CompanyMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MailModelService/humanResourcesInformationSystem.MailModelService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MailModelService/humanResourcesInformationSystem.MailModelService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PersonalMicroService/humanResourcesInformationSystem.PersonalMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/PersonalMicroService/humanResourcesInformationSystem.PersonalMicroService.main.iml" />
     </modules>
   </component>
 </project>

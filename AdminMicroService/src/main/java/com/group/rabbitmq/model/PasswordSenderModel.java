@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivateStatusModel implements Serializable {
+public class PasswordSenderModel implements Serializable {
 
     private String email;
-    private String activationCode;
+    private String password;
 }
