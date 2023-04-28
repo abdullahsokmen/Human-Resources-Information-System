@@ -16,5 +16,5 @@ public class CompanyAdminResponseDto implements Serializable {
     private String lastname;
     private String email;
     private String phone;
-    private String companyName;
+    private String companyId;
 }
