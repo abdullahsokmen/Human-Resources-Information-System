@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "tbladdress")
-public class Address extends BaseEntity{
+public class Address{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

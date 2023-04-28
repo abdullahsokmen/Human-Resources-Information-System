@@ -3,6 +3,7 @@ package com.group.config.security;
 import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 import com.group.repository.entity.Auth;
+import com.group.repository.entity.EStatus;
 import com.group.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,10 +32,10 @@ public class JwtUserDetails implements UserDetailsService {
 
     public UserDetails loadUserByUserId(Long id) throws UsernameNotFoundException {
         Optional<Auth>auth=authService.findById(id);
-
-        if (auth.isPresent()){
-            List<GrantedAuthority> authorityList =new ArrayList<>();
-            authorityList.add(new SimpleGrantedAuthority(auth.get().getRole().toString()));
+        if(auth.isEmpty())
+            return null;
+        List<GrantedAuthority> authorityList =new ArrayList<>();
+            authorityList.add(new SimpleGrantedAuthority(auth.get().getRole().name()));
             //boolean status = auth.get().getStatus().equals(EStatus.ACTIVE) ? false : true;
             return User.builder()
                     .username(auth.get().getName())
@@ -43,8 +44,7 @@ public class JwtUserDetails implements UserDetailsService {
                     .accountLocked(false)
                     .authorities(authorityList)
                     .build();
-        }
-        throw new AuthManagerException(EErrorType.REGISTER_ERROR_USERNAME);
+
     }
 
 

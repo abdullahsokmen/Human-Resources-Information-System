@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-28T12:21:41+0300",
+    date = "2023-04-28T14:13:33+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -69,6 +69,7 @@ public class ICompanyAdminMapperImpl implements ICompanyAdminMapper {
         companyAdminResponseDto.lastname( companyAdmin.getLastname() );
         companyAdminResponseDto.email( companyAdmin.getEmail() );
         companyAdminResponseDto.phone( companyAdmin.getPhone() );
+        companyAdminResponseDto.companyId( companyAdmin.getCompanyId() );
 
         return companyAdminResponseDto.build();
     }
@@ -94,6 +95,7 @@ public class ICompanyAdminMapperImpl implements ICompanyAdminMapper {
         getAllCompanyAdminDetailsResponseDto.department( dto.getDepartment() );
         getAllCompanyAdminDetailsResponseDto.email( dto.getEmail() );
         getAllCompanyAdminDetailsResponseDto.phone( dto.getPhone() );
+        getAllCompanyAdminDetailsResponseDto.companyId( dto.getCompanyId() );
 
         return getAllCompanyAdminDetailsResponseDto.build();
     }

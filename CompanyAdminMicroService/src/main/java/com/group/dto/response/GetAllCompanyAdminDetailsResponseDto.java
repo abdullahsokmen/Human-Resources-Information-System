@@ -25,5 +25,5 @@ public class GetAllCompanyAdminDetailsResponseDto {
     private String department;
     private String email;
     private String phone;
-    private String companyName;
+    private String companyId;
 }

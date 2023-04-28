@@ -8,6 +8,7 @@ import com.group.service.CompanyService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,14 +22,17 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping(SAVE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> saveCompany(@RequestBody @Valid CompanySaveRequestDto dto){
         return ResponseEntity.ok(companyService.saveCompany(dto));
     }
     @PutMapping(UPDATE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> updateCompany(@RequestBody @Valid CompanyUpdateRequestDto dto){
         return ResponseEntity.ok(companyService.updateCompany(dto));
     }
     @DeleteMapping(DELETE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteCompany(@RequestParam String id){
         return ResponseEntity.ok(companyService.deleteCompany(id));
     }
@@ -39,11 +43,13 @@ public class CompanyController {
     }
 
     @PutMapping(DEACTIVATE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deactivateCompany(@RequestParam String id){
         return ResponseEntity.ok(companyService.deactivateCompany(id));
     }
 
     @GetMapping(GETALLDETAILS)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetAllCompanyDetailsResponseDto> getAllDetails(@RequestParam String id){
         return ResponseEntity.ok(companyService.getAllDetails(id));
     }
