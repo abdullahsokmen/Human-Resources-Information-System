@@ -3,6 +3,7 @@ package com.group.controller;
 
 import com.group.dto.request.PersonalUpdateRequestDto;
 import com.group.dto.request.UpdatePersonalPasswordRequestDto;
+import com.group.dto.response.GetAllDetailsResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.group.dto.request.PersonalSaveRequestDto;
 
 
-
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -34,12 +35,12 @@ public class PersonalController {
         return ResponseEntity.ok(personalService.getMinorDetails(id));
     }
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> createPersonal(@RequestBody PersonalSaveRequestDto dto){
+    public ResponseEntity<Boolean> createPersonal(@RequestBody @Valid PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<Boolean> updatePersonal(@RequestBody PersonalUpdateRequestDto dto){
+    public ResponseEntity<Boolean> updatePersonal(@RequestBody @Valid PersonalUpdateRequestDto dto){
         return ResponseEntity.ok(personalService.updatePersonal(dto));
     }
     @PostMapping(DEACTIVATE+BYID)
@@ -59,9 +60,14 @@ public class PersonalController {
         return ResponseEntity.ok(personalService.getAllPersonals());
     }
     @PostMapping(UPDATE+PASSWORD)
-    public ResponseEntity<Boolean> updatePassword(@RequestBody UpdatePersonalPasswordRequestDto dto){
+    public ResponseEntity<Boolean> updatePassword(@RequestBody @Valid UpdatePersonalPasswordRequestDto dto){
         if (!dto.getPassword().equals(dto.getRepassword()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);//*
+            throw new PersonalException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);//*
         return ResponseEntity.ok(personalService.updatePassword(dto));
     }
+    @GetMapping(GETALLDETAILS)
+    public ResponseEntity<GetAllDetailsResponseDto>getAllDetails(@RequestParam Long id){
+        return ResponseEntity.ok(personalService.getAllDetails(id));
+    }
+
 }

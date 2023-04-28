@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
-@Builder
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class UpdateCompanyAdminPasswordRequestDto {
-
+@NoArgsConstructor
+public class CompanyAdminUpdatePasswordRequestDto {
     private Long id;
     private String currentPassword;
     private String password;
-    private String repassword;
+    private String rePassword;
+
 }

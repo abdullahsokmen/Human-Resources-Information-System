@@ -26,7 +26,7 @@ public class CompanyUpdateRequestDto {
     @NotNull(message = "Logo Url can not blank")
     private String logoUrl;
     @NotNull(message = "Phone can not blank")
-    @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
     private String phone;
     @NotNull(message = "Address can not blank")
     private String address;
@@ -34,6 +34,5 @@ public class CompanyUpdateRequestDto {
     @Email
     private String email;
     @NotNull(message = "Contract End Date can not blank")
-    @Pattern(regexp = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$")
     private Date contractEndDate;
 }

@@ -16,8 +16,9 @@ import javax.validation.constraints.Pattern;
 public class UpdateRequestDto {
     @NotNull(message = "Id can not be blank")
     private Long id;
-    @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
+
     @NotNull(message = "Phone can not be blank")
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
     private String phone;
     private String photoUrl;
     @NotNull(message = "Adress can not be blank")

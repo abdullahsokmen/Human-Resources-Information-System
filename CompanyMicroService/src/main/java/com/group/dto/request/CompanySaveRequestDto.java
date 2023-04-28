@@ -28,7 +28,7 @@ public class CompanySaveRequestDto {
     @NotBlank(message = "Logo Url can not be blank")
     private String logoUrl;
     @NotBlank(message = "Phone can not be blank")
-    @Pattern(regexp ="/^(05)([0-9]{2})\\s?([0-9]{3})\\s?([0-9]{2})\\s?([0-9]{2})$/")
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
     private String phone;
     @NotBlank(message = "Address can not be blank")
     private String address;
