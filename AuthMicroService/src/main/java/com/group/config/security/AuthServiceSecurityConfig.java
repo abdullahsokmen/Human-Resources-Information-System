@@ -34,8 +34,6 @@ public class AuthServiceSecurityConfig {
         httpSecurity.csrf().disable();
         httpSecurity.authorizeRequests().antMatchers("/v3/api-docs/**","/swagger-ui/**","/api/v1/auth/**")
                 .permitAll().anyRequest().authenticated();
-        //httpSecurity.formLogin();
-
         httpSecurity.addFilterBefore(getJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }

@@ -10,6 +10,7 @@ import com.group.exception.EErrorType;
 import com.group.service.CompanyAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class CompanyAdminController {
     private final CompanyAdminService companyAdminService;
 
     @PostMapping(SAVE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> register(@RequestBody @Valid CompanyAdminRegisterRequestDto dto){
         return ResponseEntity.ok(companyAdminService.register(dto));
     }
@@ -32,6 +34,7 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.updateAdmin(dto));
     }
     @DeleteMapping(DELETE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteCompany(@RequestParam Long id){
         return ResponseEntity.ok(companyAdminService.deleteAdmin(id));
     }
@@ -53,6 +56,7 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.deActivateById(id));
     }
     @DeleteMapping(HARDDELETE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> hardDeleteById(@RequestParam Long id){
         return ResponseEntity.ok(companyAdminService.hardDeleteById(id));
     }

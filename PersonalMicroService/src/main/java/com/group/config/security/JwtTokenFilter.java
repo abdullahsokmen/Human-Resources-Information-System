@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -35,14 +36,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         if (authHeader!=null && authHeader.startsWith("Bearer ")){
             String token=authHeader.substring(7);
             Optional<String>userRole=jwtTokenManager.getRoleFromToken(token);
-            if (userRole.isPresent()){
-                UserDetails userDetails= jwtUserDetails.loadUserByUserRole(userRole.get());
-                UsernamePasswordAuthenticationToken authenticationToken=
-                        new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }else {
-               throw new PersonalException(EErrorType.INVALID_TOKEN);
-            }
+            if (userRole.isEmpty())
+                throw new PersonalException(EErrorType.INVALID_TOKEN);
+            UserDetails userDetails=jwtUserDetails.loadUserByUserRole(userRole.get());
+            if (Objects.isNull(userDetails))
+                throw new PersonalException(EErrorType.INVALID_TOKEN);
+            UsernamePasswordAuthenticationToken authenticationToken=
+                    new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         filterChain.doFilter(request,response);
     }

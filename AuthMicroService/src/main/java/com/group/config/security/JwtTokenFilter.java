@@ -30,22 +30,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader= request.getHeader("Authorization");
-        System.out.println("=====>"+authorizationHeader);
 
         if (authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")&&
                 SecurityContextHolder.getContext().getAuthentication()==null){
             String token=authorizationHeader.substring(7);
             Optional<Long>id=jwtTokenManager.getIdFromToken(token);
-            if (id.isPresent()){
-                UserDetails userDetails=jwtUserDetails.loadUserByUserId(id.get());
-                if (!userDetails.isAccountNonLocked())
-                    throw new AuthManagerException(EErrorType.INVALID_TOKEN);
-                UsernamePasswordAuthenticationToken authenticationToken=
-                        new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }else {
-              throw new AuthManagerException(EErrorType.INVALID_TOKEN);
-            }
+            if (id.isEmpty())
+                throw new AuthManagerException(EErrorType.INVALID_TOKEN);
+            UserDetails userDetails=jwtUserDetails.loadUserByUserId(id.get());
+            UsernamePasswordAuthenticationToken authenticationToken=
+                    new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         filterChain.doFilter(request,response);
     }
