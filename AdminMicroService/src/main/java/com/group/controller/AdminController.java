@@ -28,7 +28,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> createAdmin(@RequestBody SaveRequestDto dto){
+    public ResponseEntity<Boolean> createAdmin(@RequestBody @Valid SaveRequestDto dto){
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
     @GetMapping(GETALLDETAIL)

@@ -22,6 +22,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +50,11 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         if (companyMicroServiceRepository.existsByEmail(dto.getEmail()))
             throw new CompanyAdminException(EErrorType.EMAIL_ALREADY_TAKEN);
         if (companyMicroServiceRepository.existsByIdentity(dto.getIdentity()))
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.IDENTITY_ALREADY_EXIST);
         if (companyMicroServiceRepository.existsByPhone(dto.getPhone()))
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.PHONE_ALREADY_TAKEN);
         if (!companyManager.exitsById(dto.getCompanyId()).getBody())
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.COMPANY_NOT_FOUND);
         CompanyAdmin companyAdmin = ICompanyAdminMapper.INSTANCE.toCompanyAdmin(dto);
         companyAdmin.setAddress(IAddressMapper.INSTANCE.toAddress(dto.getAddress()));
         String password = Generator.randomPassword();
@@ -64,6 +65,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         registerRequestDto.setSurname(dto.getLastname());
         Long authId = authManager.register(registerRequestDto).getBody();
         companyAdmin.setAuthId(authId);
+        companyAdmin.setDateOfStart(new Date());
         save(companyAdmin);
         companyManager.addPersonal(companyAdmin.getCompanyId());
         companyAdminMailProducer.sendCompanyAdminPassword(CompanyAdminPasswordModel.builder()
@@ -76,9 +78,9 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         if (companyMicroServiceRepository.existsByEmail(dto.getEmail()))
             throw new CompanyAdminException(EErrorType.EMAIL_ALREADY_TAKEN);
         if (companyMicroServiceRepository.existsByIdentity(dto.getIdentity()))
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.IDENTITY_ALREADY_EXIST);
         if (companyMicroServiceRepository.existsByPhone(dto.getPhone()))
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.PHONE_ALREADY_TAKEN);
         CompanyAdmin toUpdate = companyAdmin.get();
         Address newAddress = IAddressMapper.INSTANCE.toAddress(dto.getAddress());
         cacheManager.getCache("getminor").evict(toUpdate.getId());
@@ -142,18 +144,19 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
     public Boolean hardDeleteById(Long id) {
         Optional<CompanyAdmin> companyAdmin = findById(id);
         if (companyAdmin.isEmpty())
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
+            throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
         deleteById(id);
         companyManager.deletePersonal(companyAdmin.get().getCompanyId());
         authManager.deleteByAuthId(companyAdmin.get().getAuthId());
         return true;
     }
-    public Boolean updatePassword(UpdateCompanyAdminPasswordRequestDto dto) {
-        Optional<CompanyAdmin> companyAdmin = findById(dto.getId());
+
+    public Boolean updateCompanyAdminPassword(CompanyAdminUpdatePasswordRequestDto dto) {
+        Optional<CompanyAdmin>companyAdmin=findById(dto.getId());
         if (companyAdmin.isEmpty())
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
-        if(!passwordEncoder.matches(companyAdmin.get().getPassword(),dto.getPassword()))
-            throw new CompanyAdminException(EErrorType.METHOD_NOT_VALID_ARGUMENT_ERROR);
+            throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
+        if (passwordEncoder.matches(companyAdmin.get().getPassword(),dto.getCurrentPassword()))
+            throw new CompanyAdminException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);
         companyAdmin.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(companyAdmin.get());
         authManager.updatePassword(UpdatePasswordRequestDto.builder().id(companyAdmin.get().getAuthId()).password(dto.getPassword()).build());

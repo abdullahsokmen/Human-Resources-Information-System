@@ -2,6 +2,7 @@ package com.group.service;
 
 
 import com.group.dto.request.*;
+import com.group.dto.response.GetAllDetailsResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -24,6 +25,7 @@ import com.group.utility.ServiceManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,13 +60,13 @@ public class PersonalService extends ServiceManager<Personal, Long> {
 
     public Boolean createPersonal(PersonalSaveRequestDto dto) {
         if (personalRepository.existsByEmail(dto.getEmail()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.EMAIL_ALREADY_TAKEN);
         if (personalRepository.existsByIdentity(dto.getIdentity()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.IDENTITY_ALREADY_EXIST);
         if (personalRepository.existsByPhone(dto.getPhone()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PHONE_ALREADY_TAKEN);
         if (!companyManager.exitsById(dto.getCompanyId()).getBody())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.COMPANY_NOT_EXIST);
         Personal personal = IPersonalMapper.INSTANCE.toPersonal(dto);
         personal.setAddress(IAddressMapper.INSTANCE.toAddress(dto.getAddress()));
         String password = Generator.randomPassword();
@@ -74,6 +76,7 @@ public class PersonalService extends ServiceManager<Personal, Long> {
         register.setPassword(password);
         Long authId = authManager.register(register).getBody();
         personal.setAuthId(authId);
+        personal.setDateOfStart(new Date());
         save(personal);
         companyManager.addPersonal(personal.getCompanyId());
         personalPasswordProducer.sendPersonalPassword(PersonalPasswordSenderModel.builder()
@@ -85,13 +88,13 @@ public class PersonalService extends ServiceManager<Personal, Long> {
     public Boolean updatePersonal(PersonalUpdateRequestDto dto) {
         Optional<Personal> personal = findById(dto.getId());
         if (personal.isEmpty())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         if (personalRepository.existsByEmail(dto.getEmail()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.EMAIL_ALREADY_TAKEN);
         if (personalRepository.existsByIdentity(dto.getIdentity()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.IDENTITY_ALREADY_EXIST);
         if (personalRepository.existsByPhone(dto.getPhone()))
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PHONE_ALREADY_TAKEN);
         Personal toUpdate = personal.get();
         Address newAddress = IAddressMapper.INSTANCE.toAddress(dto.getAddress());
         toUpdate.setPhotoUrl(dto.getPhotoUrl());
@@ -114,7 +117,7 @@ public class PersonalService extends ServiceManager<Personal, Long> {
     public Boolean deActivateById(Long id) {
         Optional<Personal> personal = findById(id);
         if (personal.isEmpty())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         personal.get().setStatus(EStatus.NOT_ACTIVE);
         update(personal.get());
         authManager.deactivateById(personal.get().getAuthId());
@@ -124,7 +127,7 @@ public class PersonalService extends ServiceManager<Personal, Long> {
     public Boolean deletePersonalById(Long id) {
         Optional<Personal> personal = findById(id);
         if (personal.isEmpty())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         personal.get().setStatus(EStatus.DELETED);
         update(personal.get());
         companyManager.deletePersonal(personal.get().getCompanyId());
@@ -135,7 +138,7 @@ public class PersonalService extends ServiceManager<Personal, Long> {
     public Boolean hardDeleteById(Long id) {
         Optional<Personal> personal = findById(id);
         if (personal.isEmpty())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         deleteById(id);
         companyManager.deletePersonal(personal.get().getCompanyId());
         authManager.deleteByAuthId(personal.get().getAuthId());
@@ -150,12 +153,19 @@ public class PersonalService extends ServiceManager<Personal, Long> {
     public Boolean updatePassword(UpdatePersonalPasswordRequestDto dto) {
         Optional<Personal> personal = findById(dto.getId());
         if (personal.isEmpty())
-            throw new PersonalException(EErrorType.INVALID_PARAMETER);
-        if(!passwordEncoder.matches(personal.get().getPassword(),dto.getPassword()))
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
+        if(passwordEncoder.matches(personal.get().getPassword(),dto.getCurrentPassword()))
             throw new PersonalException(EErrorType.METHOD_NOT_VALID_ARGUMENT_ERROR);
         personal.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(personal.get());
         authManager.updatePassword(UpdatePasswordRequestDto.builder().id(personal.get().getAuthId()).password(dto.getPassword()).build());
         return true;
+    }
+
+    public GetAllDetailsResponseDto getAllDetails(Long id) {
+        Optional<Personal>personal=findById(id);
+        if (personal.isEmpty())
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
+        return IPersonalMapper.INSTANCE.toGetAllDetailsResponseDto(personal.get());
     }
 }

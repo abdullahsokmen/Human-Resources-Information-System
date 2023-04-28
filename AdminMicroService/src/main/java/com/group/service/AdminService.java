@@ -86,7 +86,7 @@ public class AdminService extends ServiceManager<Admin,Long> {
 
     public Boolean createAdmin(SaveRequestDto dto) {
         if (adminRepository.existsByEmail(dto.getEmail()))
-            throw new AdminServiceException(EErrorType.INVALID_PARAMETER);
+            throw new AdminServiceException(EErrorType.EMAIL_ALREADY_TAKEN);
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
         String password = Generator.randomPassword();
         admin.setPassword(passwordEncoder.encode(password));
