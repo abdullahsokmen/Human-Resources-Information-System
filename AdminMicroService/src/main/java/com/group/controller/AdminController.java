@@ -13,6 +13,7 @@ import com.group.repository.entity.Admin;
 import com.group.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,24 +33,29 @@ public class AdminController {
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
     @GetMapping(GETALLDETAIL)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetAllResponseDto>getAllDetail(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getAllDetail(id));
     }
     @GetMapping(GETMINOR)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetMinorInfoResponseDto> getMinorInformation(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getMinorInformation(id));
     }
 
     @PutMapping(UPDATE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> update(@RequestBody @Valid UpdateRequestDto dto){
         return ResponseEntity.ok(adminService.updateDto(dto));
     }
     @PutMapping(EDITPROFILE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean>editProfile(@RequestBody EditProfileRequestDto dto){
         return ResponseEntity.ok(adminService.editProfile(dto));
     }
 
     @DeleteMapping(DELETE+BYID)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteAdminById(@PathVariable Long id){
         return ResponseEntity.ok(adminService.deleteAdminById(id));
     }
