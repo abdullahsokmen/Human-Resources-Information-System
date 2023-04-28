@@ -57,7 +57,7 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.hardDeleteById(id));
     }
     @PostMapping(UPDATE+PASSWORD)
-    public ResponseEntity<Boolean>updatePassword(@RequestBody CompanyAdminUpdatePasswordRequestDto dto){
+    public ResponseEntity<Boolean>updatePassword(@RequestBody @Valid CompanyAdminUpdatePasswordRequestDto dto){
         if (!dto.getPassword().equals(dto.getRePassword()))
             throw new CompanyAdminException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);
         return ResponseEntity.ok(companyAdminService.updateCompanyAdminPassword(dto));
