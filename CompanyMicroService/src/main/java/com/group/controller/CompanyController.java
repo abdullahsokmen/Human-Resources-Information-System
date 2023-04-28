@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.group.constants.EndPoints.*;
@@ -20,11 +21,11 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<Boolean> saveCompany(@RequestBody CompanySaveRequestDto dto){
+    public ResponseEntity<Boolean> saveCompany(@RequestBody @Valid CompanySaveRequestDto dto){
         return ResponseEntity.ok(companyService.saveCompany(dto));
     }
     @PutMapping(UPDATE)
-    public ResponseEntity<Boolean> updateCompany(@RequestBody CompanyUpdateRequestDto dto){
+    public ResponseEntity<Boolean> updateCompany(@RequestBody @Valid CompanyUpdateRequestDto dto){
         return ResponseEntity.ok(companyService.updateCompany(dto));
     }
     @DeleteMapping(DELETE)

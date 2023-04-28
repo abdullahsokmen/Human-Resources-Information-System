@@ -25,10 +25,10 @@ public class CompanyAdminUpdateRequestDto {
     private String secondName;
     @NotNull(message = "Lastname can not null")
     private String lastname;
-    @NotNull(message = "Birth Date can not null")
     private Date birthDate;
     @NotNull(message = "Birth Place can not null")
     private String birthPlace;
+    @Pattern(regexp = "^[1-9]{1}[0-9]{9}[02468]{1}$",message = "Please enter a valid ID number")
     private String identity;
     @NotNull(message = "Major not null")
     private String major;
@@ -38,7 +38,7 @@ public class CompanyAdminUpdateRequestDto {
     @Email
     private String email;
     @NotNull(message = "Phone can not null")
-
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
     private String phone;
     private AddressCreateRequestDto address;
 

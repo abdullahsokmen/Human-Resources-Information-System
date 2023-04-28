@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.rmi.MarshalException;
 import java.util.Date;
 
 @Builder
@@ -13,17 +17,26 @@ import java.util.Date;
 @AllArgsConstructor
 public class PersonalSaveRequestDto {
     private String photoUrl;
+    @NotBlank(message = "Name can not blank")
     private String name;
     private String secondName;
+    @NotBlank(message = "Last name can not blank")
     private String lastname;
+
     private Date birthDate;
+    @NotBlank(message = "Birth Place can not blank")
     private String birthPlace;
+    @NotBlank(message = "Identity can not blank")
     private String identity;
-    private Date dateOfStart;
-    private Date dateOfEnd;
+    @NotBlank(message = "Major can not blank")
     private String major;
+    @NotBlank(message = "Department can not blank")
     private String department;
+    @NotBlank(message = "Email can not blank")
+    @Email
     private String email;
+    @NotBlank(message = "Phone can not blank")
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
     private String phone;
     private String companyId;
     private AddressCreateRequestDto address;

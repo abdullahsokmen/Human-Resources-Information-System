@@ -1,9 +1,8 @@
 package com.group.controller;
 
 import com.group.dto.request.CompanyAdminRegisterRequestDto;
+import com.group.dto.request.CompanyAdminUpdatePasswordRequestDto;
 import com.group.dto.request.CompanyAdminUpdateRequestDto;
-import com.group.dto.request.UpdateCompanyAdminPasswordRequestDto;
-import com.group.dto.request.UpdatePasswordRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
 import com.group.exception.CompanyAdminException;
@@ -58,10 +57,10 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.hardDeleteById(id));
     }
     @PostMapping(UPDATE+PASSWORD)
-    public ResponseEntity<Boolean> updatePassword(@RequestBody UpdateCompanyAdminPasswordRequestDto dto){
-        if(! dto.getPassword().equals(dto.getRepassword()))
-            throw new CompanyAdminException(EErrorType.INVALID_PARAMETER);
-        return ResponseEntity.ok(companyAdminService.updatePassword(dto));
+    public ResponseEntity<Boolean>updatePassword(@RequestBody CompanyAdminUpdatePasswordRequestDto dto){
+        if (!dto.getPassword().equals(dto.getRePassword()))
+            throw new CompanyAdminException(EErrorType.REGISTER_ERROR_PASSWORD_UNMATCH);
+        return ResponseEntity.ok(companyAdminService.updateCompanyAdminPassword(dto));
     }
 
 

@@ -56,9 +56,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
 
     public LoginResponse doLogin(LoginRequestDto dto) {
         Optional<Auth> optionalAuth= authRepository.findByEmail(dto.getEmail());
-        if (optionalAuth.isEmpty())
-            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
-        if(!passwordEncoder.matches(dto.getPassword(), optionalAuth.get().getPassword()))
+        if (optionalAuth.isEmpty() || !passwordEncoder.matches(dto.getPassword(), optionalAuth.get().getPassword()))
             throw  new AuthManagerException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
         Auth auth = optionalAuth.get();
         Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole());

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Builder
@@ -13,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequestDto {
-    @NotNull(message = "Email can not be null")
+    @NotBlank(message = "Email can not be blank")
     private String email;
-    @NotNull(message = "Password can not be null")
+    @NotBlank(message = "Password can not be blank")
     private String password;
 }

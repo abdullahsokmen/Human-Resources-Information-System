@@ -1,6 +1,5 @@
 package com.group.mapper;
 
-import com.group.dto.request.FindByIdRequestDto;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.FindByIdResponseDto;
