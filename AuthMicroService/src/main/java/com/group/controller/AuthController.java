@@ -44,7 +44,7 @@ public class AuthController {
     public ResponseEntity<Boolean> updateMail(@RequestBody UpdateMailRequestDto dto){
         return ResponseEntity.ok(authService.updateMail(dto));
     }
-    @PostMapping(LOGIN) // login response a role eklenecek
+    @PostMapping(LOGIN)
     public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }

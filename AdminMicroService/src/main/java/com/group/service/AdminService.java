@@ -32,7 +32,6 @@ public class AdminService extends ServiceManager<Admin,Long> {
     private final IAdminRepository adminRepository;
     private final AdminPasswordProducer adminPasswordProducer;
     private final IAuthManager authManager;
-
     private final PasswordEncoder passwordEncoder;
 
     public AdminService(IAdminRepository adminRepository, AdminPasswordProducer adminPasswordProducer, IAuthManager authManager, PasswordEncoder passwordEncoder) {

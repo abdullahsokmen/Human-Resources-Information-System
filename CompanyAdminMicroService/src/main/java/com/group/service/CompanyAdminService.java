@@ -16,6 +16,7 @@ import com.group.repository.entity.Address;
 import com.group.repository.entity.CompanyAdmin;
 import com.group.repository.entity.EStatus;
 import com.group.utility.Generator;
+import com.group.utility.JwtTokenManager;
 import com.group.utility.ServiceManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,8 +36,9 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
     private final CompanyAdminMailProducer companyAdminMailProducer;
     private final ICompanyManager companyManager;
     private final IAuthManager authManager;
+    private final JwtTokenManager tokenManager;
 
-    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, PasswordEncoder passwordEncoder, CompanyAdminMailProducer companyAdminMailProducer, ICompanyManager companyManager, IAuthManager authManager) {
+    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, PasswordEncoder passwordEncoder, CompanyAdminMailProducer companyAdminMailProducer, ICompanyManager companyManager, IAuthManager authManager, JwtTokenManager tokenManager) {
         super(companyMicroServiceRepository);
         this.companyMicroServiceRepository = companyMicroServiceRepository;
         this.cacheManager = cacheManager;
@@ -44,6 +46,7 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         this.companyAdminMailProducer = companyAdminMailProducer;
         this.companyManager = companyManager;
         this.authManager = authManager;
+        this.tokenManager = tokenManager;
     }
 
     public Boolean register(CompanyAdminRegisterRequestDto dto) {

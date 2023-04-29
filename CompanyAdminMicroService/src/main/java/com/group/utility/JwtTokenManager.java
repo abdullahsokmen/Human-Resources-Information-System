@@ -89,5 +89,22 @@ public class JwtTokenManager {
         }
 
     }
+    public Optional<String>createToken(Long id,String role){
+        String token=null;
+        Date date=new Date(System.currentTimeMillis()+(1000*60*5));
+        try {
+            token= JWT.create()
+                    .withAudience(audience)
+                    .withIssuer(issuer)
+                    .withIssuedAt(new Date())
+                    .withExpiresAt(date)
+                    .withClaim("id",id)
+                    .withClaim("role",role)
+                    .sign(Algorithm.HMAC512(secretKey));
+            return Optional.of(token);
+        }catch (Exception e){
+            return Optional.empty();
+        }
+    }
 
 }
