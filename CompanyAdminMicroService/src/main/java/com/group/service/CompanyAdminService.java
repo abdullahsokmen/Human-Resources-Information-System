@@ -11,7 +11,7 @@ import com.group.manager.IAuthManager;
 import com.group.mapper.ICompanyAdminMapper;
 import com.group.rabbitmq.model.CompanyAdminPasswordModel;
 import com.group.rabbitmq.producer.CompanyAdminMailProducer;
-import com.group.repository.ICompanyMicroServiceRepository;
+import com.group.repository.ICompanyAdminRepository;
 import com.group.repository.entity.Address;
 import com.group.repository.entity.CompanyAdmin;
 import com.group.repository.entity.EStatus;
@@ -30,7 +30,7 @@ import java.util.Optional;
 @Service
 public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
 
-    private final ICompanyMicroServiceRepository companyMicroServiceRepository;
+    private final ICompanyAdminRepository companyAdminRepository;
     private final CacheManager cacheManager;
     private final PasswordEncoder passwordEncoder;
     private final CompanyAdminMailProducer companyAdminMailProducer;
@@ -38,9 +38,9 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
     private final IAuthManager authManager;
     private final JwtTokenManager tokenManager;
 
-    public CompanyAdminService(ICompanyMicroServiceRepository companyMicroServiceRepository, CacheManager cacheManager, PasswordEncoder passwordEncoder, CompanyAdminMailProducer companyAdminMailProducer, ICompanyManager companyManager, IAuthManager authManager, JwtTokenManager tokenManager) {
-        super(companyMicroServiceRepository);
-        this.companyMicroServiceRepository = companyMicroServiceRepository;
+    public CompanyAdminService(ICompanyAdminRepository companyAdminRepository, CacheManager cacheManager, PasswordEncoder passwordEncoder, CompanyAdminMailProducer companyAdminMailProducer, ICompanyManager companyManager, IAuthManager authManager, JwtTokenManager tokenManager) {
+        super(companyAdminRepository);
+        this.companyAdminRepository = companyAdminRepository;
         this.cacheManager = cacheManager;
         this.passwordEncoder = passwordEncoder;
         this.companyAdminMailProducer = companyAdminMailProducer;
@@ -50,11 +50,11 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
     }
 
     public Boolean register(CompanyAdminRegisterRequestDto dto) {
-        if (companyMicroServiceRepository.existsByEmail(dto.getEmail()))
+        if (companyAdminRepository.existsByEmail(dto.getEmail()))
             throw new CompanyAdminException(EErrorType.EMAIL_ALREADY_TAKEN);
-        if (companyMicroServiceRepository.existsByIdentity(dto.getIdentity()))
+        if (companyAdminRepository.existsByIdentity(dto.getIdentity()))
             throw new CompanyAdminException(EErrorType.IDENTITY_ALREADY_EXIST);
-        if (companyMicroServiceRepository.existsByPhone(dto.getPhone()))
+        if (companyAdminRepository.existsByPhone(dto.getPhone()))
             throw new CompanyAdminException(EErrorType.PHONE_ALREADY_TAKEN);
         if (!companyManager.exitsById(dto.getCompanyId()).getBody())
             throw new CompanyAdminException(EErrorType.COMPANY_NOT_FOUND);
@@ -78,11 +78,11 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
 
     public Boolean updateAdmin(CompanyAdminUpdateRequestDto dto) {
         Optional<CompanyAdmin> companyAdmin = findById(dto.getId());
-        if (companyMicroServiceRepository.existsByEmail(dto.getEmail()))
+        if (companyAdminRepository.existsByEmail(dto.getEmail()))
             throw new CompanyAdminException(EErrorType.EMAIL_ALREADY_TAKEN);
-        if (companyMicroServiceRepository.existsByIdentity(dto.getIdentity()))
+        if (companyAdminRepository.existsByIdentity(dto.getIdentity()))
             throw new CompanyAdminException(EErrorType.IDENTITY_ALREADY_EXIST);
-        if (companyMicroServiceRepository.existsByPhone(dto.getPhone()))
+        if (companyAdminRepository.existsByPhone(dto.getPhone()))
             throw new CompanyAdminException(EErrorType.PHONE_ALREADY_TAKEN);
         CompanyAdmin toUpdate = companyAdmin.get();
         Address newAddress = IAddressMapper.INSTANCE.toAddress(dto.getAddress());
@@ -117,14 +117,14 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
 
     @Cacheable(value = "getminor", key = "#id")
     public CompanyAdminResponseDto findCompanyAdminById(Long id) {
-        Optional<CompanyAdmin> companyAdmin = companyMicroServiceRepository.findById(id);
+        Optional<CompanyAdmin> companyAdmin = companyAdminRepository.findById(id);
         if (companyAdmin.isEmpty())
             throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
         return ICompanyAdminMapper.INSTANCE.fromCompanyAdmin(companyAdmin.get());
     }
 
     public GetAllCompanyAdminDetailsResponseDto getAllDetails(Long id) {
-        Optional<CompanyAdmin> companyAdmin = companyMicroServiceRepository.findById(id);
+        Optional<CompanyAdmin> companyAdmin = companyAdminRepository.findById(id);
         if (companyAdmin.isEmpty())
             throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
         GetAllCompanyAdminDetailsResponseDto details = ICompanyAdminMapper.INSTANCE.fromCompanyAdminToGetAllDetails(companyAdmin.get());
@@ -164,5 +164,13 @@ public class CompanyAdminService extends ServiceManager<CompanyAdmin, Long> {
         update(companyAdmin.get());
         authManager.updatePassword(UpdatePasswordRequestDto.builder().id(companyAdmin.get().getAuthId()).password(dto.getPassword()).build());
         return true;
+    }
+
+    public void resetPassword(ResetPasswordRequestDto dto) {
+        Optional<CompanyAdmin> companyAdmin = companyAdminRepository.findByAuthId(dto.getAuthId());
+        if (companyAdmin.isEmpty())
+            throw new CompanyAdminException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
+        companyAdmin.get().setPassword(passwordEncoder.encode(dto.getPassword()));
+        update(companyAdmin.get());
     }
 }

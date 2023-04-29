@@ -3,7 +3,6 @@ package com.group.manager;
 import com.group.dto.request.RegisterRequestDto;
 import com.group.dto.request.UpdateMailRequestDto;
 import com.group.dto.request.UpdatePasswordRequestDto;
-import com.group.dto.request.UpdatePersonalPasswordRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

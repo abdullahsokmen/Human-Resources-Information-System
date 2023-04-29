@@ -1,14 +1,10 @@
 package com.group.service;
 
 
-import com.group.dto.request.EditProfileRequestDto;
-import com.group.dto.request.RegisterRequestDto;
-import com.group.dto.request.SaveRequestDto;
+import com.group.dto.request.*;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
 
-
-import com.group.dto.request.UpdateRequestDto;
 
 import com.group.exception.AdminServiceException;
 import com.group.exception.EErrorType;
@@ -107,5 +103,13 @@ public class AdminService extends ServiceManager<Admin,Long> {
         authManager.deleteByAuthId(admin.get().getAuthId());
         deleteById(id);
         return true;
+    }
+
+    public void resetPassword(ResetPasswordRequestDto dto) {
+        Optional<Admin> admin = adminRepository.findByAuthId(dto.getAuthId());
+        if (admin.isEmpty())
+            throw new AdminServiceException(EErrorType.ADMIN_NOT_FOUND);
+        admin.get().setPassword(passwordEncoder.encode(dto.getPassword()));
+        update(admin.get());
     }
 }

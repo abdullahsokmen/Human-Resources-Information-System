@@ -5,13 +5,17 @@ package com.group.service;
 
 import com.group.dto.request.*;
 
-import com.group.dto.response.FindByIdResponseDto;
 import com.group.dto.response.LoginResponse;
 import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 
+import com.group.manager.IAdminManager;
+import com.group.manager.ICompanyAdminManager;
+import com.group.manager.IPersonalManager;
 import com.group.mapper.IAuthMapper;
 
+import com.group.rabbitmq.model.ResetPasswordModel;
+import com.group.rabbitmq.producer.ResetPasswordProducer;
 import com.group.repository.IAuthRepository;
 import com.group.repository.entity.Auth;
 import com.group.repository.entity.ERole;
@@ -29,13 +33,22 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
     private final PasswordEncoder passwordEncoder;
+    private final IAdminManager adminManager;
+    private final ICompanyAdminManager companyAdminManager;
+    private final IPersonalManager personalManager;
+    private final ResetPasswordProducer resetPasswordProducer;
 
-    public AuthService(IAuthRepository authRepository,
-                       JwtTokenManager jwtTokenManager, PasswordEncoder passwordEncoder) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, PasswordEncoder passwordEncoder,
+                       IAdminManager adminManager, ICompanyAdminManager companyAdminManager,
+                       IPersonalManager personalManager, ResetPasswordProducer resetPasswordProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.passwordEncoder = passwordEncoder;
+        this.adminManager = adminManager;
+        this.companyAdminManager = companyAdminManager;
+        this.personalManager = personalManager;
+        this.resetPasswordProducer = resetPasswordProducer;
     }
 
     public Boolean deactivateById(Long id) {
@@ -88,6 +101,33 @@ public class AuthService extends ServiceManager<Auth,Long> {
             throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
         auth.get().setEmail(dto.getEmail());
         update(auth.get());
+        return true;
+    }
+
+    public Boolean resetPassword(String email) {
+        Optional<Auth> optionalAuth = authRepository.findByEmail(email);
+        if (optionalAuth.isEmpty())
+            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
+        Auth auth = optionalAuth.get();
+        String password = Generator.randomPassword();
+
+        try {
+            resetPasswordProducer.sendNewPassword(ResetPasswordModel.builder().email(email).password(password).build());
+        }catch (Exception exception){
+            throw new AuthManagerException(EErrorType.MAIL_SEND_ERROR);
+        }
+        auth.setPassword(passwordEncoder.encode(password));
+        update(auth);
+
+        switch (optionalAuth.get().getRole()){
+            case ADMIN: adminManager.resetPassword(ResetPasswordRequestDto.builder()
+                    .authId(auth.getId()).password(password).build()); break;
+            case COMPANYADMIN: companyAdminManager.resetPassword(ResetPasswordRequestDto.builder()
+                    .authId(auth.getId()).password(password).build()); break;
+            case PERSONAL: personalManager.resetPassword(ResetPasswordRequestDto.builder()
+                    .authId(auth.getId()).password(password).build()); break;
+        }
+
         return true;
     }
 }

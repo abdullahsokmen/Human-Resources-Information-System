@@ -2,6 +2,7 @@ package com.group.controller;
 
 
 import com.group.dto.request.PersonalUpdateRequestDto;
+import com.group.dto.request.ResetPasswordRequestDto;
 import com.group.dto.request.UpdatePersonalPasswordRequestDto;
 import com.group.dto.response.GetAllDetailsResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
@@ -73,6 +74,11 @@ public class PersonalController {
     @GetMapping(GETALLDETAILS)
     public ResponseEntity<GetAllDetailsResponseDto>getAllDetails(@RequestParam Long id){
         return ResponseEntity.ok(personalService.getAllDetails(id));
+    }
+    @PostMapping(FORGOT)
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequestDto dto){
+        personalService.resetPassword(dto);
+        return ResponseEntity.ok().build();
     }
 
 }

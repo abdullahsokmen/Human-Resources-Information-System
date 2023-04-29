@@ -12,6 +12,6 @@ public interface IPersonalRepository extends JpaRepository<Personal,Long> {
     boolean existsByEmail(String email);
     boolean existsByIdentity(String identity);
     boolean existsByPhone(String phone);
-
-    Optional<Personal>findByEmail(String email);
+    Optional<Personal> findByAuthId(Long authId);
+    Optional<Personal> findByEmail(String email);
 }

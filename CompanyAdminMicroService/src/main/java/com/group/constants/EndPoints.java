@@ -31,6 +31,7 @@ public class EndPoints {
     public static final String RESENDMAIL = "/resendmail";
     public static final String DEACTIVATE = "/deactivate";
     public static final String PASSWORD = "/password";
+    public static final String FORGOT = "/forgot";
 
     public static final String ACTIVATESTATUS ="/activatestatus";
 
