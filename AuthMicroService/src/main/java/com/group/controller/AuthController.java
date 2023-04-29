@@ -2,7 +2,6 @@ package com.group.controller;
 
 
 
-
 import com.group.dto.request.*;
 
 import com.group.dto.response.FindByIdResponseDto;
@@ -47,5 +46,9 @@ public class AuthController {
     @PostMapping(LOGIN)
     public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
+    }
+    @PostMapping(FORGOT)
+    public ResponseEntity<Boolean> resetPassword(@RequestParam String email){
+        return ResponseEntity.ok(authService.resetPassword(email));
     }
 }

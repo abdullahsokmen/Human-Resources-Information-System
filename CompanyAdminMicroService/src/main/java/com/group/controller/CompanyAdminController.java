@@ -3,6 +3,7 @@ package com.group.controller;
 import com.group.dto.request.CompanyAdminRegisterRequestDto;
 import com.group.dto.request.CompanyAdminUpdatePasswordRequestDto;
 import com.group.dto.request.CompanyAdminUpdateRequestDto;
+import com.group.dto.request.ResetPasswordRequestDto;
 import com.group.dto.response.CompanyAdminResponseDto;
 import com.group.dto.response.GetAllCompanyAdminDetailsResponseDto;
 import com.group.exception.CompanyAdminException;
@@ -67,5 +68,10 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.updateCompanyAdminPassword(dto));
     }
 
+    @PostMapping(FORGOT)
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequestDto dto){
+        companyAdminService.resetPassword(dto);
+        return ResponseEntity.ok().build();
+    }
 
 }

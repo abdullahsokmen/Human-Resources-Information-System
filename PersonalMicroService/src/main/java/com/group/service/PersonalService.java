@@ -168,4 +168,12 @@ public class PersonalService extends ServiceManager<Personal, Long> {
             throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         return IPersonalMapper.INSTANCE.toGetAllDetailsResponseDto(personal.get());
     }
+
+    public void resetPassword(ResetPasswordRequestDto dto) {
+        Optional<Personal> personal = personalRepository.findByAuthId(dto.getAuthId());
+        if (personal.isEmpty())
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
+        personal.get().setPassword(passwordEncoder.encode(dto.getPassword()));
+        update(personal.get());
+    }
 }
