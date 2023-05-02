@@ -20,7 +20,10 @@ public class EndPoints {
     public static final String ADDPERSONAL = "/addpersonal";
     public static final String DELETEPERSONAL = "/deletepersonal";
     public static final String SAVE = "/save";
+    public static final String SAVEADVANCEPAYMENT = "/saveadvancepayment";
+
     public static final String UPDATE = "/update";
+    public static final String UPDATEADVANCEPAYMENT = "/updateadvancepayment";
     public static final String UPDATEPASSWORD = "/updatepassword";
     public static final String DELETE = "/delete";
     public static final String HARDDELETE = "/harddelete";
@@ -36,6 +39,7 @@ public class EndPoints {
     public static final String FORGOT = "/forgot";
 
     public static final String ACTIVATESTATUS ="/activatestatus";
+    public static final String CONFIRMADVANCEPAYMENT ="/confirmadvancepayment";
 
 
 }

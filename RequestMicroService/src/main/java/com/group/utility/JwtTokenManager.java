@@ -4,7 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
 import com.group.exception.RequestServiceException;
+
+import com.group.exception.RequestException;
+
 import com.group.exception.EErrorType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -52,7 +56,11 @@ public class JwtTokenManager {
             }
         }catch (Exception exception){
             System.out.println(exception.getMessage());
+
             throw new RequestServiceException(EErrorType.INVALID_TOKEN);
+
+            throw new RequestException(EErrorType.INVALID_TOKEN);
+
         }
         return true;
     }
@@ -63,12 +71,20 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
+
                 throw new RequestServiceException(EErrorType.NOT_DECODED);
+
+                throw new RequestException(EErrorType.NOT_DECODED);
+
             }
             String id=decodedJWT.getClaim("id").asString();
             return Optional.of(id);
         }catch (Exception exception){
+
             throw new RequestServiceException(EErrorType.INVALID_TOKEN);
+
+            throw new RequestException(EErrorType.INVALID_TOKEN);
+
         }
 
     }
@@ -79,13 +95,21 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
+
                 throw new RequestServiceException(EErrorType.NOT_DECODED);
+
+                throw new RequestException(EErrorType.NOT_DECODED);
+
             }
             String role=decodedJWT.getClaim("role").asString();
             return Optional.of(role);
         }catch (Exception exception){
             System.out.println(exception.getMessage());
+
             throw new RequestServiceException(EErrorType.INVALID_TOKEN);
+
+            throw new RequestException(EErrorType.INVALID_TOKEN);
+
         }
 
     }
