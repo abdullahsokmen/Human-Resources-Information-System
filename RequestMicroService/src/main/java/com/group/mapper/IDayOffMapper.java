@@ -1,7 +1,8 @@
 package com.group.mapper;
 
-import com.group.dto.Dayoffdto.DayOffSaveRequestDto;
-import com.group.dto.Dayoffdto.DayOffUpdateRequestDto;
+import com.group.dto.Dayoffdto.request.DayOffSaveRequestDto;
+import com.group.dto.Dayoffdto.request.DayOffUpdateRequestDto;
+import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.repository.entity.DayOff;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,4 +15,7 @@ public interface IDayOffMapper {
 
     DayOff toDayOff(final DayOffSaveRequestDto dto);
     DayOff toDayOff(final DayOffUpdateRequestDto dto);
+
+    DayOffResponseDto fromDayOff(final DayOff dayOff);
+
 }
