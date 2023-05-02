@@ -2,6 +2,7 @@ package com.group.controller;
 
 
 import com.group.dto.request.EditProfileRequestDto;
+import com.group.dto.request.ResetPasswordRequestDto;
 import com.group.dto.request.SaveRequestDto;
 import com.group.dto.response.GetAllResponseDto;
 import com.group.dto.response.GetMinorInfoResponseDto;
@@ -58,6 +59,12 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteAdminById(@PathVariable Long id){
         return ResponseEntity.ok(adminService.deleteAdminById(id));
+    }
+
+    @PostMapping(FORGOT)
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequestDto dto){
+        adminService.resetPassword(dto);
+        return ResponseEntity.ok().build();
     }
 
 }

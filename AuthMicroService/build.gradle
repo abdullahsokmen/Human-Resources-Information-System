@@ -9,6 +9,5 @@ dependencies {
     implementation libs.springCloudOpenFeign
     implementation libs.springBootStarterSecurity
     implementation libs.jwt
-
-
+    implementation libs.springBootAmqp
 }
