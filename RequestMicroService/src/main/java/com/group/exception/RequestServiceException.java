@@ -3,15 +3,15 @@ package com.group.exception;
 import lombok.Getter;
 
 @Getter
-public class CompanyAdminException extends RuntimeException{
+public class RequestServiceException extends RuntimeException{
     private final EErrorType errorType;
 
-    public CompanyAdminException(EErrorType errorType){
+    public RequestServiceException(EErrorType errorType){
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public CompanyAdminException(EErrorType errorType, String message){
+    public RequestServiceException(EErrorType errorType, String message){
         super(message);
         this.errorType = errorType;
     }
