@@ -19,16 +19,16 @@ public class JwtUserDetails implements UserDetailsService {
     }
 
 
-    public UserDetails loadUserByUserRole(String role) throws UsernameNotFoundException {
+    public UserDetails loadUserByRoleAndStatus(String role, String status) throws UsernameNotFoundException {
         List<GrantedAuthority> authorityList=new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(role));
+        boolean userStatus = status.equals("ACTIVE") ? false : true;
         return User.builder()
                 .username(role)
                 .password("")
                 .accountLocked(false)
-                .accountExpired(false)
+                .accountExpired(userStatus)
                 .authorities(authorityList)
                 .build();
     }
-
 }

@@ -30,6 +30,7 @@ public enum EErrorType {
     REGISTER_ERROR_COMPANYEMAIL(1103,"This company mail already taken", BAD_REQUEST),
     REGISTER_ERROR_COMPANYNAME(1104,"This company name already taken", BAD_REQUEST),
     LOGIN_ERROR_USERNAME_PASSWORD(1102,"Username or Password are incorrect", BAD_REQUEST),
+    USER_NOT_ACTIVE(1105,"User not active", BAD_REQUEST),
 
 
 

@@ -28,8 +28,13 @@ public class GlobalExceptionHandler {
         EErrorType errorType = EErrorType.UNEXPECTED_ERROR;
         return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
     }*/
-    @ExceptionHandler(CompanyAdminException.class)
-    public ResponseEntity<ErrorMessage> handleManagerException(CompanyAdminException ex){
+
+    @ExceptionHandler(RequestServiceException.class)
+    public ResponseEntity<ErrorMessage> handleManagerException(RequestServiceException ex){
+
+    @ExceptionHandler(RequestException.class)
+    public ResponseEntity<ErrorMessage> handleManagerException(RequestException ex){
+
         EErrorType errorType=ex.getErrorType();
         HttpStatus httpStatus = errorType.getHttpStatus();
         return new ResponseEntity<>(createErrorMessage(errorType,ex),httpStatus);

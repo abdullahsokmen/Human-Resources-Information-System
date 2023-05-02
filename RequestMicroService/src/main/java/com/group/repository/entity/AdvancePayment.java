@@ -2,6 +2,7 @@ package com.group.repository.entity;
 
 import com.group.repository.entity.enums.Currency;
 import com.group.repository.entity.enums.EAdvancePaymentType;
+import com.group.repository.entity.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +31,8 @@ public class AdvancePayment extends BaseEntity{
     private String advanceDetails;
     @Enumerated(EnumType.STRING)
     private EAdvancePaymentType advancePaymentType;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EStatus status =EStatus.PENDING;
 
 }

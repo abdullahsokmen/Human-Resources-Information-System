@@ -36,12 +36,12 @@ public class JwtUserDetails implements UserDetailsService {
             return null;
         List<GrantedAuthority> authorityList =new ArrayList<>();
             authorityList.add(new SimpleGrantedAuthority(auth.get().getRole().name()));
-            //boolean status = auth.get().getStatus().equals(EStatus.ACTIVE) ? false : true;
+            boolean status = auth.get().getStatus().equals(EStatus.ACTIVE) ? false : true;
             return User.builder()
                     .username(auth.get().getName())
                     .password("")
                     .accountExpired(false)
-                    .accountLocked(false)
+                    .accountLocked(status)
                     .authorities(authorityList)
                     .build();
 

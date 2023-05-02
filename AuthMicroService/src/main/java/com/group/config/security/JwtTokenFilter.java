@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -38,6 +39,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (id.isEmpty())
                 throw new AuthManagerException(EErrorType.INVALID_TOKEN);
             UserDetails userDetails=jwtUserDetails.loadUserByUserId(id.get());
+            if (Objects.isNull(userDetails))
+                throw new AuthManagerException(EErrorType.INVALID_TOKEN);
+            if (!userDetails.isAccountNonLocked())
+                throw new AuthManagerException(EErrorType.USER_NOT_ACTIVE);
             UsernamePasswordAuthenticationToken authenticationToken=
                     new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
