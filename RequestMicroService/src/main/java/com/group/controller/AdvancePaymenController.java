@@ -10,5 +10,5 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(ADVANCEPAYMENT)
 public class AdvancePaymenController {
     private final AdvancePaymentService advancePaymentService;
-    //commit atmak icin yazdim burayi silebilirsiniz
+
 }
