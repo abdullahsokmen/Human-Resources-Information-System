@@ -11,7 +11,9 @@ public class EndPoints {
     public static final String API = "/api";
 
 
-    public static final String COMPANYADMIN = API+VERSION+"/companyadmin";
+    public static final String ADVANCEPAYMENT = API+VERSION+"/advancepaymen";
+    public static final String DAYOFF = API+VERSION+"/dayoff";
+    public static final String EXPENDITURE = API+VERSION+"/expenditure";
     public static final String MAIL = "/mail";
     public static final String EXIST = "/exist";
     public static final String BYID = "/{id}";
