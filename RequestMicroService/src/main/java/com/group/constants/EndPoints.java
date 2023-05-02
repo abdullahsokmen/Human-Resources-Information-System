@@ -11,9 +11,9 @@ public class EndPoints {
     public static final String API = "/api";
 
 
-    public static final String ADVANCEPAYMENT = API+VERSION+"/advancepaymen";
-    public static final String DAYOFF = API+VERSION+"/dayoff";
-    public static final String EXPENDITURE = API+VERSION+"/expenditure";
+    public static final String ADVANCEPAYMENT = "/advancepaymen";
+    public static final String DAYOFF = "/dayoff";
+    public static final String EXPENDITURE = "/expenditure";
     public static final String MAIL = "/mail";
     public static final String EXIST = "/exist";
     public static final String BYID = "/{id}";
@@ -23,6 +23,8 @@ public class EndPoints {
     public static final String SAVEADVANCEPAYMENT = "/saveadvancepayment";
 
     public static final String UPDATE = "/update";
+    public static final String ACCEPT = "/accept";
+    public static final String DECLINE = "/accept";
     public static final String UPDATEADVANCEPAYMENT = "/updateadvancepayment";
     public static final String UPDATEPASSWORD = "/updatepassword";
     public static final String DELETE = "/delete";
