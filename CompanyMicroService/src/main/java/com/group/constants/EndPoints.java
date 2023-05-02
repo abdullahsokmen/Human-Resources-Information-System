@@ -12,6 +12,7 @@ public class EndPoints {
 
 
     public static final String COMPANY = API+VERSION+"/company";
+
     public static final String SAVE = "/save";
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";

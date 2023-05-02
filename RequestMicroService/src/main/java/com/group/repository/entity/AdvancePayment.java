@@ -1,8 +1,7 @@
 package com.group.repository.entity;
 
 import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EStatus;
-import com.group.repository.entity.enums.ExpenditureType;
+import com.group.repository.entity.enums.EAdvancePaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,24 +13,22 @@ import java.util.Date;
 
 @Data
 @SuperBuilder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "tblexpenditure")
-public class Expenditure extends BaseEntity{
+@Table(name = "tbladvance")
+public class AdvancePayment extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private EStatus status =EStatus.PENDING;
-    @Enumerated(EnumType.STRING)
-    private ExpenditureType expenditureType;
-    private Double amount;
     @Builder.Default
     private Date requestDate = new Date();
     private Date confirmDate;
     @Enumerated(EnumType.STRING)
     private Currency currency;
-    private String expendDetails;
+    private Double amount;
+    private String advanceDetails;
+    @Enumerated(EnumType.STRING)
+    private EAdvancePaymentType advancePaymentType;
+
 }
