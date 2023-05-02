@@ -1,5 +1,7 @@
 package com.group.repository.entity;
 
+import com.group.repository.entity.enums.EDayOffType;
+import com.group.repository.entity.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
