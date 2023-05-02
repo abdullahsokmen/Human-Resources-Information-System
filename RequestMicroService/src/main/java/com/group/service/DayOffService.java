@@ -3,8 +3,7 @@ package com.group.service;
 import com.group.dto.Dayoffdto.DayOffSaveRequestDto;
 import com.group.dto.Dayoffdto.DayOffUpdateRequestDto;
 import com.group.exception.EErrorType;
-import com.group.exception.GlobalExceptionHandler;
-import com.group.exception.RequestServiceException;
+import com.group.exception.RequestException;
 import com.group.mapper.IDayOffMapper;
 import com.group.repository.IDayOffRepository;
 import com.group.repository.entity.DayOff;
@@ -38,7 +37,7 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
     public ResponseEntity<Boolean> updateDayOff(DayOffUpdateRequestDto dto) {
         Optional<DayOff> dayOff = findById(dto.getId());
         if(dayOffRepository.existsById(dto.getId()))
-            throw new RequestServiceException(EErrorType.UNEXPECTED_ERROR);
+            throw new RequestException(EErrorType.UNEXPECTED_ERROR);
         DayOff toUpdate = dayOff.get();
         toUpdate.setStartingDate(dto.getStartingDate());
         toUpdate.setEndDate(dto.getEndDate());
