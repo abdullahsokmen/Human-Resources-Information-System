@@ -11,11 +11,13 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AdminMicroService" />
             <option value="$PROJECT_DIR$/AuthMicroService" />
+            <option value="$PROJECT_DIR$/AuthMicroService/RequestMicroService" />
             <option value="$PROJECT_DIR$/CompanyAdminMicroService" />
             <option value="$PROJECT_DIR$/CompanyMicroService" />
             <option value="$PROJECT_DIR$/ConfigServerGit" />
             <option value="$PROJECT_DIR$/MailModelService" />
             <option value="$PROJECT_DIR$/PersonalMicroService" />
+            <option value="$PROJECT_DIR$/RequestMicroService" />
           </set>
         </option>
       </GradleProjectSettings>
