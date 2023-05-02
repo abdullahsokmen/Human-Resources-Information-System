@@ -27,6 +27,7 @@ public enum EErrorType {
     REGISTER_ERROR_PASSWORD_UNMATCH(1100,"Passwords not matched", BAD_REQUEST),
     REGISTER_ERROR_USERNAME(1101,"This Username already taken", BAD_REQUEST),
     LOGIN_ERROR_USERNAME_PASSWORD(1102,"Username or Password are incorrect", BAD_REQUEST),
+    USER_NOT_ACTIVE(1103,"User not active", BAD_REQUEST),
 
 
 

@@ -72,7 +72,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if (optionalAuth.isEmpty() || !passwordEncoder.matches(dto.getPassword(), optionalAuth.get().getPassword()))
             throw  new AuthManagerException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
         Auth auth = optionalAuth.get();
-        Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole());
+        Optional<String> token = jwtTokenManager.createToken(auth.getId(), auth.getRole(), auth.getStatus());
         if (token.isEmpty())
             throw new AuthManagerException(EErrorType.TOKEN_NOT_CREATED);
         return LoginResponse.builder().id(auth.getId()).token(token.get()).role(auth.getRole().name()).build();

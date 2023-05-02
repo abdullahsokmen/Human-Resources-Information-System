@@ -22,26 +22,6 @@ public class JwtTokenManager {
     @Value("${jwt.audience}")
     String audience;
 
-
-    public Optional<String>createToken(String id){
-        String token=null;
-        Date date=new Date(System.currentTimeMillis()+(1000*60*5));
-        try {
-            token= JWT.create()
-                    .withAudience(audience)
-                    .withIssuer(issuer)
-                    .withIssuedAt(new Date())
-                    .withExpiresAt(date)
-                    .withClaim("id",id)
-                    .sign(Algorithm.HMAC512(secretKey));
-            return Optional.of(token);
-        }catch (Exception e){
-            return Optional.empty();
-        }
-    }
-
-
-
     public Boolean validateToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(secretKey);
@@ -84,26 +64,22 @@ public class JwtTokenManager {
             String role=decodedJWT.getClaim("role").asString();
             return Optional.of(role);
         }catch (Exception exception){
-            System.out.println(exception.getMessage());
             throw new CompanyAdminException(EErrorType.INVALID_TOKEN);
         }
 
     }
-    public Optional<String>createToken(Long id,String role){
-        String token=null;
-        Date date=new Date(System.currentTimeMillis()+(1000*60*5));
+    public Optional<String> getStatusFromToken(String token){
         try {
-            token= JWT.create()
-                    .withAudience(audience)
-                    .withIssuer(issuer)
-                    .withIssuedAt(new Date())
-                    .withExpiresAt(date)
-                    .withClaim("id",id)
-                    .withClaim("role",role)
-                    .sign(Algorithm.HMAC512(secretKey));
-            return Optional.of(token);
-        }catch (Exception e){
-            return Optional.empty();
+            Algorithm algorithm=Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
+            DecodedJWT decodedJWT=verifier.verify(token);
+            if (decodedJWT==null){
+                throw new CompanyAdminException(EErrorType.NOT_DECODED);
+            }
+            String status = decodedJWT.getClaim("status").asString();
+            return Optional.of(status);
+        }catch (Exception exception){
+            throw new CompanyAdminException(EErrorType.INVALID_TOKEN);
         }
     }
 
