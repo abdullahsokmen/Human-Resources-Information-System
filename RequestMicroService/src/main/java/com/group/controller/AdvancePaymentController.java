@@ -8,7 +8,7 @@ import static com.group.constants.EndPoints.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(ADVANCEPAYMENT)
-public class AdvancePaymenController {
+public class AdvancePaymentController {
     private final AdvancePaymentService advancePaymentService;
 
 }
