@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.exception.AuthManagerException;
 import com.group.exception.EErrorType;
 import com.group.repository.entity.ERole;
+import com.group.repository.entity.EStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class JwtTokenManager {
         }
     }
 
-    public Optional<String>createToken(Long id, ERole role){
+    public Optional<String>createToken(Long id, ERole role, EStatus status){
         String token=null;
         Date date=new Date(System.currentTimeMillis()+(1000*60*5));
         try {
@@ -52,6 +53,7 @@ public class JwtTokenManager {
                     .withExpiresAt(date)
                     .withClaim("id",id)
                     .withClaim("role",role.toString())
+                    .withClaim("status",status.toString())
                     .sign(Algorithm.HMAC512(secretKey));
             return Optional.of(token);
         }catch (Exception e){
@@ -90,21 +92,5 @@ public class JwtTokenManager {
 
     }
 
-    public Optional<String>getRoleFromToken(String token){
-        try {
-            Algorithm algorithm=Algorithm.HMAC512(secretKey);
-            JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
-            DecodedJWT decodedJWT=verifier.verify(token);
-            if (decodedJWT==null){
-                throw new AuthManagerException(EErrorType.NOT_DECODED);
-            }
-            String role=decodedJWT.getClaim("role").asString();
-            return Optional.of(role);
-        }catch (Exception exception){
-            System.out.println(exception.getMessage());
-            throw new AuthManagerException(EErrorType.INVALID_TOKEN);
-        }
-
-    }
 
 }

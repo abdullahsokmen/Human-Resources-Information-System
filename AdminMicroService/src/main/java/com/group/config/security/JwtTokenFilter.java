@@ -34,12 +34,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String authHeader=request.getHeader("Authorization");
         if (authHeader!=null && authHeader.startsWith("Bearer ")){
             String token=authHeader.substring(7);
-            Optional<String>userRole=jwtTokenManager.getRoleFromToken(token);
+            Optional<String> userRole = jwtTokenManager.getRoleFromToken(token);
             if (userRole.isEmpty())
                 throw new AdminServiceException(EErrorType.INVALID_TOKEN);
-            UserDetails userDetails=jwtUserDetails.loadUserByUserRole(userRole.get());
+            Optional<String> userStatus = jwtTokenManager.getStatusFromToken(token);
+            if (userStatus.isEmpty())
+                throw new AdminServiceException(EErrorType.INVALID_TOKEN);
+            UserDetails userDetails=jwtUserDetails.loadUserByRoleAndStatus(userRole.get(), userStatus.get());
             if (Objects.isNull(userDetails))
                 throw new AdminServiceException(EErrorType.INVALID_TOKEN);
+            if (!userDetails.isAccountNonLocked())
+                throw new AdminServiceException(EErrorType.USER_NOT_ACTIVE);
             UsernamePasswordAuthenticationToken authenticationToken=
                     new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
