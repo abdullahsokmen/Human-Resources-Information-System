@@ -11,7 +11,7 @@ public class EndPoints {
     public static final String API = "/api";
 
 
-    public static final String ADVANCEPAYMENT = "/advancepaymen";
+    public static final String ADVANCEPAYMENT = "/advancepayment";
     public static final String DAYOFF = "/dayoff";
     public static final String EXPENDITURE = "/expenditure";
     public static final String MAIL = "/mail";
