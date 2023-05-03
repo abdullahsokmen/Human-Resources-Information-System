@@ -26,6 +26,4 @@ public class AdvancePaymentController {
     public ResponseEntity<Boolean>confirmAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.confirmAdvancePayment(id));
     }
-
-
 }
