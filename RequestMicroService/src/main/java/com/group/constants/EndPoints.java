@@ -21,14 +21,17 @@ public class EndPoints {
     public static final String DELETEPERSONAL = "/deletepersonal";
     public static final String SAVE = "/save";
     public static final String SAVEADVANCEPAYMENT = "/saveadvancepayment";
+    public static final String SAVEEXPENDITURE = "/saveexpenditure";
 
     public static final String UPDATE = "/update";
     public static final String ACCEPT = "/accept";
     public static final String DECLINE = "/accept";
     public static final String UPDATEADVANCEPAYMENT = "/updateadvancepayment";
+    public static final String UPDATEEXPENDITURE = "/updateexpenditure";
     public static final String UPDATEPASSWORD = "/updatepassword";
     public static final String DELETE = "/delete";
     public static final String DELETEADVANCEPAYMENT = "/deleteadvancepayment";
+    public static final String DELETEEXPENDITURE = "/deleteexpenditure";
     public static final String HARDDELETE = "/harddelete";
     public static final String FINDALL = "/getall";
     public static final String GETALLDETAILS = "/getalldetails";
@@ -43,7 +46,9 @@ public class EndPoints {
 
     public static final String ACTIVATESTATUS ="/activatestatus";
     public static final String CONFIRMADVANCEPAYMENT ="/confirmadvancepayment";
+    public static final String CONFIRMEXPENDITURE ="/confirmexpenditure";
     public static final String DECLINEADVANCEPAYMENT ="/declineadvancepayment";
+    public static final String DECLINEEXPENDITURE ="/declineexpenditure";
 
 
 }
