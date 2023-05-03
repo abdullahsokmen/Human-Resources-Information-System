@@ -28,6 +28,7 @@ public class EndPoints {
     public static final String UPDATEADVANCEPAYMENT = "/updateadvancepayment";
     public static final String UPDATEPASSWORD = "/updatepassword";
     public static final String DELETE = "/delete";
+    public static final String DELETEADVANCEPAYMENT = "/deleteadvancepayment";
     public static final String HARDDELETE = "/harddelete";
     public static final String FINDALL = "/getall";
     public static final String GETALLDETAILS = "/getalldetails";
@@ -42,6 +43,7 @@ public class EndPoints {
 
     public static final String ACTIVATESTATUS ="/activatestatus";
     public static final String CONFIRMADVANCEPAYMENT ="/confirmadvancepayment";
+    public static final String DECLINEADVANCEPAYMENT ="/declineadvancepayment";
 
 
 }

@@ -1,19 +1,20 @@
-package com.group.dto.Advancepaymentdto;
+package com.group.dto.Advancepaymentdto.request;
 
 import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EAdvancePaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateAdvancePaymentRequestDto {
-    private String currency;
-    private Double amount;
+public class UpdateAdvancePaymentRequestDto {
+    private Long id;
     private String advanceDetails;
-    private String advancePaymentType;
+    private String  currency;
+    private Double amount;
 }
