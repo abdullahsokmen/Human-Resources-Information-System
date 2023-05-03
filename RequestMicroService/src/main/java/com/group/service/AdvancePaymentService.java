@@ -3,31 +3,44 @@ package com.group.service;
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
 import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
+import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
+import com.group.manager.IPersonalManager;
 import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymenRepository;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
+import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     private final IAdvancePaymenRepository advancePaymenRepository;
+    private final IPersonalManager personalManager;
 
 
-    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository) {
+    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository, IPersonalManager personalManager) {
         super(advancePaymenRepository);
         this.advancePaymenRepository = advancePaymenRepository;
+        this.personalManager = personalManager;
     }
 
     public Boolean requestAdvancePayment(CreateAdvancePaymentRequestDto dto) {
+        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
+        if (Objects.isNull(personalDto))
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
+        if (dto.getAmount()>=personalDto.getSalary()*3)
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
         AdvancePayment advancePayment= IAdvancePaymentMapper.INSTANCE.toAdvancePayment(dto);
+        advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
+        advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);
         return true;
     }
@@ -75,7 +88,13 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.INVALID_PARAMETER);
+        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(advancePayment.get().getPersonalId()).getBody();
         AdvancePaymentResponseDto allDetails=IAdvancePaymentMapper.INSTANCE.fromAdvancePayment(advancePayment.get());
+        allDetails.setCurrency(advancePayment.get().getCurrency().name());
+        allDetails.setAdvancePaymentType(advancePayment.get().getAdvancePaymentType().name());
+        allDetails.setStatus(advancePayment.get().getStatus().name());
+        allDetails.setName(personalDto.getName());
+        allDetails.setLastname(personalDto.getLastname());
         return allDetails;
     }
 }

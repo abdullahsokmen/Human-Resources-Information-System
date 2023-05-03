@@ -36,6 +36,7 @@ public class Personal extends BaseEntity{
     private String phone;
     private String companyId;
     private Long authId;
+    private Double salary;
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status = EStatus.ACTIVE;

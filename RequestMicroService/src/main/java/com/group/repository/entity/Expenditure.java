@@ -34,4 +34,5 @@ public class Expenditure extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Currency currency;
     private String expendDetails;
+    private Long PersonalId;
 }
