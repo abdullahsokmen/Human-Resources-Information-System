@@ -36,6 +36,7 @@ public class JwtTokenManager {
         return true;
     }
 
+    // no usages
     public Optional<String >getIdFromToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(secretKey);
