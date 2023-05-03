@@ -1,6 +1,8 @@
 package com.group.mapper;
 
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
+import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import com.group.repository.entity.enums.Currency;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T12:41:27+0300",
+    date = "2023-05-03T16:47:29+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -60,5 +62,46 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
         expenditureResponseDto.expendDetails( expenditure.getExpendDetails() );
 
         return expenditureResponseDto.build();
+    }
+
+    @Override
+    public CreateExpenditureRequestElasticDto fromExpenditureElastic(Expenditure expenditure) {
+        if ( expenditure == null ) {
+            return null;
+        }
+
+        CreateExpenditureRequestElasticDto.CreateExpenditureRequestElasticDtoBuilder createExpenditureRequestElasticDto = CreateExpenditureRequestElasticDto.builder();
+
+        if ( expenditure.getExpenditureType() != null ) {
+            createExpenditureRequestElasticDto.expenditureType( expenditure.getExpenditureType().name() );
+        }
+        createExpenditureRequestElasticDto.amount( expenditure.getAmount() );
+        if ( expenditure.getCurrency() != null ) {
+            createExpenditureRequestElasticDto.currency( expenditure.getCurrency().name() );
+        }
+        createExpenditureRequestElasticDto.expendDetails( expenditure.getExpendDetails() );
+
+        return createExpenditureRequestElasticDto.build();
+    }
+
+    @Override
+    public UpdateExpenditureRequestElasticDto fromExpenditureElasticUpdate(Expenditure expenditure) {
+        if ( expenditure == null ) {
+            return null;
+        }
+
+        UpdateExpenditureRequestElasticDto.UpdateExpenditureRequestElasticDtoBuilder updateExpenditureRequestElasticDto = UpdateExpenditureRequestElasticDto.builder();
+
+        updateExpenditureRequestElasticDto.id( expenditure.getId() );
+        if ( expenditure.getExpenditureType() != null ) {
+            updateExpenditureRequestElasticDto.expenditureType( expenditure.getExpenditureType().name() );
+        }
+        updateExpenditureRequestElasticDto.amount( expenditure.getAmount() );
+        if ( expenditure.getCurrency() != null ) {
+            updateExpenditureRequestElasticDto.currency( expenditure.getCurrency().name() );
+        }
+        updateExpenditureRequestElasticDto.expendDetails( expenditure.getExpendDetails() );
+
+        return updateExpenditureRequestElasticDto.build();
     }
 }

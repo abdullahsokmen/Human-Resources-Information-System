@@ -1,6 +1,8 @@
 package com.group.mapper;
 
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.repository.entity.AdvancePayment;
 import org.mapstruct.Mapper;
@@ -13,4 +15,7 @@ public interface IAdvancePaymentMapper {
 
     AdvancePayment toAdvancePayment(final CreateAdvancePaymentRequestDto dto);
     AdvancePaymentResponseDto fromAdvancePayment(final AdvancePayment advancePayment);
+
+    CreateAdvancePaymentRequestElasticDto fromAdvancePaymentElastic(final AdvancePayment advancePayment);
+    UpdateAdvancePaymentRequestElasticDto fromAdvancePaymentElasticUpdate(final AdvancePayment advancePayment);
 }
