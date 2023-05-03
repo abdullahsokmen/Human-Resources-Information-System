@@ -27,6 +27,7 @@ public class AdvancePaymentController {
     public ResponseEntity<Boolean>confirmAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.confirmAdvancePayment(id));
     }
+
     @DeleteMapping(DELETEADVANCEPAYMENT)
     public ResponseEntity<Boolean>deleteAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.deletePayment(id));
@@ -39,6 +40,8 @@ public class AdvancePaymentController {
     public ResponseEntity<AdvancePaymentResponseDto>getDetailsOfAdvancePaymentDto(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.getDetails(id));
     }
+
+
 
 
 }

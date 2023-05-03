@@ -40,11 +40,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Optional<String> userStatus = jwtTokenManager.getStatusFromToken(token);
             if (userRole.isEmpty())
                 throw new CompanyAdminException(EErrorType.INVALID_TOKEN);
-            UserDetails userDetails=jwtUserDetails.loadUserByRoleAndStatus(userRole.get(), userStatus.get());
+            if (!userRole.get().equals("ACTIVE"))
+                throw new CompanyAdminException(EErrorType.USER_NOT_ACTIVE);
+            UserDetails userDetails=jwtUserDetails.loadUserByRole(userRole.get());
             if (Objects.isNull(userDetails))
                 throw new CompanyAdminException(EErrorType.INVALID_TOKEN);
-            if (!userDetails.isAccountNonLocked())
-                throw new CompanyAdminException(EErrorType.USER_NOT_ACTIVE);
             UsernamePasswordAuthenticationToken authenticationToken=
                     new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
