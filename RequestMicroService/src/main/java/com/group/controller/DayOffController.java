@@ -20,36 +20,33 @@ public class DayOffController {
     private final DayOffService dayOffService;
 
 
-    @PostMapping(SAVE+DAYOFF)
+    @PostMapping(SAVE)
     public ResponseEntity<Boolean> requestDayOff(@RequestBody DayOffSaveRequestDto dto){
         return ResponseEntity.ok(dayOffService.requestDayOff(dto));
     }
 
-    @PostMapping(DELETE+DAYOFF)
+    @PostMapping(DELETE)
     public ResponseEntity<Boolean> deleteDayOff(@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.deleteDayOff(id));
     }
 
-    @PostMapping(UPDATE+DAYOFF)
+    @PostMapping(UPDATE)
     public ResponseEntity<Boolean> updateDayOff(@RequestBody DayOffUpdateRequestDto dto){
         return ResponseEntity.ok(dayOffService.updateDayOff(dto));
     }
-    @GetMapping(GETALLDETAILS+DAYOFF)
+    @GetMapping(GETALLDETAILS)
     public ResponseEntity<DayOffResponseDto> getDayOffDetails (@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.getDayOffDetails(id));
     }
 
-    @PostMapping(ACCEPT+DAYOFF)
+    @PostMapping(ACCEPT)
     public ResponseEntity<Boolean> acceptDayOffRequest(@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.acceptDayOffRequest(id));
     }
-    @PostMapping(DECLINE+DAYOFF)
+    @PostMapping(DECLINE)
     public ResponseEntity<Boolean> declineDayOffRequest(@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.declineDayOffRequest(id));
     }
 
-    @GetMapping(FINDALL+DAYOFF)
-    public ResponseEntity<List<DayOffResponseDto>> getAllDayOffDetails(){
-        return ResponseEntity.ok(dayOffService.getAllDayOffDetails());
-    }
+
 }

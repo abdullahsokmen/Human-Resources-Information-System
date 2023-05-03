@@ -5,6 +5,7 @@ import com.group.dto.request.PersonalUpdateRequestDto;
 import com.group.dto.request.ResetPasswordRequestDto;
 import com.group.dto.request.UpdatePersonalPasswordRequestDto;
 import com.group.dto.response.GetAllDetailsResponseDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -79,6 +80,10 @@ public class PersonalController {
     public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequestDto dto){
         personalService.resetPassword(dto);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping(PERSONALINFO)
+    public ResponseEntity<PersonalInfoResponseDto>getPersonalInfo(@RequestParam Long id){
+        return ResponseEntity.ok(personalService.personalInfo(id));
     }
 
 }

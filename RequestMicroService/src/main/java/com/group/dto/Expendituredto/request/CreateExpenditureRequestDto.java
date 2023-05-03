@@ -15,4 +15,5 @@ public class CreateExpenditureRequestDto {
     private Double amount;
     private String currency;
     private String expendDetails;
+    private Long PersonalId;
 }

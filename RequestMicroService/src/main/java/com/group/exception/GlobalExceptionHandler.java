@@ -29,8 +29,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(createErrorMessage(errorType,exception),errorType.getHttpStatus());
     }*/
 
-    @ExceptionHandler(RequestServiceException.class)
-    public ResponseEntity<ErrorMessage> handleManagerException(RequestServiceException ex){
+
 
     @ExceptionHandler(RequestException.class)
     public ResponseEntity<ErrorMessage> handleManagerException(RequestException ex){
