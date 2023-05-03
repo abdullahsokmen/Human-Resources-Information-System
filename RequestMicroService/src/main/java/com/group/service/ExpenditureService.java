@@ -6,6 +6,7 @@ import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
+import com.group.manager.IElasticManager;
 import com.group.manager.IPersonalManager;
 import com.group.mapper.IExpenditureDayOffMapper;
 import com.group.repository.IExpenditureRepository;
@@ -24,11 +25,15 @@ import java.util.Optional;
 public class ExpenditureService extends ServiceManager<Expenditure,Long> {
    private final IExpenditureRepository expenditureRepository;
    private final IPersonalManager personalManager;
+   private final IExpenditureDayOffMapper expenditureDayOffMapper;
+   private final IElasticManager elasticManager;
 
-    public ExpenditureService(IExpenditureRepository expenditureRepository, IPersonalManager personalManager) {
+    public ExpenditureService(IExpenditureRepository expenditureRepository, IPersonalManager personalManager, IExpenditureDayOffMapper expenditureDayOffMapper, IElasticManager elasticManager) {
         super(expenditureRepository);
         this.expenditureRepository = expenditureRepository;
         this.personalManager = personalManager;
+        this.expenditureDayOffMapper = expenditureDayOffMapper;
+        this.elasticManager = elasticManager;
     }
 
     public Boolean createExpenditure(CreateExpenditureRequestDto dto) {
@@ -40,6 +45,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         expenditure.setPersonalLastName(personalDto.getLastname());
         expenditure.setCurrency(Currency.valueOf(dto.getCurrency()));
         save(expenditure);
+        elasticManager.saveExpenditure(expenditureDayOffMapper.fromExpenditureElastic(expenditure));
         return true;
     }
 
@@ -48,6 +54,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         if (expenditure.isEmpty())
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         delete(expenditure.get());
+        elasticManager.deleteExpenditure(id);
         return true;
     }
 
@@ -61,6 +68,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
         toUpdate.setExpendDetails(dto.getExpendDetails());
         update(toUpdate);
+        elasticManager.updateExpenditure(expenditureDayOffMapper.fromExpenditureElasticUpdate(toUpdate));
         return true;
     }
 

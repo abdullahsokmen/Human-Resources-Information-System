@@ -6,6 +6,7 @@ import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
+import com.group.manager.IElasticManager;
 import com.group.manager.IPersonalManager;
 import com.group.mapper.IDayOffMapper;
 import com.group.repository.IDayOffRepository;
@@ -16,7 +17,6 @@ import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,11 +24,16 @@ import java.util.Optional;
 public class DayOffService extends ServiceManager<DayOff,Long> {
     private final IDayOffRepository dayOffRepository;
     private final IPersonalManager personalManager;
+    private final IElasticManager manager;
+    private final IDayOffMapper dayOffMapper;
 
-    public DayOffService(IDayOffRepository dayOffRepository, IPersonalManager personalManager) {
+    public DayOffService(IDayOffRepository dayOffRepository, IPersonalManager personalManager, IElasticManager manager, IDayOffMapper dayOffMapper) {
         super(dayOffRepository);
         this.dayOffRepository = dayOffRepository;
         this.personalManager = personalManager;
+
+        this.manager = manager;
+        this.dayOffMapper = dayOffMapper;
     }
 
     public Boolean requestDayOff(DayOffSaveRequestDto dto) {
@@ -40,12 +45,14 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         dayOff.setPersonalLastName(personalDto.getLastname());
         dayOff.setType(EDayOffType.valueOf(dto.getType()));
         save(dayOff);
+        manager.requestDayOff(dayOffMapper.fromDayOffElastic(dayOff));
         return true;
     }
 
     public Boolean deleteDayOff(Long id) {
         Optional<DayOff> dayOff = findById(id);
         delete(dayOff.get());
+        manager.deleteAdvancePayment(id);
         return true;
     }
 
@@ -58,6 +65,7 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         toUpdate.setEndDate(dto.getEndDate());
         toUpdate.setSpan(dto.getSpan());
         update(toUpdate);
+        manager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
 
