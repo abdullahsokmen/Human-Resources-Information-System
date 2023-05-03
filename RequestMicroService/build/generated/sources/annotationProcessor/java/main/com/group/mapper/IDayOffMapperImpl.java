@@ -1,7 +1,9 @@
 package com.group.mapper;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestDto;
+import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestDto;
+import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
 import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.repository.entity.DayOff;
 import com.group.repository.entity.enums.EDayOffType;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T12:41:27+0300",
+    date = "2023-05-03T16:47:28+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -77,5 +79,45 @@ public class IDayOffMapperImpl implements IDayOffMapper {
         dayOffResponseDto.span( dayOff.getSpan() );
 
         return dayOffResponseDto.build();
+    }
+
+    @Override
+    public DayOffSaveRequestElasticDto fromDayOffElastic(DayOff dayOff) {
+        if ( dayOff == null ) {
+            return null;
+        }
+
+        DayOffSaveRequestElasticDto.DayOffSaveRequestElasticDtoBuilder dayOffSaveRequestElasticDto = DayOffSaveRequestElasticDto.builder();
+
+        if ( dayOff.getType() != null ) {
+            dayOffSaveRequestElasticDto.type( dayOff.getType().name() );
+        }
+        dayOffSaveRequestElasticDto.startingDate( dayOff.getStartingDate() );
+        dayOffSaveRequestElasticDto.endDate( dayOff.getEndDate() );
+        dayOffSaveRequestElasticDto.span( dayOff.getSpan() );
+
+        return dayOffSaveRequestElasticDto.build();
+    }
+
+    @Override
+    public DayOffUpdateRequestElasticDto fromDayOffElasticUpdate(DayOff dayOff) {
+        if ( dayOff == null ) {
+            return null;
+        }
+
+        DayOffUpdateRequestElasticDto.DayOffUpdateRequestElasticDtoBuilder dayOffUpdateRequestElasticDto = DayOffUpdateRequestElasticDto.builder();
+
+        dayOffUpdateRequestElasticDto.id( dayOff.getId() );
+        if ( dayOff.getType() != null ) {
+            dayOffUpdateRequestElasticDto.type( dayOff.getType().name() );
+        }
+        dayOffUpdateRequestElasticDto.startingDate( dayOff.getStartingDate() );
+        dayOffUpdateRequestElasticDto.endDate( dayOff.getEndDate() );
+        dayOffUpdateRequestElasticDto.span( dayOff.getSpan() );
+        if ( dayOff.getStatus() != null ) {
+            dayOffUpdateRequestElasticDto.status( dayOff.getStatus().name() );
+        }
+
+        return dayOffUpdateRequestElasticDto.build();
     }
 }
