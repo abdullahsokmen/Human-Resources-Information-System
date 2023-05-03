@@ -2,10 +2,13 @@ package com.group.controller;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
+import com.group.repository.entity.DayOff;
 import com.group.service.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.group.constants.EndPoints.*;
 
@@ -18,6 +21,10 @@ public class DayOffController {
     public ResponseEntity<Void> requestDayOff(@RequestBody DayOffSaveRequestElasticDto dto){
         dayOffService.requestDayOff(dto);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping()
+    public ResponseEntity<Iterable<DayOff>>testMethod(){
+        return ResponseEntity.ok(dayOffService.findAll());
     }
 
     @PostMapping(DELETE)

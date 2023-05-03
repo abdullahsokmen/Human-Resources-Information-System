@@ -8,7 +8,6 @@ import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymentRepository;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     }
 
     public void updateAdvancePayment(UpdateAdvancePaymentRequestElasticDto dto) {
-        Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentId(dto.getPaymentRequestId());
+        Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentRequestId(dto.getPaymentRequestId());
         if(advancePayment.isEmpty())
             throw new ElasticServiceException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
         AdvancePayment toUpdate = advancePayment.get();
@@ -43,7 +42,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     }
 
     public void deletePayment(Long id) {
-        Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentId(id);
+        Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentRequestId(id);
         if(advancePayment.isEmpty())
             throw new ElasticServiceException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
         delete(advancePayment.get());
