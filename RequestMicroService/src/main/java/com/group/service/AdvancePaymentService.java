@@ -1,7 +1,8 @@
 package com.group.service;
 
-import com.group.dto.Advancepaymentdto.CreateAdvancePaymentRequestDto;
-import com.group.dto.Advancepaymentdto.UpdateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
 import com.group.mapper.IAdvancePaymentMapper;
@@ -51,5 +52,30 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         advancePayment.get().setConfirmDate(new Date());
         update(advancePayment.get());
         return true;
+    }
+
+    public Boolean deletePayment(Long id) {
+        Optional<AdvancePayment>advancePayment=findById(id);
+        if (advancePayment.isEmpty())
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
+        delete(advancePayment.get());
+        return true;
+    }
+
+    public Boolean declineAdvancePayment(Long id) {
+        Optional<AdvancePayment>advancePayment=findById(id);
+        if (advancePayment.isEmpty())
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
+        advancePayment.get().setStatus(EStatus.DECLINED);
+        update(advancePayment.get());
+        return true;
+    }
+
+    public AdvancePaymentResponseDto getDetails(Long id) {
+        Optional<AdvancePayment>advancePayment=findById(id);
+        if (advancePayment.isEmpty())
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
+        AdvancePaymentResponseDto allDetails=IAdvancePaymentMapper.INSTANCE.fromAdvancePayment(advancePayment.get());
+        return allDetails;
     }
 }

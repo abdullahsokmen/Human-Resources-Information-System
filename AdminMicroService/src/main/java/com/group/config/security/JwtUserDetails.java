@@ -22,15 +22,14 @@ public class JwtUserDetails implements UserDetailsService {
     }
 
 
-    public UserDetails loadUserByRoleAndStatus(String role, String status) throws UsernameNotFoundException {
+    public UserDetails loadUserByRole(String role) throws UsernameNotFoundException {
         List<GrantedAuthority> authorityList=new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(role));
-        boolean userStatus = status.equals("ACTIVE") ? false : true;
         return User.builder()
                 .username(role)
                 .password("")
                 .accountLocked(false)
-                .accountExpired(userStatus)
+                .accountExpired(false)
                 .authorities(authorityList)
                 .build();
     }
