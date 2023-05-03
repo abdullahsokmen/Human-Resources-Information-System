@@ -6,6 +6,7 @@ import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
+import com.group.manager.IElasticManager;
 import com.group.manager.IPersonalManager;
 import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymenRepository;
@@ -24,12 +25,16 @@ import java.util.Optional;
 public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     private final IAdvancePaymenRepository advancePaymenRepository;
     private final IPersonalManager personalManager;
+    private final IElasticManager elasticManager;
+    private final IAdvancePaymentMapper advancePaymentMapper;
 
 
-    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository, IPersonalManager personalManager) {
+    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository, IPersonalManager personalManager, IElasticManager elasticManager, IAdvancePaymentMapper advancePaymentMapper) {
         super(advancePaymenRepository);
         this.advancePaymenRepository = advancePaymenRepository;
         this.personalManager = personalManager;
+        this.elasticManager = elasticManager;
+        this.advancePaymentMapper = advancePaymentMapper;
     }
 
     public Boolean requestAdvancePayment(CreateAdvancePaymentRequestDto dto) {
@@ -44,6 +49,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
         advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);
+        elasticManager.requestAdvancePayment(advancePaymentMapper.fromAdvancePaymentElastic(advancePayment));
         return true;
     }
 
@@ -56,6 +62,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
         update(toUpdate);
+        elasticManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(toUpdate));
         return true;
     }
 
@@ -74,6 +81,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         delete(advancePayment.get());
+        elasticManager.deleteAdvancePayment(id);
         return true;
     }
 
