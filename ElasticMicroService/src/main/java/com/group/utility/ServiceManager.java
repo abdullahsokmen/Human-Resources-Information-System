@@ -1,35 +1,34 @@
 package com.group.utility;
 
-
 import com.group.repository.entity.BaseEntity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
+
+import java.util.List;
 import java.util.Optional;
 
-public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID> {
 
-    private final ElasticsearchRepository<T, ID> repository;
+@RequiredArgsConstructor
+@Getter
+public class ServiceManager<T extends BaseEntity,ID> implements IService<T,ID> {
 
-    public ServiceManager(ElasticsearchRepository<T, ID> repository) {
-        this.repository = repository;
-    }
-
+    private final ElasticsearchRepository<T,ID> repository;
     @Override
     public T save(T t) {
-        long time = System.currentTimeMillis();
-        t.setIsactive(true);
-        t.setCreateat(time);
-        t.setUpdateat(time);
+        t.setCreateat(System.currentTimeMillis());
+        t.setUpdateat(System.currentTimeMillis());
+
         return repository.save(t);
     }
 
     @Override
     public Iterable<T> saveAll(Iterable<T> t) {
-        t.forEach(x -> {
-            long time = System.currentTimeMillis();
-            x.setCreateat(time);
-            x.setUpdateat(time);
-            x.setIsactive(true);
+        t.forEach(x->{
+            x.setCreateat(System.currentTimeMillis());
+            x.setUpdateat(System.currentTimeMillis());
+
         });
         return repository.saveAll(t);
     }
@@ -51,12 +50,13 @@ public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID>
     }
 
     @Override
+    public Iterable<T> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public Optional<T> findById(ID id) {
         return repository.findById(id);
     }
 
-    @Override
-    public Iterable<T> findAll() {
-        return repository.findAll();
-    }
 }

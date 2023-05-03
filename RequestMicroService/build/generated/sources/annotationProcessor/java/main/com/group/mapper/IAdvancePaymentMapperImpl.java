@@ -1,6 +1,8 @@
 package com.group.mapper;
 
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T12:41:27+0300",
+    date = "2023-05-03T16:47:29+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -60,5 +62,42 @@ public class IAdvancePaymentMapperImpl implements IAdvancePaymentMapper {
         }
 
         return advancePaymentResponseDto.build();
+    }
+
+    @Override
+    public CreateAdvancePaymentRequestElasticDto fromAdvancePaymentElastic(AdvancePayment advancePayment) {
+        if ( advancePayment == null ) {
+            return null;
+        }
+
+        CreateAdvancePaymentRequestElasticDto.CreateAdvancePaymentRequestElasticDtoBuilder createAdvancePaymentRequestElasticDto = CreateAdvancePaymentRequestElasticDto.builder();
+
+        if ( advancePayment.getCurrency() != null ) {
+            createAdvancePaymentRequestElasticDto.currency( advancePayment.getCurrency().name() );
+        }
+        createAdvancePaymentRequestElasticDto.amount( advancePayment.getAmount() );
+        createAdvancePaymentRequestElasticDto.advanceDetails( advancePayment.getAdvanceDetails() );
+        if ( advancePayment.getAdvancePaymentType() != null ) {
+            createAdvancePaymentRequestElasticDto.advancePaymentType( advancePayment.getAdvancePaymentType().name() );
+        }
+
+        return createAdvancePaymentRequestElasticDto.build();
+    }
+
+    @Override
+    public UpdateAdvancePaymentRequestElasticDto fromAdvancePaymentElasticUpdate(AdvancePayment advancePayment) {
+        if ( advancePayment == null ) {
+            return null;
+        }
+
+        UpdateAdvancePaymentRequestElasticDto.UpdateAdvancePaymentRequestElasticDtoBuilder updateAdvancePaymentRequestElasticDto = UpdateAdvancePaymentRequestElasticDto.builder();
+
+        updateAdvancePaymentRequestElasticDto.advanceDetails( advancePayment.getAdvanceDetails() );
+        if ( advancePayment.getCurrency() != null ) {
+            updateAdvancePaymentRequestElasticDto.currency( advancePayment.getCurrency().name() );
+        }
+        updateAdvancePaymentRequestElasticDto.amount( advancePayment.getAmount() );
+
+        return updateAdvancePaymentRequestElasticDto.build();
     }
 }
