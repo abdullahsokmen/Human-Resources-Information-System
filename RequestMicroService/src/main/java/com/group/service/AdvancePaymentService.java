@@ -9,6 +9,7 @@ import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymenRepository;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
+import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
 
     public Boolean requestAdvancePayment(CreateAdvancePaymentRequestDto dto) {
         AdvancePayment advancePayment= IAdvancePaymentMapper.INSTANCE.toAdvancePayment(dto);
+        advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
+        advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);
         return true;
     }
@@ -76,6 +79,9 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         AdvancePaymentResponseDto allDetails=IAdvancePaymentMapper.INSTANCE.fromAdvancePayment(advancePayment.get());
+        allDetails.setCurrency(advancePayment.get().getCurrency().name());
+        allDetails.setAdvancePaymentType(advancePayment.get().getAdvancePaymentType().name());
+        allDetails.setStatus(advancePayment.get().getStatus().name());
         return allDetails;
     }
 }
