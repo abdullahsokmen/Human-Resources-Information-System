@@ -21,6 +21,8 @@ public class DayOff extends BaseEntity{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+        private String personalName;
+        private String personalLastName;
         @Enumerated(EnumType.STRING)
         private EDayOffType type;
         private Date startingDate;

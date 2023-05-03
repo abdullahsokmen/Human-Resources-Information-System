@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,12 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
     }
 
     public Boolean requestDayOff(DayOffSaveRequestDto dto) {
+        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
+        if (Objects.isNull(personalDto))
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
         DayOff dayOff = IDayOffMapper.INSTANCE.toDayOff(dto);
+        dayOff.setPersonalName(personalDto.getName());
+        dayOff.setPersonalLastName(personalDto.getLastname());
         dayOff.setType(EDayOffType.valueOf(dto.getType()));
         save(dayOff);
         return true;

@@ -39,6 +39,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         if (dto.getAmount()>=personalDto.getSalary()*3)
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         AdvancePayment advancePayment= IAdvancePaymentMapper.INSTANCE.toAdvancePayment(dto);
+        advancePayment.setPersonalName(personalDto.getName());
+        advancePayment.setPersonalLastName(personalDto.getLastname());
         advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
         advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);

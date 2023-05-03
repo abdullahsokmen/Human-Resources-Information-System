@@ -17,6 +17,7 @@ import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,12 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     }
 
     public Boolean createExpenditure(CreateExpenditureRequestDto dto) {
+        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
+        if (Objects.isNull(personalDto))
+            throw new RequestException(EErrorType.INVALID_PARAMETER);
         Expenditure expenditure= IExpenditureDayOffMapper.INSTANCE.toExpenditure(dto);
+        expenditure.setPersonalName(personalDto.getName());
+        expenditure.setPersonalLastName(personalDto.getLastname());
         expenditure.setCurrency(Currency.valueOf(dto.getCurrency()));
         save(expenditure);
         return true;

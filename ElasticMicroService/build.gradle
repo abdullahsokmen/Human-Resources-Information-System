@@ -4,7 +4,9 @@ buildscript {
     }
 }
 dependencies{
-    implementation libs.springBootStarterSecurity
+  //  implementation libs.springBootStarterSecurity
     implementation libs.springBootStarterElasticsearch
     implementation libs.jwt
+    implementation libs.springCloudOpenFeign
+
 }

@@ -12,6 +12,9 @@ public class EndPoints {
     public static final String API = "/api";
 
     public static final String ELASTIC = "/elastic";
+    public static final String ADVANCEPAYMENT = "/advancepayment";
+    public static final String DAYOFF = "/dayoff";
+    public static final String EXPENDITURE = "/expenditure";
     public static final String REQUEST = "/request";
     public static final String USER = "/user";
     public static final String SATIS = "/satis";
