@@ -19,5 +19,8 @@ public class DayOffResponseDto {
     private Date startingDate;
     private Date endDate;
     private Double span;
+    private Long PersonalId;
+    private String name;
+    private String lastname;
 
 }

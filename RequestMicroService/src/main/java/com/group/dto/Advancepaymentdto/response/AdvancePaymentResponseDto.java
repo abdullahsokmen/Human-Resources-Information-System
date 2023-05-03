@@ -23,4 +23,7 @@ public class AdvancePaymentResponseDto {
     private String advanceDetails;
     private String advancePaymentType;
     private String status;
+    private Long PersonalId;
+    private String name;
+    private String lastname;
 }

@@ -3,6 +3,7 @@ package com.group.service;
 
 import com.group.dto.request.*;
 import com.group.dto.response.GetAllDetailsResponseDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import com.group.dto.response.PersonalMinorDetailsResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.PersonalException;
@@ -109,6 +110,7 @@ public class PersonalService extends ServiceManager<Personal, Long> {
         toUpdate.setEmail(dto.getEmail());
         toUpdate.setPhone(dto.getPhone());
         toUpdate.setAddress(newAddress);
+        toUpdate.setSalary(dto.getSalary());
         update(toUpdate);
         authManager.updateMail(UpdateMailRequestDto.builder().id(toUpdate.getAuthId()).email(toUpdate.getEmail()).build());
         return true;
@@ -175,5 +177,16 @@ public class PersonalService extends ServiceManager<Personal, Long> {
             throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
         personal.get().setPassword(passwordEncoder.encode(dto.getPassword()));
         update(personal.get());
+    }
+
+    public PersonalInfoResponseDto personalInfo(Long id) {
+        Optional<Personal>personal=findById(id);
+        if (personal.isEmpty())
+            throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
+        PersonalInfoResponseDto personalInfoResponseDto=IPersonalMapper.INSTANCE.fromPersonalInfo(personal.get());
+        personalInfoResponseDto.setSalary(personal.get().getSalary());
+        personalInfoResponseDto.setName(personal.get().getName());
+        personalInfoResponseDto.setLastname(personal.get().getLastname());
+        return personalInfoResponseDto;
     }
 }

@@ -40,4 +40,5 @@ public class PersonalSaveRequestDto {
     private String phone;
     private String companyId;
     private AddressCreateRequestDto address;
+    private Double salary;
 }
