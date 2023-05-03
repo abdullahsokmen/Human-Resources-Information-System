@@ -31,6 +31,7 @@ public class EndPoints {
     public static final String PASSWORD = "/password";
     public static final String MAIL = "/mail";
     public static final String FORGOT = "/forgot";
+    public static final String PERSONALINFO = "/personalinfo";
 
 
     public static final String ACTIVATESTATUS ="/activatestatus";

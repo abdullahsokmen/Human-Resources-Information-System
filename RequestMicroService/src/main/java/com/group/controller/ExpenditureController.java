@@ -16,27 +16,27 @@ import static com.group.constants.EndPoints.*;
 public class ExpenditureController {
     private final ExpenditureService expenditureService;
 
-    @PostMapping(SAVEEXPENDITURE)
+    @PostMapping(SAVE)
     public ResponseEntity<Boolean>saveExpenditure(@RequestBody CreateExpenditureRequestDto dto){
         return ResponseEntity.ok(expenditureService.createExpenditure(dto));
     }
-    @DeleteMapping(DELETEEXPENDITURE)
+    @DeleteMapping(DELETE)
     public ResponseEntity<Boolean>deleteExpenditure(@RequestParam Long id){
         return ResponseEntity.ok(expenditureService.deleteExpenditure(id));
     }
-    @PostMapping(UPDATEEXPENDITURE)
+    @PostMapping(UPDATE)
     public ResponseEntity<Boolean>updateExpenditure(@RequestBody UpdateExpenditureRequestDto dto){
         return ResponseEntity.ok(expenditureService.updateExpenditure(dto));
     }
-    @PostMapping(CONFIRMEXPENDITURE)
+    @PostMapping(CONFIRM)
     public ResponseEntity<Boolean>confirmExpenditure(@RequestParam Long id){
         return ResponseEntity.ok(expenditureService.confirmExpenditure(id));
     }
-    @PostMapping(DECLINEEXPENDITURE)
+    @PostMapping(DECLINE)
     public ResponseEntity<Boolean>declineExpenditure(@RequestParam Long id){
         return ResponseEntity.ok(expenditureService.declineExpenditure(id));
     }
-    @GetMapping(GETALLDETAILS+EXPENDITURE)
+    @GetMapping(GETALLDETAILS)
     public ResponseEntity<ExpenditureResponseDto>getAllDetailsOfExpenditure(@RequestParam Long id){
         return ResponseEntity.ok(expenditureService.getDetailsOfExpenditure(id));
     }

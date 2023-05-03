@@ -23,4 +23,7 @@ public class ExpenditureResponseDto {
     private Date confirmDate;
     private String currency;
     private String expendDetails;
+    private Long PersonalId;
+    private String name;
+    private String lastname;
 }

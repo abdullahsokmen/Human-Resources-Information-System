@@ -16,4 +16,5 @@ public class CreateAdvancePaymentRequestDto {
     private Double amount;
     private String advanceDetails;
     private String advancePaymentType;
+    private Long PersonalId;
 }

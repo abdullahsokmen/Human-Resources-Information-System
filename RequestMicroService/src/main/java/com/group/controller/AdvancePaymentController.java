@@ -15,28 +15,28 @@ import static com.group.constants.EndPoints.*;
 public class AdvancePaymentController {
     private final AdvancePaymentService advancePaymentService;
 
-    @PostMapping(SAVEADVANCEPAYMENT)
+    @PostMapping(SAVE)
     public ResponseEntity<Boolean>requestAdvancePayment(@RequestBody CreateAdvancePaymentRequestDto dto){
         return ResponseEntity.ok(advancePaymentService.requestAdvancePayment(dto));
     }
-    @PutMapping(UPDATEADVANCEPAYMENT)
+    @PutMapping(UPDATE)
     public ResponseEntity<Boolean>updateAdvancePayment(@RequestBody UpdateAdvancePaymentRequestDto dto){
         return ResponseEntity.ok(advancePaymentService.updateAdvancePayment(dto));
     }
-    @PostMapping(CONFIRMADVANCEPAYMENT)
+    @PostMapping(CONFIRM)
     public ResponseEntity<Boolean>confirmAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.confirmAdvancePayment(id));
     }
 
-    @DeleteMapping(DELETEADVANCEPAYMENT)
+    @DeleteMapping(DELETE)
     public ResponseEntity<Boolean>deleteAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.deletePayment(id));
     }
-    @PostMapping(DECLINEADVANCEPAYMENT)
+    @PostMapping(DECLINE)
     public ResponseEntity<Boolean>declineAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.declineAdvancePayment(id));
     }
-    @GetMapping(GETALLDETAILS+ADVANCEPAYMENT)
+    @GetMapping(GETALLDETAILS)
     public ResponseEntity<AdvancePaymentResponseDto>getDetailsOfAdvancePaymentDto(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.getDetails(id));
     }
