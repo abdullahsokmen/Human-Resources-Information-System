@@ -6,6 +6,7 @@ import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -17,6 +18,8 @@ public interface IExpenditureDayOffMapper {
 
     ExpenditureResponseDto fromExpenditure(final Expenditure expenditure);
 
+    @Mapping(source = "id",target = "expenditureRequestId")
     CreateExpenditureRequestElasticDto fromExpenditureElastic(final Expenditure expenditure);
+    @Mapping(source = "id",target = "expenditureRequestId")
     UpdateExpenditureRequestElasticDto fromExpenditureElasticUpdate(final Expenditure expenditure);
 }

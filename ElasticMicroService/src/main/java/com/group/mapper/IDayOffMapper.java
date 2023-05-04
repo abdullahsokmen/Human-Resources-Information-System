@@ -14,7 +14,6 @@ public interface IDayOffMapper {
     IDayOffMapper INSTANCE = Mappers.getMapper(IDayOffMapper.class);
 
     DayOff toDayOff(final DayOffSaveRequestElasticDto dto);
-    DayOff toDayOff(final DayOffUpdateRequestElasticDto dto);
 
     DayOffResponseDto fromDayOff(final DayOff dayOff);
 

@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class DayOffUpdateRequestElasticDto {
     private Long dayOffRequestId;
-    private Long id;
     private String type;
     private Date startingDate;
     private Date endDate;
