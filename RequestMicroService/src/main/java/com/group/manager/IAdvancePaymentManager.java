@@ -1,7 +1,7 @@
 package com.group.manager;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.UpdateAdvancePaymentRequestElasticDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

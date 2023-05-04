@@ -1,24 +1,21 @@
-package com.group.repository.entity;
+package com.group.dto.request;
+
 
 import com.group.repository.entity.enums.EDayOffType;
 import com.group.repository.entity.enums.EStatus;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Comparator;
 import java.util.Date;
 
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Document(indexName = "dayoff")
-public class DayOff extends BaseEntity {
-    @Id
-    private String id;
+public class DayOffSaveRequestElasticDto {
+
     private String personalName;
     private String personalLastName;
     private EDayOffType type;
@@ -30,6 +27,4 @@ public class DayOff extends BaseEntity {
     private EStatus status;
     private Long personalId;
     private Long dayOffRequestId;
-
-
 }

@@ -1,8 +1,8 @@
 package com.group.controller;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestDto;
-import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
+
+import com.group.dto.request.CreateExpenditureRequestDto;
+import com.group.dto.request.UpdateExpenditureRequestDto;
 import com.group.service.ExpenditureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +35,6 @@ public class ExpenditureController {
     @PostMapping(DECLINE)
     public ResponseEntity<Boolean>declineExpenditure(@RequestParam Long id){
         return ResponseEntity.ok(expenditureService.declineExpenditure(id));
-    }
-    @GetMapping(GETALLDETAILS)
-    public ResponseEntity<ExpenditureResponseDto>getAllDetailsOfExpenditure(@RequestParam Long id){
-        return ResponseEntity.ok(expenditureService.getDetailsOfExpenditure(id));
     }
 
 }

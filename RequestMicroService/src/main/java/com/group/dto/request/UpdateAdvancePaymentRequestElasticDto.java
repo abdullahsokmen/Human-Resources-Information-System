@@ -1,4 +1,4 @@
-package com.group.dto.Advancepaymentdto.request;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

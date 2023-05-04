@@ -2,6 +2,7 @@ package com.group.controller;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
+import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.repository.IDayOffRepository;
 import com.group.repository.entity.DayOff;
 import com.group.service.DayOffService;
@@ -18,16 +19,23 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(DAYOFF)
 public class DayOffController {
     private final DayOffService dayOffService;
-    private final IDayOffRepository dayOffRepository;
     @PostMapping(SAVE)
     public ResponseEntity<Void> requestDayOff(@RequestBody DayOffSaveRequestElasticDto dto){
         dayOffService.requestDayOff(dto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping()
-    public ResponseEntity<Iterable<DayOff>>testMethod(){
-        return ResponseEntity.ok(dayOffRepository.findAll());
+    @GetMapping(GETONE)
+    public ResponseEntity<DayOffResponseDto> getOneDayOff(@RequestParam Long dayOffRequestId){
+        return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
     }
+    @GetMapping(GETALL)
+    public ResponseEntity<List<DayOff>> getAllDayOff(){
+        return ResponseEntity.ok(dayOffService.getAllDayOff());
+    }
+//    @GetMapping(GETALL+BYPERSONALID)
+//    public ResponseEntity<Iterable<DayOffResponseDto>> getAllByPersonalId(@PathVariable Long personalId){
+//        return ResponseEntity.ok(dayOffService.getAllByPersonalId(personalId));
+//    }
 
     @PostMapping(DELETE)
     public ResponseEntity<Void> deleteDayOff(@RequestParam Long id){

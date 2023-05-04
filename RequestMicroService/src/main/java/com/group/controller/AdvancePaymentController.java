@@ -1,8 +1,7 @@
 package com.group.controller;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestDto;
-import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
+import com.group.dto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.request.UpdateAdvancePaymentRequestDto;
 import com.group.service.AdvancePaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,12 +35,5 @@ public class AdvancePaymentController {
     public ResponseEntity<Boolean>declineAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.declineAdvancePayment(id));
     }
-    @GetMapping(GETALLDETAILS)
-    public ResponseEntity<AdvancePaymentResponseDto>getDetailsOfAdvancePaymentDto(@RequestParam Long id){
-        return ResponseEntity.ok(advancePaymentService.getDetails(id));
-    }
-
-
-
 
 }
