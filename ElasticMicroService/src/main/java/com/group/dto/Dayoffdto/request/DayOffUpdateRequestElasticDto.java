@@ -15,6 +15,7 @@ public class DayOffUpdateRequestElasticDto {
     private Long dayOffRequestId;
     private String type;
     private Date startingDate;
+    private Date confirmDate;
     private Date endDate;
     private Double span;
     private String status;

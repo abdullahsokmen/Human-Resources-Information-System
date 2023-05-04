@@ -49,6 +49,7 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         toUpdate.setStartingDate(dto.getStartingDate());
         toUpdate.setEndDate(dto.getEndDate());
         toUpdate.setStatus(EStatus.valueOf(dto.getStatus()));
+        toUpdate.setConfirmDate(dto.getConfirmDate());
         update(toUpdate);
     }
 
