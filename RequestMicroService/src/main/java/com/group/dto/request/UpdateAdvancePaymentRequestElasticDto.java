@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,4 +16,6 @@ public class UpdateAdvancePaymentRequestElasticDto {
     private String advanceDetails;
     private String currency;
     private Double amount;
+    private String status;
+    private Date confirmDate;
 }

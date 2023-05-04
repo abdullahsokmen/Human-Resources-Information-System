@@ -1,9 +1,8 @@
 package com.group.controller;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.UpdateAdvancePaymentRequestElasticDto;
 import com.group.repository.entity.AdvancePayment;
-import com.group.repository.entity.Expenditure;
 import com.group.service.AdvancePaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
