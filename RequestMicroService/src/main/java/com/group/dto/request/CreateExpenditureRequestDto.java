@@ -1,7 +1,6 @@
-package com.group.dto.Expendituredto.request;
+package com.group.dto.request;
 
-import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.ExpenditureType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateExpenditureRequestDto {
-    private Long id;
+public class CreateExpenditureRequestDto {
     private String expenditureType;
     private Double amount;
     private String currency;
     private String expendDetails;
+    private Long PersonalId;
 }

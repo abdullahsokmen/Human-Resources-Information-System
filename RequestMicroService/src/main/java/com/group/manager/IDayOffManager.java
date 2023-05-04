@@ -1,7 +1,7 @@
 package com.group.manager;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.request.DayOffUpdateRequestElasticDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

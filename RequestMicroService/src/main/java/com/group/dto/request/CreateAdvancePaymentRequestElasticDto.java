@@ -1,7 +1,7 @@
-package com.group.dto.Dayoffdto.request;
+package com.group.dto.request;
 
-
-import com.group.repository.entity.enums.EDayOffType;
+import com.group.repository.entity.enums.Currency;
+import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.repository.entity.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,19 +12,20 @@ import java.util.Date;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class DayOffSaveRequestElasticDto {
+@NoArgsConstructor
+public class CreateAdvancePaymentRequestElasticDto {
 
     private String personalName;
     private String personalLastName;
-    private EDayOffType type;
-    private Date startingDate;
     private Date requestDate;
-    private Date endDate;
     private Date confirmDate;
-    private Double span;
+    private Currency currency;
+    private Double amount;
+    private String advanceDetails;
+    private EAdvancePaymentType advancePaymentType;
     private EStatus status;
     private Long personalId;
-    private Long dayOffRequestId;
+    private Long paymentRequestId;
+
 }

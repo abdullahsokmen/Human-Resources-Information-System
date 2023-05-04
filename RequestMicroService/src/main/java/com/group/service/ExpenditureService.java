@@ -1,9 +1,8 @@
 package com.group.service;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestDto;
-import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
-import com.group.dto.PersonalInfoResponseDto;
+import com.group.dto.request.CreateExpenditureRequestDto;
+import com.group.dto.request.UpdateExpenditureRequestDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
 import com.group.manager.IExpenditureManager;
@@ -93,17 +92,4 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         return true;
     }
 
-    public ExpenditureResponseDto getDetailsOfExpenditure(Long id) {
-        Optional<Expenditure>expenditure=findById(id);
-        if (expenditure.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
-        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(expenditure.get().getPersonalId()).getBody();
-        ExpenditureResponseDto expenditureDetails=IExpenditureDayOffMapper.INSTANCE.fromExpenditure(expenditure.get());
-        expenditureDetails.setStatus(expenditure.get().getStatus().name());
-        expenditureDetails.setExpenditureType(expenditure.get().getExpenditureType().name());
-        expenditureDetails.setCurrency(expenditure.get().getCurrency().name());
-        expenditureDetails.setName(personalDto.getName());
-        expenditureDetails.setLastname(personalDto.getLastname());
-        return expenditureDetails;
-    }
 }

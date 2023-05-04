@@ -1,4 +1,4 @@
-package com.group.dto.Expendituredto.request;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateExpenditureRequestElasticDto {
-    private Long expenditureRequestId;
+public class UpdateExpenditureRequestDto {
+    private Long id;
     private String expenditureType;
     private Double amount;
     private String currency;

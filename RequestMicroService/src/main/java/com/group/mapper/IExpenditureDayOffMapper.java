@@ -1,9 +1,8 @@
 package com.group.mapper;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
+import com.group.dto.request.CreateExpenditureRequestDto;
+import com.group.dto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.request.UpdateExpenditureRequestElasticDto;
 import com.group.repository.entity.Expenditure;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,9 +14,6 @@ public interface IExpenditureDayOffMapper {
     IExpenditureDayOffMapper INSTANCE= Mappers.getMapper(IExpenditureDayOffMapper.class);
 
     Expenditure toExpenditure(final CreateExpenditureRequestDto dto);
-
-    ExpenditureResponseDto fromExpenditure(final Expenditure expenditure);
-
     @Mapping(source = "id",target = "expenditureRequestId")
     CreateExpenditureRequestElasticDto fromExpenditureElastic(final Expenditure expenditure);
     @Mapping(source = "id",target = "expenditureRequestId")

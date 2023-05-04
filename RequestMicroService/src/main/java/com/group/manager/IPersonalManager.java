@@ -1,6 +1,6 @@
 package com.group.manager;
 
-import com.group.dto.PersonalInfoResponseDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

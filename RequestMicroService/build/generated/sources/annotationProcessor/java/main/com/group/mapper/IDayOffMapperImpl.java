@@ -1,7 +1,7 @@
 package com.group.mapper;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestDto;
+import com.group.dto.request.DayOffSaveRequestDto;
+import com.group.dto.request.DayOffUpdateRequestDto;
 import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.repository.entity.DayOff;
 import com.group.repository.entity.enums.EDayOffType;
