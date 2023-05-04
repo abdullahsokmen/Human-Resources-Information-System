@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T15:53:27+0300",
+    date = "2023-05-04T18:18:35+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -100,6 +100,7 @@ public class IDayOffMapperImpl implements IDayOffMapper {
         if ( dayOff.getStatus() != null ) {
             dayOffUpdateRequestElasticDto.status( dayOff.getStatus().name() );
         }
+        dayOffUpdateRequestElasticDto.confirmDate( dayOff.getConfirmDate() );
 
         return dayOffUpdateRequestElasticDto.build();
     }

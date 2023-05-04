@@ -73,12 +73,14 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         dayOff.get().setStatus(EStatus.CONFIRMED);
         dayOff.get().setConfirmDate(new Date());
         save(dayOff.get());
+        dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
     public Boolean declineDayOffRequest(Long id) {
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
         dayOff.get().setStatus(EStatus.DECLINED);
         save(dayOff.get());
+        dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
 
