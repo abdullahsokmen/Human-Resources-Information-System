@@ -1,6 +1,6 @@
 package com.group.mapper;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.CreateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.repository.entity.AdvancePayment;
 import javax.annotation.processing.Generated;

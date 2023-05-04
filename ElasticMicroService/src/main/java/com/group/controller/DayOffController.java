@@ -1,14 +1,13 @@
 package com.group.controller;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
-import com.group.repository.entity.DayOff;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.request.DayOffUpdateRequestElasticDto;
+import com.group.dto.response.DayOffResponseDto;
 import com.group.service.DayOffService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.group.constants.EndPoints.*;
 
@@ -27,8 +26,8 @@ public class DayOffController {
         return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
     }*/
     @GetMapping(GETALL)
-    public ResponseEntity<List<DayOff>> getAllDayOff(){
-        return ResponseEntity.ok(dayOffService.getAllDayOff());
+    public ResponseEntity<Page<DayOffResponseDto>> getAllDayOff(@RequestParam Integer currentPage){
+        return ResponseEntity.ok(dayOffService.getAllDayOff(currentPage));
     }
 //    @GetMapping(GETALL+BYPERSONALID)
 //    public ResponseEntity<Iterable<DayOffResponseDto>> getAllByPersonalId(@PathVariable Long personalId){

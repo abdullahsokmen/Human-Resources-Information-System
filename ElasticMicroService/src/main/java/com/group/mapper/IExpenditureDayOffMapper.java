@@ -1,8 +1,6 @@
 package com.group.mapper;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
+import com.group.dto.request.CreateExpenditureRequestElasticDto;
 import com.group.repository.entity.Expenditure;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,5 +12,4 @@ public interface IExpenditureDayOffMapper {
 
     Expenditure toExpenditure(final CreateExpenditureRequestElasticDto dto);
 
-    ExpenditureResponseDto fromExpenditure(final Expenditure expenditure);
 }

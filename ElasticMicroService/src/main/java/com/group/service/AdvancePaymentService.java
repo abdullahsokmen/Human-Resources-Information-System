@@ -1,14 +1,14 @@
 package com.group.service;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.CreateAdvancePaymentRequestElasticDto;
+import com.group.dto.request.UpdateAdvancePaymentRequestElasticDto;
 import com.group.exception.EErrorType;
 import com.group.exception.ElasticServiceException;
 import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymentRepository;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EAdvancePaymentType;
+import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +39,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setAdvanceDetails(dto.getAdvanceDetails());
         toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
+        toUpdate.setStatus(EStatus.valueOf(dto.getStatus()));
+        toUpdate.setConfirmDate(dto.getConfirmDate());
         update(toUpdate);
     }
 

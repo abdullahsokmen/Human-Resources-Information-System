@@ -1,8 +1,9 @@
-package com.group.dto.Advancepaymentdto.request;
+package com.group.dto.request;
+
 
 import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.repository.entity.enums.EStatus;
+import com.group.repository.entity.enums.ExpenditureType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,18 +15,16 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateAdvancePaymentRequestElasticDto {
-
+public class CreateExpenditureRequestElasticDto {
     private String personalName;
     private String personalLastName;
+    private EStatus status;
+    private ExpenditureType expenditureType;
+    private Double amount;
     private Date requestDate;
     private Date confirmDate;
     private Currency currency;
-    private Double amount;
-    private String advanceDetails;
-    private EAdvancePaymentType advancePaymentType;
-    private EStatus status;
+    private String expendDetails;
     private Long personalId;
-    private Long paymentRequestId;
-
+    private Long expenditureRequestId;
 }

@@ -1,15 +1,21 @@
 package com.group.service;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.request.DayOffUpdateRequestElasticDto;
+import com.group.dto.response.DayOffResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.ElasticServiceException;
 import com.group.mapper.IDayOffMapper;
 import com.group.repository.IDayOffRepository;
+import com.group.repository.entity.BaseEntity;
 import com.group.repository.entity.DayOff;
 import com.group.repository.entity.enums.EDayOffType;
 import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -75,18 +81,27 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         return dayOffs;*/
    // }
 
-    public List<DayOff> getAllDayOff() {
+    public Page<DayOffResponseDto> getAllDayOff(Integer currentPage) {
      List<DayOff>pending=new ArrayList<>();
      List<DayOff>others=new ArrayList<>();
-     findAll().forEach(x->{
+     List<DayOff> allDayOffs = new ArrayList<>();
+     Pageable pageable = PageRequest.of(currentPage,4,null);
+     findAll().forEach(x-> allDayOffs.add(x));
+     allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat));
+     allDayOffs.forEach(x->{
          if (x.getStatus().equals(EStatus.PENDING)){
              pending.add(x);
          }else {
              others.add(x);
          }
      });
-     List<DayOff>allDayoffs= Stream.of(pending,others).flatMap(Collection::stream).collect(Collectors.toList());
-     return allDayoffs;
+     List<DayOffResponseDto> results= Stream.of(pending,others).flatMap(Collection::stream).map(x-> {
+         DayOffResponseDto dto = IDayOffMapper.INSTANCE.toDayOffResponseDto(x);
+         dto.setType(x.getType().name());
+         dto.setStatus(x.getStatus().name());
+         return dto;
+     }).collect(Collectors.toList());
+     return new PageImpl<>(results,pageable,results.size());
     }
 
 }
