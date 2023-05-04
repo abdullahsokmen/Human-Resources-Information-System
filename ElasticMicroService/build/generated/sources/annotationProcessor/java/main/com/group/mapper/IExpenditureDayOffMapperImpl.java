@@ -1,17 +1,14 @@
 package com.group.mapper;
 
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
-import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.ExpenditureType;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T16:49:16+0300",
+    date = "2023-05-04T14:39:13+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -25,38 +22,16 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
 
         Expenditure.ExpenditureBuilder<?, ?> expenditure = Expenditure.builder();
 
-        if ( dto.getExpenditureType() != null ) {
-            expenditure.expenditureType( Enum.valueOf( ExpenditureType.class, dto.getExpenditureType() ) );
-        }
+        expenditure.personalName( dto.getPersonalName() );
+        expenditure.personalLastName( dto.getPersonalLastName() );
+        expenditure.status( dto.getStatus() );
+        expenditure.expenditureType( dto.getExpenditureType() );
         expenditure.amount( dto.getAmount() );
-        if ( dto.getCurrency() != null ) {
-            expenditure.currency( Enum.valueOf( Currency.class, dto.getCurrency() ) );
-        }
+        expenditure.requestDate( dto.getRequestDate() );
+        expenditure.confirmDate( dto.getConfirmDate() );
+        expenditure.currency( dto.getCurrency() );
         expenditure.expendDetails( dto.getExpendDetails() );
-        expenditure.expenditureRequestId( dto.getExpenditureRequestId() );
-
-        return expenditure.build();
-    }
-
-    @Override
-    public Expenditure toExpenditure(UpdateExpenditureRequestElasticDto dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        Expenditure.ExpenditureBuilder<?, ?> expenditure = Expenditure.builder();
-
-        if ( dto.getId() != null ) {
-            expenditure.id( String.valueOf( dto.getId() ) );
-        }
-        if ( dto.getExpenditureType() != null ) {
-            expenditure.expenditureType( Enum.valueOf( ExpenditureType.class, dto.getExpenditureType() ) );
-        }
-        expenditure.amount( dto.getAmount() );
-        if ( dto.getCurrency() != null ) {
-            expenditure.currency( Enum.valueOf( Currency.class, dto.getCurrency() ) );
-        }
-        expenditure.expendDetails( dto.getExpendDetails() );
+        expenditure.personalId( dto.getPersonalId() );
         expenditure.expenditureRequestId( dto.getExpenditureRequestId() );
 
         return expenditure.build();

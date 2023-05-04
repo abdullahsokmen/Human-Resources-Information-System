@@ -1,6 +1,8 @@
 package com.group.mapper;
 
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
+import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import com.group.repository.entity.enums.Currency;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T14:24:12+0300",
+    date = "2023-05-04T14:39:06+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -32,6 +34,7 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
             expenditure.currency( Enum.valueOf( Currency.class, dto.getCurrency() ) );
         }
         expenditure.expendDetails( dto.getExpendDetails() );
+        expenditure.personalId( dto.getPersonalId() );
 
         return expenditure.build();
     }
@@ -70,14 +73,17 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
 
         CreateExpenditureRequestElasticDto.CreateExpenditureRequestElasticDtoBuilder createExpenditureRequestElasticDto = CreateExpenditureRequestElasticDto.builder();
 
-        if ( expenditure.getExpenditureType() != null ) {
-            createExpenditureRequestElasticDto.expenditureType( expenditure.getExpenditureType().name() );
-        }
+        createExpenditureRequestElasticDto.expenditureRequestId( expenditure.getId() );
+        createExpenditureRequestElasticDto.personalName( expenditure.getPersonalName() );
+        createExpenditureRequestElasticDto.personalLastName( expenditure.getPersonalLastName() );
+        createExpenditureRequestElasticDto.status( expenditure.getStatus() );
+        createExpenditureRequestElasticDto.expenditureType( expenditure.getExpenditureType() );
         createExpenditureRequestElasticDto.amount( expenditure.getAmount() );
-        if ( expenditure.getCurrency() != null ) {
-            createExpenditureRequestElasticDto.currency( expenditure.getCurrency().name() );
-        }
+        createExpenditureRequestElasticDto.requestDate( expenditure.getRequestDate() );
+        createExpenditureRequestElasticDto.confirmDate( expenditure.getConfirmDate() );
+        createExpenditureRequestElasticDto.currency( expenditure.getCurrency() );
         createExpenditureRequestElasticDto.expendDetails( expenditure.getExpendDetails() );
+        createExpenditureRequestElasticDto.personalId( expenditure.getPersonalId() );
 
         return createExpenditureRequestElasticDto.build();
     }
@@ -90,7 +96,7 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
 
         UpdateExpenditureRequestElasticDto.UpdateExpenditureRequestElasticDtoBuilder updateExpenditureRequestElasticDto = UpdateExpenditureRequestElasticDto.builder();
 
-        updateExpenditureRequestElasticDto.id( expenditure.getId() );
+        updateExpenditureRequestElasticDto.expenditureRequestId( expenditure.getId() );
         if ( expenditure.getExpenditureType() != null ) {
             updateExpenditureRequestElasticDto.expenditureType( expenditure.getExpenditureType().name() );
         }
