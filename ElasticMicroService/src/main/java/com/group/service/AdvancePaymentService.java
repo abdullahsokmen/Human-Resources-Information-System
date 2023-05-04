@@ -28,13 +28,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     }
 
     public void requestAdvancePayment(CreateAdvancePaymentRequestElasticDto dto) {
-        save(AdvancePayment.builder()
-                .advanceDetails(dto.getAdvanceDetails())
-                .advancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()))
-                .personalName(dto.getPersonalName())
-                .personalLastName(dto.getPersonalLastName())
-                .paymentRequestId(dto.getPaymentRequestId())
-                .build());
+        save(mapper.toAdvancePayment(dto));
     }
 
     public void updateAdvancePayment(UpdateAdvancePaymentRequestElasticDto dto) {

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class UpdateAdvancePaymentRequestElasticDto {
     private Long paymentRequestId;
     private String advanceDetails;
-    private String  currency;
+    private String currency;
     private Double amount;
 }

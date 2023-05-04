@@ -6,6 +6,7 @@ import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasti
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.repository.entity.AdvancePayment;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -15,7 +16,8 @@ public interface IAdvancePaymentMapper {
 
     AdvancePayment toAdvancePayment(final CreateAdvancePaymentRequestDto dto);
     AdvancePaymentResponseDto fromAdvancePayment(final AdvancePayment advancePayment);
-
+    @Mapping(source = "id",target = "paymentRequestId")
     CreateAdvancePaymentRequestElasticDto fromAdvancePaymentElastic(final AdvancePayment advancePayment);
+    @Mapping(source = "id",target = "paymentRequestId")
     UpdateAdvancePaymentRequestElasticDto fromAdvancePaymentElasticUpdate(final AdvancePayment advancePayment);
 }
