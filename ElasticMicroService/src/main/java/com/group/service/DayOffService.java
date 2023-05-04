@@ -2,7 +2,6 @@ package com.group.service;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
-import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.ElasticServiceException;
 import com.group.mapper.IDayOffMapper;
@@ -11,11 +10,11 @@ import com.group.repository.entity.DayOff;
 import com.group.repository.entity.enums.EDayOffType;
 import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
-import org.elasticsearch.common.util.Comparators;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 
@@ -58,13 +57,11 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         return true;
     }
 
-    public DayOffResponseDto getOneDayOff(Long dayOffRequestId) {
+ /*   public DayOffResponseDto getOneDayOff(Long dayOffRequestId) {
         return IDayOffMapper.INSTANCE.fromDayOff(dayOffRepository.findByDayOffRequestId(dayOffRequestId)
                 .orElseThrow(()-> new ElasticServiceException(EErrorType.INVALID_PARAMETER)));
-    }
 
-    public List<DayOff> getAllDayOff() {
-        List<DayOff> dayOffs = new ArrayList<>();
+                /*  List<DayOff> dayOffs = new ArrayList<>();
         findAll().forEach(x->{
             dayOffs.add(x);
         });
@@ -74,7 +71,21 @@ public class DayOffService extends ServiceManager<DayOff,String> {
                 return o1.getRequestDate().compareTo(o2.getRequestDate());
             }
         });
-        return dayOffs;
+        return dayOffs;*/
+   // }
+
+    public List<DayOff> getAllDayOff() {
+     List<DayOff>pending=new ArrayList<>();
+     List<DayOff>others=new ArrayList<>();
+     findAll().forEach(x->{
+         if (x.getStatus().equals(EStatus.PENDING)){
+             pending.add(x);
+         }else {
+             others.add(x);
+         }
+     });
+     List<DayOff>allDayoffs= Stream.of(pending,others).flatMap(Collection::stream).collect(Collectors.toList());
+     return allDayoffs;
     }
 
 }
