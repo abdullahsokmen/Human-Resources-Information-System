@@ -19,5 +19,4 @@ public class DayOffUpdateRequestElasticDto {
     private Date endDate;
     private Double span;
     private String status;
-    private Date confirmDate;
 }
