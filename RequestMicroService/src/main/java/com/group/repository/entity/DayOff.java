@@ -34,6 +34,6 @@ public class DayOff extends BaseEntity{
         @Enumerated(EnumType.STRING)
         @Builder.Default
         private EStatus status = EStatus.PENDING;
-        private Long PersonalId;
+        private Long personalId;
 
 }

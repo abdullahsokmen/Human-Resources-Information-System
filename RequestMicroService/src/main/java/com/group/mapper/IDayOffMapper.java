@@ -7,6 +7,7 @@ import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
 import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.repository.entity.DayOff;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -20,7 +21,9 @@ public interface IDayOffMapper {
 
     DayOffResponseDto fromDayOff(final DayOff dayOff);
 
+    @Mapping(source = "id",target = "dayOffRequestId")
     DayOffSaveRequestElasticDto fromDayOffElastic(final DayOff dayOff);
+    @Mapping(source = "id",target = "dayOffRequestId")
     DayOffUpdateRequestElasticDto fromDayOffElasticUpdate(final DayOff dayOff);
 
 }

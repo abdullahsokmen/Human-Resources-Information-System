@@ -7,6 +7,8 @@ import com.group.exception.ElasticServiceException;
 import com.group.mapper.IDayOffMapper;
 import com.group.repository.IDayOffRepository;
 import com.group.repository.entity.DayOff;
+import com.group.repository.entity.enums.EDayOffType;
+import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -39,15 +41,12 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         Optional<DayOff> dayOff = dayOffRepository.findByDayOffRequestId(dto.getDayOffRequestId());
         if(dayOff.isEmpty())
             throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
-        DayOff toUpdate = dayOffMapper.toDayOff(dto);
-        toUpdate.setSpan(dayOff.get().getSpan());
-        toUpdate.setType(dayOff.get().getType());
-        toUpdate.setPersonalLastName(dayOff.get().getPersonalLastName());
-        toUpdate.setPersonalName(dayOff.get().getPersonalName());
-        toUpdate.setStartingDate(dayOff.get().getStartingDate());
-        toUpdate.setEndDate(dayOff.get().getEndDate());
-        toUpdate.setId(dayOff.get().getId());
-        toUpdate.setStatus(dayOff.get().getStatus());
+        DayOff toUpdate = dayOff.get();
+        toUpdate.setSpan(dto.getSpan());
+        toUpdate.setType(EDayOffType.valueOf(dto.getType()));
+        toUpdate.setStartingDate(dto.getStartingDate());
+        toUpdate.setEndDate(dto.getEndDate());
+        toUpdate.setStatus(EStatus.valueOf(dto.getStatus()));
         update(toUpdate);
     }
 

@@ -21,15 +21,13 @@ public class Expenditure extends BaseEntity{
     private String id;
     private String personalName;
     private String personalLastName;
-    @Builder.Default
-    private EStatus status =EStatus.PENDING;
+    private EStatus status;
     private ExpenditureType expenditureType;
     private Double amount;
-    @Builder.Default
-    private Date requestDate = new Date();
+    private Date requestDate;
     private Date confirmDate;
     private Currency currency;
     private String expendDetails;
-    private Long PersonalId;
+    private Long personalId;
     private Long expenditureRequestId;
 }

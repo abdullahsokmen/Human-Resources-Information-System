@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateExpenditureRequestElasticDto {
     private Long expenditureRequestId;
-    private Long id;
     private String expenditureType;
     private Double amount;
     private String currency;

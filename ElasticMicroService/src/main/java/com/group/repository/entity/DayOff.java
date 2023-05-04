@@ -22,13 +22,11 @@ public class DayOff extends BaseEntity{
     private String personalLastName;
     private EDayOffType type;
     private Date startingDate;
-    @Builder.Default
-    private Date requestDate = new Date();
+    private Date requestDate;
     private Date endDate;
     private Date confirmDate;
     private Double span;
-    @Builder.Default
-    private EStatus status = EStatus.PENDING;
-    private Long PersonalId;
+    private EStatus status;
+    private Long personalId;
     private Long dayOffRequestId;
 }

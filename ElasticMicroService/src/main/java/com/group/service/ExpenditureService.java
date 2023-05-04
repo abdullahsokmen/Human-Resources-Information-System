@@ -7,6 +7,7 @@ import com.group.exception.ElasticServiceException;
 import com.group.mapper.IExpenditureDayOffMapper;
 import com.group.repository.IExpenditureRepository;
 import com.group.repository.entity.Expenditure;
+import com.group.repository.entity.enums.Currency;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -39,14 +40,10 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
         Optional<Expenditure> expenditure = expenditureRepository.findByExpenditureRequestId(dto.getExpenditureRequestId());
         if(expenditure.isEmpty())
             throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
-        Expenditure toUpdate = expenditureDayOffMapper.toExpenditure(dto);
-        toUpdate.setPersonalName(expenditure.get().getPersonalName());
-        toUpdate.setPersonalLastName(expenditure.get().getPersonalLastName());
-        toUpdate.setId(expenditure.get().getId());
-        toUpdate.setAmount(expenditure.get().getAmount());
-        toUpdate.setExpendDetails(expenditure.get().getExpendDetails());
-        toUpdate.setCurrency(expenditure.get().getCurrency());
-        toUpdate.setRequestDate(expenditure.get().getRequestDate());
+        Expenditure toUpdate = expenditure.get();
+        toUpdate.setAmount(dto.getAmount());
+        toUpdate.setExpendDetails(dto.getExpendDetails());
+        toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
         update(toUpdate);
     }
 }

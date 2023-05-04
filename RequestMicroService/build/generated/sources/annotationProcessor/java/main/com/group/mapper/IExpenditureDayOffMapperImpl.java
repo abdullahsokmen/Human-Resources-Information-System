@@ -1,8 +1,6 @@
 package com.group.mapper;
 
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import com.group.repository.entity.enums.Currency;
