@@ -1,7 +1,7 @@
 package com.group.manager;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
+import com.group.dto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.request.UpdateExpenditureRequestElasticDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

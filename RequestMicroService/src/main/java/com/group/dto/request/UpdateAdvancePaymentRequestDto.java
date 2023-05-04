@@ -1,4 +1,4 @@
-package com.group.dto.Advancepaymentdto.request;
+package com.group.dto.request;
 
 import com.group.repository.entity.enums.Currency;
 import lombok.AllArgsConstructor;

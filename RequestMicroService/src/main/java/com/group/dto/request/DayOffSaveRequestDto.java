@@ -1,4 +1,4 @@
-package com.group.dto.Dayoffdto.request;
+package com.group.dto.request;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,8 @@
 package com.group.service;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestDto;
-import com.group.dto.Dayoffdto.response.DayOffResponseDto;
-import com.group.dto.PersonalInfoResponseDto;
+import com.group.dto.request.DayOffSaveRequestDto;
+import com.group.dto.request.DayOffUpdateRequestDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
 import com.group.manager.IDayOffManager;
@@ -17,7 +16,6 @@ import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -68,19 +66,6 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         update(toUpdate);
         dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
-    }
-
-    public DayOffResponseDto getDayOffDetails(Long id) {
-        Optional<DayOff> dayOff = dayOffRepository.findById(id);
-        if(dayOff.isEmpty())
-            throw new RequestException(EErrorType.COMPANY_ADMIN_NOT_EXIST);
-        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dayOff.get().getPersonalId()).getBody();
-        DayOffResponseDto details = IDayOffMapper.INSTANCE.fromDayOff(dayOff.get());
-        details.setType(dayOff.get().getType().name());
-        details.setStatus(dayOff.get().getStatus().name());
-        details.setName(personalDto.getName());
-        details.setLastname(personalDto.getLastname());
-        return details;
     }
 
     public Boolean acceptDayOffRequest(Long id) {

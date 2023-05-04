@@ -1,4 +1,4 @@
-package com.group.dto.Dayoffdto.request;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,8 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DayOffUpdateRequestDto {
-
-    private Long id;
+public class DayOffUpdateRequestElasticDto {
+    private Long dayOffRequestId;
     private String type;
     private Date startingDate;
     private Date endDate;

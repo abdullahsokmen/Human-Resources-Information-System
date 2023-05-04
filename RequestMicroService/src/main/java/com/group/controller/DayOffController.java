@@ -1,15 +1,11 @@
 package com.group.controller;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestDto;
-import com.group.dto.Dayoffdto.request.DayOffUpdateRequestDto;
-import com.group.dto.Dayoffdto.response.DayOffResponseDto;
+import com.group.dto.request.DayOffSaveRequestDto;
+import com.group.dto.request.DayOffUpdateRequestDto;
 import com.group.service.DayOffService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.group.constants.EndPoints.*;
 
@@ -33,10 +29,6 @@ public class DayOffController {
     @PostMapping(UPDATE)
     public ResponseEntity<Boolean> updateDayOff(@RequestBody DayOffUpdateRequestDto dto){
         return ResponseEntity.ok(dayOffService.updateDayOff(dto));
-    }
-    @GetMapping(GETALLDETAILS)
-    public ResponseEntity<DayOffResponseDto> getDayOffDetails (@RequestParam Long id){
-        return ResponseEntity.ok(dayOffService.getDayOffDetails(id));
     }
 
     @PostMapping(ACCEPT)

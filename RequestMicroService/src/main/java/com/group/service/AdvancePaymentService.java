@@ -1,10 +1,8 @@
 package com.group.service;
 
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
-import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestDto;
-import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
-import com.group.dto.PersonalInfoResponseDto;
+import com.group.dto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.request.UpdateAdvancePaymentRequestDto;
+import com.group.dto.response.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
 import com.group.manager.IAdvancePaymentManager;
@@ -97,17 +95,4 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         return true;
     }
 
-    public AdvancePaymentResponseDto getDetails(Long id) {
-        Optional<AdvancePayment>advancePayment=findById(id);
-        if (advancePayment.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
-        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(advancePayment.get().getPersonalId()).getBody();
-        AdvancePaymentResponseDto allDetails=IAdvancePaymentMapper.INSTANCE.fromAdvancePayment(advancePayment.get());
-        allDetails.setCurrency(advancePayment.get().getCurrency().name());
-        allDetails.setAdvancePaymentType(advancePayment.get().getAdvancePaymentType().name());
-        allDetails.setStatus(advancePayment.get().getStatus().name());
-        allDetails.setName(personalDto.getName());
-        allDetails.setLastname(personalDto.getLastname());
-        return allDetails;
-    }
 }
