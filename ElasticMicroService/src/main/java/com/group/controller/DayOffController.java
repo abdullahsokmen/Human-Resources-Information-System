@@ -2,8 +2,6 @@ package com.group.controller;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
-import com.group.dto.Dayoffdto.response.DayOffResponseDto;
-import com.group.repository.IDayOffRepository;
 import com.group.repository.entity.DayOff;
 import com.group.service.DayOffService;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +22,10 @@ public class DayOffController {
         dayOffService.requestDayOff(dto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(GETONE)
+   /* @GetMapping(GETONE)
     public ResponseEntity<DayOffResponseDto> getOneDayOff(@RequestParam Long dayOffRequestId){
         return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
-    }
+    }*/
     @GetMapping(GETALL)
     public ResponseEntity<List<DayOff>> getAllDayOff(){
         return ResponseEntity.ok(dayOffService.getAllDayOff());

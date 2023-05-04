@@ -1,8 +1,9 @@
 package com.group.mapper;
 
 import com.group.dto.request.DayOffSaveRequestDto;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.request.DayOffUpdateRequestDto;
-import com.group.dto.Dayoffdto.response.DayOffResponseDto;
+import com.group.dto.request.DayOffUpdateRequestElasticDto;
 import com.group.repository.entity.DayOff;
 import com.group.repository.entity.enums.EDayOffType;
 import com.group.repository.entity.enums.EStatus;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T16:47:28+0300",
+    date = "2023-05-04T15:53:27+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -31,6 +32,7 @@ public class IDayOffMapperImpl implements IDayOffMapper {
         dayOff.startingDate( dto.getStartingDate() );
         dayOff.endDate( dto.getEndDate() );
         dayOff.span( dto.getSpan() );
+        dayOff.personalId( dto.getPersonalId() );
 
         return dayOff.build();
     }
@@ -58,28 +60,6 @@ public class IDayOffMapperImpl implements IDayOffMapper {
     }
 
     @Override
-    public DayOffResponseDto fromDayOff(DayOff dayOff) {
-        if ( dayOff == null ) {
-            return null;
-        }
-
-        DayOffResponseDto.DayOffResponseDtoBuilder dayOffResponseDto = DayOffResponseDto.builder();
-
-        if ( dayOff.getType() != null ) {
-            dayOffResponseDto.type( dayOff.getType().name() );
-        }
-        dayOffResponseDto.requestDate( dayOff.getRequestDate() );
-        if ( dayOff.getStatus() != null ) {
-            dayOffResponseDto.status( dayOff.getStatus().name() );
-        }
-        dayOffResponseDto.startingDate( dayOff.getStartingDate() );
-        dayOffResponseDto.endDate( dayOff.getEndDate() );
-        dayOffResponseDto.span( dayOff.getSpan() );
-
-        return dayOffResponseDto.build();
-    }
-
-    @Override
     public DayOffSaveRequestElasticDto fromDayOffElastic(DayOff dayOff) {
         if ( dayOff == null ) {
             return null;
@@ -87,12 +67,17 @@ public class IDayOffMapperImpl implements IDayOffMapper {
 
         DayOffSaveRequestElasticDto.DayOffSaveRequestElasticDtoBuilder dayOffSaveRequestElasticDto = DayOffSaveRequestElasticDto.builder();
 
-        if ( dayOff.getType() != null ) {
-            dayOffSaveRequestElasticDto.type( dayOff.getType().name() );
-        }
+        dayOffSaveRequestElasticDto.dayOffRequestId( dayOff.getId() );
+        dayOffSaveRequestElasticDto.personalName( dayOff.getPersonalName() );
+        dayOffSaveRequestElasticDto.personalLastName( dayOff.getPersonalLastName() );
+        dayOffSaveRequestElasticDto.type( dayOff.getType() );
         dayOffSaveRequestElasticDto.startingDate( dayOff.getStartingDate() );
+        dayOffSaveRequestElasticDto.requestDate( dayOff.getRequestDate() );
         dayOffSaveRequestElasticDto.endDate( dayOff.getEndDate() );
+        dayOffSaveRequestElasticDto.confirmDate( dayOff.getConfirmDate() );
         dayOffSaveRequestElasticDto.span( dayOff.getSpan() );
+        dayOffSaveRequestElasticDto.status( dayOff.getStatus() );
+        dayOffSaveRequestElasticDto.personalId( dayOff.getPersonalId() );
 
         return dayOffSaveRequestElasticDto.build();
     }
@@ -105,7 +90,7 @@ public class IDayOffMapperImpl implements IDayOffMapper {
 
         DayOffUpdateRequestElasticDto.DayOffUpdateRequestElasticDtoBuilder dayOffUpdateRequestElasticDto = DayOffUpdateRequestElasticDto.builder();
 
-        dayOffUpdateRequestElasticDto.id( dayOff.getId() );
+        dayOffUpdateRequestElasticDto.dayOffRequestId( dayOff.getId() );
         if ( dayOff.getType() != null ) {
             dayOffUpdateRequestElasticDto.type( dayOff.getType().name() );
         }
