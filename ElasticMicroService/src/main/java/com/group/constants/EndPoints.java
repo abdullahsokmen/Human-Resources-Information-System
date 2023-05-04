@@ -21,7 +21,7 @@ public class EndPoints {
     public static final String DELETE = "/delete";
     public static final String GETALL = "/getall";
     public static final String GETONE = "/getone";
-    public static final String BYPERSONALID = "/{personalId}}";
+    public static final String BYPERSONALID = "/{personalId}";
     public static final String GETALLPAGE = "/getallpage";
 
 

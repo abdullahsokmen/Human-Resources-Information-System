@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DayOffResponseDto {
+    private Long createat;
     private String personalName;
     private String personalLastName;
     private String type;
