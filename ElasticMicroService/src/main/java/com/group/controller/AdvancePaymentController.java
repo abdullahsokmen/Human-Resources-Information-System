@@ -2,6 +2,8 @@ package com.group.controller;
 
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
+import com.group.repository.entity.AdvancePayment;
+import com.group.repository.entity.Expenditure;
 import com.group.service.AdvancePaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +32,9 @@ public class AdvancePaymentController {
     public ResponseEntity<Void>deleteAdvancePayment(@RequestParam Long id){
         advancePaymentService.deletePayment(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping()
+    public ResponseEntity<Iterable<AdvancePayment>>testMethod(){
+        return ResponseEntity.ok(advancePaymentService.findAll());
     }
 }

@@ -31,6 +31,6 @@ public class AdvancePayment extends BaseEntity{
     private EAdvancePaymentType advancePaymentType;
     @Builder.Default
     private EStatus status =EStatus.PENDING;
-    private Long PersonalId;
+    private Long personalId;
     private Long paymentRequestId;
 }

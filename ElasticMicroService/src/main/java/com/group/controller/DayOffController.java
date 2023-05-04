@@ -41,13 +41,5 @@ public class DayOffController {
         dayOffService.updateDayOff(dto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(TEST)
-    public ResponseEntity<DayOff>testMethod2(@RequestParam Long id){
-        return ResponseEntity.ok(dayOffRepository.findByDayOffRequestId(id).get());
-    }
-    @PostMapping(SAVE+"2")
-    public ResponseEntity<Boolean> saveTest(@RequestBody DayOffSaveRequestElasticDto dto){
-        return ResponseEntity.ok(dayOffService.saveTest(dto));
-    }
 
 }

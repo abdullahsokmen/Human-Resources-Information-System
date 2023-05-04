@@ -6,7 +6,7 @@ import com.group.dto.Dayoffdto.response.DayOffResponseDto;
 import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
-import com.group.manager.IElasticManager;
+import com.group.manager.IDayOffManager;
 import com.group.manager.IPersonalManager;
 import com.group.mapper.IDayOffMapper;
 import com.group.repository.IDayOffRepository;
@@ -24,35 +24,36 @@ import java.util.Optional;
 public class DayOffService extends ServiceManager<DayOff,Long> {
     private final IDayOffRepository dayOffRepository;
     private final IPersonalManager personalManager;
-    private final IElasticManager manager;
+
+    private final IDayOffManager dayOffManager;
     private final IDayOffMapper dayOffMapper;
 
-    public DayOffService(IDayOffRepository dayOffRepository, IPersonalManager personalManager, IElasticManager manager, IDayOffMapper dayOffMapper) {
+    public DayOffService(IDayOffRepository dayOffRepository, IPersonalManager personalManager, IDayOffManager dayOffManager, IDayOffMapper dayOffMapper) {
         super(dayOffRepository);
         this.dayOffRepository = dayOffRepository;
         this.personalManager = personalManager;
+        this.dayOffManager = dayOffManager;
 
-        this.manager = manager;
+
         this.dayOffMapper = dayOffMapper;
     }
 
     public Boolean requestDayOff(DayOffSaveRequestDto dto) {
         PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
-        if (Objects.isNull(personalDto))
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+        System.out.println(personalDto);
         DayOff dayOff = IDayOffMapper.INSTANCE.toDayOff(dto);
         dayOff.setPersonalName(personalDto.getName());
         dayOff.setPersonalLastName(personalDto.getLastname());
         dayOff.setType(EDayOffType.valueOf(dto.getType()));
         save(dayOff);
-        manager.requestDayOff(dayOffMapper.fromDayOffElastic(dayOff));
+        dayOffManager.requestDayOff(dayOffMapper.fromDayOffElastic(dayOff));
         return true;
     }
 
     public Boolean deleteDayOff(Long id) {
         Optional<DayOff> dayOff = findById(id);
         delete(dayOff.get());
-        manager.deleteAdvancePayment(id);
+        dayOffManager.deleteDayOff(id);
         return true;
     }
 
@@ -65,7 +66,7 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         toUpdate.setEndDate(dto.getEndDate());
         toUpdate.setSpan(dto.getSpan());
         update(toUpdate);
-        manager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
+        dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
 
