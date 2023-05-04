@@ -1,4 +1,4 @@
-package com.group.dto.Dayoffdto.request;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +19,4 @@ public class DayOffUpdateRequestElasticDto {
     private Date endDate;
     private Double span;
     private String status;
-    private Date confirmDate;
 }

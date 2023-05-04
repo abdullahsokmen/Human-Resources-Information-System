@@ -1,6 +1,6 @@
 package com.group.mapper;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
 import com.group.repository.entity.DayOff;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;

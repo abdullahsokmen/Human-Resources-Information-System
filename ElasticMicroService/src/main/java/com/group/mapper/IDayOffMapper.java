@@ -1,6 +1,7 @@
 package com.group.mapper;
 
-import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.request.DayOffSaveRequestElasticDto;
+import com.group.dto.response.DayOffResponseDto;
 import com.group.repository.entity.DayOff;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -13,6 +14,6 @@ public interface IDayOffMapper {
 
     DayOff toDayOff(final DayOffSaveRequestElasticDto dto);
 
-   /* DayOffResponseDto fromDayOff(final DayOff dayOff);*/
+    DayOffResponseDto toDayOffResponseDto(final DayOff dayOff);
 
 }

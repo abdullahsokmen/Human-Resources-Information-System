@@ -80,6 +80,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         expenditure.get().setStatus(EStatus.CONFIRMED);
         expenditure.get().setConfirmDate(new Date());
         update(expenditure.get());
+        expenditureManager.updateExpenditure(expenditureDayOffMapper.fromExpenditureElasticUpdate(expenditure.get()));
         return true;
     }
 
@@ -89,6 +90,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         expenditure.get().setStatus(EStatus.DECLINED);
         update(expenditure.get());
+        expenditureManager.updateExpenditure(expenditureDayOffMapper.fromExpenditureElasticUpdate(expenditure.get()));
         return true;
     }
 

@@ -1,13 +1,14 @@
 package com.group.service;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
-import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
+import com.group.dto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.request.UpdateExpenditureRequestElasticDto;
 import com.group.exception.EErrorType;
 import com.group.exception.ElasticServiceException;
 import com.group.mapper.IExpenditureDayOffMapper;
 import com.group.repository.IExpenditureRepository;
 import com.group.repository.entity.Expenditure;
 import com.group.repository.entity.enums.Currency;
+import com.group.repository.entity.enums.EStatus;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,8 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setExpendDetails(dto.getExpendDetails());
         toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
+        toUpdate.setStatus(EStatus.valueOf(dto.getStatus()));
+        toUpdate.setConfirmDate(dto.getConfirmDate());
         update(toUpdate);
     }
 }

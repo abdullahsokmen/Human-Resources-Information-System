@@ -1,4 +1,4 @@
-package com.group.dto.Expendituredto.response;
+package com.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +11,12 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpenditureResponseDto {
-    private Long id;
-    private String status;
+public class UpdateExpenditureRequestElasticDto {
+    private Long expenditureRequestId;
     private String expenditureType;
     private Double amount;
-    private Date requestDate;
-    private Date confirmDate;
     private String currency;
     private String expendDetails;
-    private Long PersonalId;
-    private String name;
-    private String lastname;
+    private String status;
+    private Date confirmDate;
 }

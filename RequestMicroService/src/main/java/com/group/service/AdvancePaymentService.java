@@ -74,6 +74,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         advancePayment.get().setStatus(EStatus.CONFIRMED);
         advancePayment.get().setConfirmDate(new Date());
         update(advancePayment.get());
+        advancePaymentManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(advancePayment.get()));
         return true;
     }
 
@@ -92,6 +93,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         advancePayment.get().setStatus(EStatus.DECLINED);
         update(advancePayment.get());
+        advancePaymentManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(advancePayment.get()));
         return true;
     }
 

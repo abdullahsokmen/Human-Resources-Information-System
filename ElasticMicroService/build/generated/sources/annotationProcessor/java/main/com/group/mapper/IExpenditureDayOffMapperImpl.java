@@ -1,6 +1,6 @@
 package com.group.mapper;
 
-import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
+import com.group.dto.request.CreateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import javax.annotation.processing.Generated;
