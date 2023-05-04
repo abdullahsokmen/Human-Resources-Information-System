@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IExpenditureRepository extends ElasticsearchRepository<Expenditure,String> {
-    Optional<Expenditure> findByExpenditureRequestId(Long id);
-
+public interface IExpenditureRepository extends ElasticsearchRepository<Expenditure,String > {
+    Optional<Expenditure>findByExpenditureRequestId(Long id);
 }

@@ -25,8 +25,7 @@ public class PersonalServiceSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf().disable();
-        httpSecurity.authorizeRequests().antMatchers("/v3/api-docs/**","/swagger-ui/**","/api/v1/personal/forgot",
-                        "/api/v1/personal/personalinfo")
+        httpSecurity.authorizeRequests().antMatchers("/v3/api-docs/**","/swagger-ui/**","/api/v1/personal/**")
                 .permitAll().anyRequest().authenticated();
         httpSecurity.addFilterBefore(getJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

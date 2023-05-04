@@ -1,12 +1,13 @@
 package com.group.service;
 
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestDto;
+import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.dto.PersonalInfoResponseDto;
 import com.group.exception.EErrorType;
 import com.group.exception.RequestException;
-import com.group.manager.IElasticManager;
+import com.group.manager.IAdvancePaymentManager;
 import com.group.manager.IPersonalManager;
 import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymenRepository;
@@ -25,15 +26,16 @@ import java.util.Optional;
 public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     private final IAdvancePaymenRepository advancePaymenRepository;
     private final IPersonalManager personalManager;
-    private final IElasticManager elasticManager;
+    private final IAdvancePaymentManager advancePaymentManager;
     private final IAdvancePaymentMapper advancePaymentMapper;
 
 
-    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository, IPersonalManager personalManager, IElasticManager elasticManager, IAdvancePaymentMapper advancePaymentMapper) {
+    public AdvancePaymentService(IAdvancePaymenRepository advancePaymenRepository, IPersonalManager personalManager, IAdvancePaymentManager advancePaymentManager, IAdvancePaymentMapper advancePaymentMapper) {
         super(advancePaymenRepository);
         this.advancePaymenRepository = advancePaymenRepository;
         this.personalManager = personalManager;
-        this.elasticManager = elasticManager;
+        this.advancePaymentManager = advancePaymentManager;
+
         this.advancePaymentMapper = advancePaymentMapper;
     }
 
@@ -46,10 +48,19 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         AdvancePayment advancePayment= IAdvancePaymentMapper.INSTANCE.toAdvancePayment(dto);
         advancePayment.setPersonalName(personalDto.getName());
         advancePayment.setPersonalLastName(personalDto.getLastname());
+        advancePayment.setPersonalId(dto.getPersonalId());
         advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
         advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);
-        elasticManager.requestAdvancePayment(advancePaymentMapper.fromAdvancePaymentElastic(advancePayment));
+        advancePaymentManager.requestAdvancePayment(CreateAdvancePaymentRequestElasticDto.builder()
+                        .personalId(advancePayment.getPersonalId())
+                        .personalName(advancePayment.getPersonalName())
+                        .personalLastName(advancePayment.getPersonalLastName())
+                        .advanceDetails(advancePayment.getAdvanceDetails())
+                        .paymentRequestId(advancePayment.getId())
+                        .amount(advancePayment.getAmount())
+                        .currency(advancePayment.getCurrency().toString())
+                .build());
         return true;
     }
 
@@ -62,7 +73,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setCurrency(Currency.valueOf(dto.getCurrency()));
         update(toUpdate);
-        elasticManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(toUpdate));
+        advancePaymentManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(toUpdate));
         return true;
     }
 
@@ -81,7 +92,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.INVALID_PARAMETER);
         delete(advancePayment.get());
-        elasticManager.deleteAdvancePayment(id);
+        advancePaymentManager.deleteAdvancePayment(id);
         return true;
     }
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T16:49:16+0300",
+    date = "2023-05-04T13:56:24+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -24,6 +24,8 @@ public class IAdvancePaymentMapperImpl implements IAdvancePaymentMapper {
 
         AdvancePayment.AdvancePaymentBuilder<?, ?> advancePayment = AdvancePayment.builder();
 
+        advancePayment.personalName( dto.getPersonalName() );
+        advancePayment.personalLastName( dto.getPersonalLastName() );
         if ( dto.getCurrency() != null ) {
             advancePayment.currency( Enum.valueOf( Currency.class, dto.getCurrency() ) );
         }
@@ -32,6 +34,7 @@ public class IAdvancePaymentMapperImpl implements IAdvancePaymentMapper {
         if ( dto.getAdvancePaymentType() != null ) {
             advancePayment.advancePaymentType( Enum.valueOf( EAdvancePaymentType.class, dto.getAdvancePaymentType() ) );
         }
+        advancePayment.personalId( dto.getPersonalId() );
         advancePayment.paymentRequestId( dto.getPaymentRequestId() );
 
         return advancePayment.build();
