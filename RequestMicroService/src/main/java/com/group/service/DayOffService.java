@@ -78,13 +78,10 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         return true;
     }
     public Boolean declineDayOffRequest(Long id) {
+        //requested
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
         dayOff.get().setStatus(EStatus.DECLINED);
-
-       
-
         update(dayOff.get());
-
         dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
