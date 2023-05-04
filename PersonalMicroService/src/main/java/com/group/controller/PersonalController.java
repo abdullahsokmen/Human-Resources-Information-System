@@ -37,7 +37,7 @@ public class PersonalController {
         return ResponseEntity.ok(personalService.getMinorDetails(id));
     }
     @PostMapping(SAVE)
-    @PreAuthorize("hasAuthority('COMPANYADMIN')")
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> createPersonal(@RequestBody @Valid PersonalSaveRequestDto dto){
         return ResponseEntity.ok(personalService.createPersonal(dto));
     }
@@ -47,22 +47,22 @@ public class PersonalController {
         return ResponseEntity.ok(personalService.updatePersonal(dto));
     }
     @PostMapping(DEACTIVATE+BYID)
-    @PreAuthorize("hasAuthority('COMPANYADMIN')")
+ /*   @PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> deActivateById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deActivateById(id));
     }
     @PutMapping(DELETE+BYID)
-    @PreAuthorize("hasAuthority('COMPANYADMIN')")
+/*    @PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.deletePersonalById(id));
     }
     @DeleteMapping(DELETE+BYID)
-    @PreAuthorize("hasAuthority('COMPANYADMIN')")
+   /* @PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> hardDeleteById(@PathVariable Long id){
         return ResponseEntity.ok(personalService.hardDeleteById(id));
     }
     @GetMapping(GETALLPERSONAL)
-    @PreAuthorize("hasAuthority('COMPANYADMIN')")
+  /*  @PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<List<PersonalMinorDetailsResponseDto>> getPersonalList(){
         return ResponseEntity.ok(personalService.getAllPersonals());
     }

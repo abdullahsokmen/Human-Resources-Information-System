@@ -2,6 +2,7 @@ package com.group.controller;
 
 import com.group.dto.Dayoffdto.request.DayOffSaveRequestElasticDto;
 import com.group.dto.Dayoffdto.request.DayOffUpdateRequestElasticDto;
+import com.group.repository.IDayOffRepository;
 import com.group.repository.entity.DayOff;
 import com.group.service.DayOffService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(DAYOFF)
 public class DayOffController {
     private final DayOffService dayOffService;
+    private final IDayOffRepository dayOffRepository;
     @PostMapping(SAVE)
     public ResponseEntity<Void> requestDayOff(@RequestBody DayOffSaveRequestElasticDto dto){
         dayOffService.requestDayOff(dto);
@@ -24,11 +26,12 @@ public class DayOffController {
     }
     @GetMapping()
     public ResponseEntity<Iterable<DayOff>>testMethod(){
-        return ResponseEntity.ok(dayOffService.findAll());
+        return ResponseEntity.ok(dayOffRepository.findAll());
     }
 
     @PostMapping(DELETE)
     public ResponseEntity<Void> deleteDayOff(@RequestParam Long id){
+
         dayOffService.deleteDayOff(id);
         return ResponseEntity.ok().build();
     }
@@ -38,4 +41,13 @@ public class DayOffController {
         dayOffService.updateDayOff(dto);
         return ResponseEntity.ok().build();
     }
+    @GetMapping(TEST)
+    public ResponseEntity<DayOff>testMethod2(@RequestParam Long id){
+        return ResponseEntity.ok(dayOffRepository.findByDayOffRequestId(id).get());
+    }
+    @PostMapping(SAVE+"2")
+    public ResponseEntity<Boolean> saveTest(@RequestBody DayOffSaveRequestElasticDto dto){
+        return ResponseEntity.ok(dayOffService.saveTest(dto));
+    }
+
 }

@@ -50,4 +50,9 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         toUpdate.setStatus(dayOff.get().getStatus());
         update(toUpdate);
     }
+
+    public Boolean saveTest(DayOffSaveRequestElasticDto dto) {
+        save(IDayOffMapper.INSTANCE.toDayOff(dto));
+        return true;
+    }
 }

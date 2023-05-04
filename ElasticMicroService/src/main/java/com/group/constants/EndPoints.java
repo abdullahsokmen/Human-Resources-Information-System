@@ -11,10 +11,10 @@ public class EndPoints {
     public static final String DEV = "/dev";
     public static final String API = "/api";
 
-    public static final String ELASTIC = "/elastic";
-    public static final String ADVANCEPAYMENT = "/advancepayment";
-    public static final String DAYOFF = "/dayoff";
-    public static final String EXPENDITURE = "/expenditure";
+    public static final String ELASTIC =API+VERSION+"/elastic";
+    public static final String ADVANCEPAYMENT = ELASTIC+"/advancepayment";
+    public static final String DAYOFF =ELASTIC+"/dayoff";
+    public static final String EXPENDITURE =ELASTIC+"/expenditure";
     public static final String REQUEST = "/request";
     public static final String USER = "/user";
     public static final String SATIS = "/satis";
@@ -27,4 +27,5 @@ public class EndPoints {
     public static final String GETALLPAGE = "/getallpage";
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
+    public static final String TEST = "/test";
 }
