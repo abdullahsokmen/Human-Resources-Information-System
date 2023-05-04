@@ -10,4 +10,5 @@ dependencies {
     implementation libs.springBootStarterSecurity
     implementation libs.jwt
     implementation libs.springBootAmqp
+    
 }
