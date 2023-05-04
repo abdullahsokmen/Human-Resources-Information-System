@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface IDayOffRepository extends ElasticsearchRepository<DayOff,String > {
     Optional<DayOff>findByDayOffRequestId(Long id);
+
+    Iterable<DayOff> findAllByPersonalId(Long id);
 }

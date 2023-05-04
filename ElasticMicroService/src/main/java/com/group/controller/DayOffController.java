@@ -21,18 +21,19 @@ public class DayOffController {
         dayOffService.requestDayOff(dto);
         return ResponseEntity.ok().build();
     }
-   /* @GetMapping(GETONE)
+    @GetMapping(GETONE)
     public ResponseEntity<DayOffResponseDto> getOneDayOff(@RequestParam Long dayOffRequestId){
         return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
-    }*/
+    }
     @GetMapping(GETALL)
     public ResponseEntity<Page<DayOffResponseDto>> getAllDayOff(@RequestParam Integer currentPage){
         return ResponseEntity.ok(dayOffService.getAllDayOff(currentPage));
     }
-//    @GetMapping(GETALL+BYPERSONALID)
-//    public ResponseEntity<Iterable<DayOffResponseDto>> getAllByPersonalId(@PathVariable Long personalId){
-//        return ResponseEntity.ok(dayOffService.getAllByPersonalId(personalId));
-//    }
+    @GetMapping(GETALL+BYPERSONALID)
+    public ResponseEntity<Page<DayOffResponseDto>> getAllByPersonalId(@PathVariable Long personalId,
+                                                                      @RequestParam Integer currentPage){
+        return ResponseEntity.ok(dayOffService.getAllByPersonalId(personalId,currentPage));
+    }
 
     @PostMapping(DELETE)
     public ResponseEntity<Void> deleteDayOff(@RequestParam Long id){
