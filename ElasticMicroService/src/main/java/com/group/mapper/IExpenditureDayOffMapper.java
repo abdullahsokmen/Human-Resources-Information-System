@@ -13,7 +13,6 @@ public interface IExpenditureDayOffMapper {
     IExpenditureDayOffMapper INSTANCE= Mappers.getMapper(IExpenditureDayOffMapper.class);
 
     Expenditure toExpenditure(final CreateExpenditureRequestElasticDto dto);
-    Expenditure toExpenditure(final UpdateExpenditureRequestElasticDto dto);
 
     ExpenditureResponseDto fromExpenditure(final Expenditure expenditure);
 }
