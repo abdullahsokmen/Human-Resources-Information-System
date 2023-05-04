@@ -2,6 +2,8 @@ package com.group.controller;
 
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;
+import com.group.repository.entity.DayOff;
+import com.group.repository.entity.Expenditure;
 import com.group.service.ExpenditureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import static com.group.constants.EndPoints.*;
 @RequestMapping(EXPENDITURE)
 public class ExpenditureController {
     private final ExpenditureService expenditureService;
+
 
     @PostMapping(SAVE)
     public ResponseEntity<Void> saveExpenditure(@RequestBody CreateExpenditureRequestElasticDto dto){
@@ -29,5 +32,9 @@ public class ExpenditureController {
     public ResponseEntity<Void>updateExpenditure(@RequestBody UpdateExpenditureRequestElasticDto dto){
         expenditureService.updateExpenditure(dto);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping()
+    public ResponseEntity<Iterable<Expenditure>>testMethod(){
+        return ResponseEntity.ok(expenditureService.findAll());
     }
 }

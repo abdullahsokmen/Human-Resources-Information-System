@@ -8,6 +8,7 @@ import com.group.mapper.IAdvancePaymentMapper;
 import com.group.repository.IAdvancePaymentRepository;
 import com.group.repository.entity.AdvancePayment;
 import com.group.repository.entity.enums.Currency;
+import com.group.repository.entity.enums.EAdvancePaymentType;
 import com.group.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,13 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     }
 
     public void requestAdvancePayment(CreateAdvancePaymentRequestElasticDto dto) {
-        save(mapper.toAdvancePayment(dto));
+        save(AdvancePayment.builder()
+                .advanceDetails(dto.getAdvanceDetails())
+                .advancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()))
+                .personalName(dto.getPersonalName())
+                .personalLastName(dto.getPersonalLastName())
+                .paymentRequestId(dto.getPaymentRequestId())
+                .build());
     }
 
     public void updateAdvancePayment(UpdateAdvancePaymentRequestElasticDto dto) {

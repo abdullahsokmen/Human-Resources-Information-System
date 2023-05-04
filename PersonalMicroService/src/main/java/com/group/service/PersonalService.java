@@ -183,10 +183,11 @@ public class PersonalService extends ServiceManager<Personal, Long> {
         Optional<Personal>personal=findById(id);
         if (personal.isEmpty())
             throw new PersonalException(EErrorType.PERSONAL_NOT_FOUND);
-        PersonalInfoResponseDto personalInfoResponseDto=IPersonalMapper.INSTANCE.fromPersonalInfo(personal.get());
-        personalInfoResponseDto.setSalary(personal.get().getSalary());
-        personalInfoResponseDto.setName(personal.get().getName());
-        personalInfoResponseDto.setLastname(personal.get().getLastname());
-        return personalInfoResponseDto;
+
+        return PersonalInfoResponseDto.builder()
+                .name(personal.get().getName())
+                .lastname(personal.get().getLastname())
+                .salary(personal.get().getSalary())
+                .build();
     }
 }

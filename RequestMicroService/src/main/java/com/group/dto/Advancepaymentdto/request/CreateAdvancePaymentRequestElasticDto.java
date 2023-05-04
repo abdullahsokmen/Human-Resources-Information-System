@@ -15,5 +15,7 @@ public class CreateAdvancePaymentRequestElasticDto {
     private Double amount;
     private String advanceDetails;
     private String advancePaymentType;
-    private Long PersonalId;
+    private Long personalId;
+    private String personalName;
+    private String personalLastName;
 }
