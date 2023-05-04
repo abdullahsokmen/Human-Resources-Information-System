@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T15:53:26+0300",
+    date = "2023-05-04T19:27:54+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -78,6 +78,10 @@ public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
             updateExpenditureRequestElasticDto.currency( expenditure.getCurrency().name() );
         }
         updateExpenditureRequestElasticDto.expendDetails( expenditure.getExpendDetails() );
+        if ( expenditure.getStatus() != null ) {
+            updateExpenditureRequestElasticDto.status( expenditure.getStatus().name() );
+        }
+        updateExpenditureRequestElasticDto.confirmDate( expenditure.getConfirmDate() );
 
         return updateExpenditureRequestElasticDto.build();
     }
