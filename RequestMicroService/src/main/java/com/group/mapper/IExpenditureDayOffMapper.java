@@ -1,6 +1,5 @@
 package com.group.mapper;
 
-import com.group.dto.Advancepaymentdto.request.UpdateAdvancePaymentRequestElasticDto;
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestDto;
 import com.group.dto.Expendituredto.request.CreateExpenditureRequestElasticDto;
 import com.group.dto.Expendituredto.request.UpdateExpenditureRequestElasticDto;

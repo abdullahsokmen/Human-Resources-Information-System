@@ -22,15 +22,13 @@ public class AdvancePayment extends BaseEntity{
     private String id;
     private String personalName;
     private String personalLastName;
-    @Builder.Default
-    private Date requestDate = new Date();
+    private Date requestDate;
     private Date confirmDate;
     private Currency currency;
     private Double amount;
     private String advanceDetails;
     private EAdvancePaymentType advancePaymentType;
-    @Builder.Default
-    private EStatus status =EStatus.PENDING;
+    private EStatus status;
     private Long personalId;
     private Long paymentRequestId;
 }

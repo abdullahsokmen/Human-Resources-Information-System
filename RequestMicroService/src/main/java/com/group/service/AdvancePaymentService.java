@@ -52,15 +52,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         advancePayment.setCurrency(Currency.valueOf(dto.getCurrency()));
         advancePayment.setAdvancePaymentType(EAdvancePaymentType.valueOf(dto.getAdvancePaymentType()));
         save(advancePayment);
-        advancePaymentManager.requestAdvancePayment(CreateAdvancePaymentRequestElasticDto.builder()
-                        .personalId(advancePayment.getPersonalId())
-                        .personalName(advancePayment.getPersonalName())
-                        .personalLastName(advancePayment.getPersonalLastName())
-                        .advanceDetails(advancePayment.getAdvanceDetails())
-                        .paymentRequestId(advancePayment.getId())
-                        .amount(advancePayment.getAmount())
-                        .currency(advancePayment.getCurrency().toString())
-                .build());
+        advancePaymentManager.requestAdvancePayment(advancePaymentMapper.fromAdvancePaymentElastic(advancePayment));
         return true;
     }
 
