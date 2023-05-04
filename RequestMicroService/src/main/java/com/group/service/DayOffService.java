@@ -73,10 +73,7 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         dayOff.get().setStatus(EStatus.CONFIRMED);
         dayOff.get().setConfirmDate(new Date());
 
-    
-
         update(dayOff.get());
-
         dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
         return true;
     }
