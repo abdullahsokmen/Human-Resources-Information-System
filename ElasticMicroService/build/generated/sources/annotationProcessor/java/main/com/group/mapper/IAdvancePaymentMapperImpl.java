@@ -3,14 +3,12 @@ package com.group.mapper;
 import com.group.dto.Advancepaymentdto.request.CreateAdvancePaymentRequestElasticDto;
 import com.group.dto.Advancepaymentdto.response.AdvancePaymentResponseDto;
 import com.group.repository.entity.AdvancePayment;
-import com.group.repository.entity.enums.Currency;
-import com.group.repository.entity.enums.EAdvancePaymentType;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T13:56:24+0300",
+    date = "2023-05-04T14:24:14+0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -26,14 +24,13 @@ public class IAdvancePaymentMapperImpl implements IAdvancePaymentMapper {
 
         advancePayment.personalName( dto.getPersonalName() );
         advancePayment.personalLastName( dto.getPersonalLastName() );
-        if ( dto.getCurrency() != null ) {
-            advancePayment.currency( Enum.valueOf( Currency.class, dto.getCurrency() ) );
-        }
+        advancePayment.requestDate( dto.getRequestDate() );
+        advancePayment.confirmDate( dto.getConfirmDate() );
+        advancePayment.currency( dto.getCurrency() );
         advancePayment.amount( dto.getAmount() );
         advancePayment.advanceDetails( dto.getAdvanceDetails() );
-        if ( dto.getAdvancePaymentType() != null ) {
-            advancePayment.advancePaymentType( Enum.valueOf( EAdvancePaymentType.class, dto.getAdvancePaymentType() ) );
-        }
+        advancePayment.advancePaymentType( dto.getAdvancePaymentType() );
+        advancePayment.status( dto.getStatus() );
         advancePayment.personalId( dto.getPersonalId() );
         advancePayment.paymentRequestId( dto.getPaymentRequestId() );
 
