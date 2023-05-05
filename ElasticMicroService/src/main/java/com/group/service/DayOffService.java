@@ -41,14 +41,14 @@ public class DayOffService extends ServiceManager<DayOff,String> {
     public void deleteDayOff(Long id) {
         Optional<DayOff> dayOff = dayOffRepository.findByDayOffRequestId(id);
         if(dayOff.isEmpty())
-            throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
+            throw new ElasticServiceException(EErrorType.PERSONAL_NOT_FOUND);
         delete(dayOff.get());
     }
 
     public void updateDayOff(DayOffUpdateRequestElasticDto dto) {
         Optional<DayOff> dayOff = dayOffRepository.findByDayOffRequestId(dto.getDayOffRequestId());
         if(dayOff.isEmpty())
-            throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
+            throw new ElasticServiceException(EErrorType.PERSONAL_NOT_FOUND);
         DayOff toUpdate = dayOff.get();
         toUpdate.setSpan(dto.getSpan());
         toUpdate.setType(EDayOffType.valueOf(dto.getType()));
