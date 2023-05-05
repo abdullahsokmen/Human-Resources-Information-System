@@ -67,7 +67,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
         List<Expenditure> pending = new ArrayList<>();
         List<Expenditure> others = new ArrayList<>();
         List<Expenditure> allExpenditure = new ArrayList<>();
-        Pageable pageable = PageRequest.of(currentPage,10);
+        Pageable pageable = PageRequest.of(currentPage,5);
         findAll().forEach(allExpenditure::add);
         List<Expenditure> sortedList = allExpenditure.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
         sortedList.forEach(x->{
