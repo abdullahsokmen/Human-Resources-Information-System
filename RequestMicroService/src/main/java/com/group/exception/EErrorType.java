@@ -14,37 +14,22 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public enum EErrorType {
     INVALID_PARAMETER(1000,"Invalid parameter entered", BAD_REQUEST),
     METHOD_MIS_MATCH_ERROR(1001,"The value you entered does not match the desired value.", BAD_REQUEST),
-    METHOD_NOT_VALID_ARGUMENT_ERROR(1002,"Missing parameter submission in URL",BAD_REQUEST),
-    COMPANY_NOT_FOUND(2002,"Company not found", BAD_REQUEST),
-    INVALID_TOKEN(1004,"Invalid token",HttpStatus.BAD_REQUEST),
+       INVALID_TOKEN(1004,"Invalid token",HttpStatus.BAD_REQUEST),
     NOT_DECODED(1005,"Token can not decoded", INTERNAL_SERVER_ERROR),
     HTTP_MESSAGE_NOT_READABLE(1006,"Http message not readable",BAD_REQUEST),
-    TOKEN_NOT_CREATED(1007,"Token can not be created", INTERNAL_SERVER_ERROR),
     UNEXPECTED_ERROR(1008,"Unexpected Error Occured", INTERNAL_SERVER_ERROR),
-    COMPANY_ADMIN_NOT_EXIST(3000,"Company Admin Not Exist", INTERNAL_SERVER_ERROR),
     PERSONAL_NOT_EXIST(200,"Personal Not Exist", BAD_REQUEST),
     ADVANCE_PAYMENT_NOT_EXIST(201,"Advance Payment Not Exist", BAD_REQUEST),
     DAYOFF_NOT_EXIST(202,"DayOff request Not Exist", BAD_REQUEST),
     EXPENDITURE_NOT_EXIST(203,"Expenditure request Not Exist", BAD_REQUEST),
     SALARY_PRICE_ERROR(5000,"Advance payment request cannot be more than 3x your salary", BAD_REQUEST),
-
-
-
-    REGISTER_ERROR_PASSWORD_UNMATCH(1100,"Passwords not matched", BAD_REQUEST),
-    REGISTER_ERROR_USERNAME(1101,"This Username already taken", BAD_REQUEST),
-    REGISTER_ERROR_COMPANYEMAIL(1103,"This company mail already taken", BAD_REQUEST),
-    REGISTER_ERROR_COMPANYNAME(1104,"This company name already taken", BAD_REQUEST),
-    LOGIN_ERROR_USERNAME_PASSWORD(1102,"Username or Password are incorrect", BAD_REQUEST),
     USER_NOT_ACTIVE(1105,"User not active", BAD_REQUEST),
 
 
 
 
-    EMAIL_ALREADY_TAKEN(3000,"User not found", BAD_REQUEST),
-    PHONE_ALREADY_TAKEN(3001,"User not found", BAD_REQUEST),
 
-    MAIL_SEND_ERROR(102,"Mail could not send", INTERNAL_SERVER_ERROR),
-    IDENTITY_ALREADY_EXIST(3002,"Identity already taken", BAD_REQUEST),
+
 
 
 
