@@ -68,7 +68,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
         List<AdvancePayment> pending = new ArrayList<>();
         List<AdvancePayment> others = new ArrayList<>();
         List<AdvancePayment> allAdvancePayments = new ArrayList<>();
-        Pageable pageable = PageRequest.of(currentPage,10);
+        Pageable pageable = PageRequest.of(currentPage,5);
         findAll().forEach(allAdvancePayments::add);
         List<AdvancePayment> sortedList = allAdvancePayments.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
         sortedList.forEach(x-> {
