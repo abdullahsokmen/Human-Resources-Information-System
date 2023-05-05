@@ -34,18 +34,15 @@ public class DayOffController {
                                                                       @RequestParam Integer currentPage){
         return ResponseEntity.ok(dayOffService.getAllByPersonalId(personalId,currentPage));
     }
-
     @PostMapping(DELETE)
     public ResponseEntity<Void> deleteDayOff(@RequestParam Long id){
 
         dayOffService.deleteDayOff(id);
         return ResponseEntity.ok().build();
     }
-
     @PostMapping(UPDATE)
     public ResponseEntity<Void> updateDayOff(@RequestBody DayOffUpdateRequestElasticDto dto){
         dayOffService.updateDayOff(dto);
         return ResponseEntity.ok().build();
     }
-
 }

@@ -60,13 +60,13 @@ public class DayOffService extends ServiceManager<DayOff,String> {
     }
 
     public Page<DayOffResponseDto> getAllDayOff(Integer currentPage) {
-     List<DayOff>pending=new ArrayList<>();
-     List<DayOff>others=new ArrayList<>();
+     List<DayOff> pending = new ArrayList<>();
+     List<DayOff> others = new ArrayList<>();
      List<DayOff> allDayOffs = new ArrayList<>();
-     Pageable pageable = PageRequest.of(currentPage,4);
-     findAll().forEach(x-> allDayOffs.add(x));
-     List<DayOff> newList=allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).collect(Collectors.toList());
-        newList.forEach(x->{
+     Pageable pageable = PageRequest.of(currentPage,10);
+     findAll().forEach(allDayOffs::add);
+     List<DayOff> sortedList = allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
+        sortedList.forEach(x->{
          if (x.getStatus().equals(EStatus.PENDING)){
              pending.add(x);
          }else {
@@ -78,8 +78,10 @@ public class DayOffService extends ServiceManager<DayOff,String> {
          dto.setType(x.getType().name());
          dto.setStatus(x.getStatus().name());
          return dto;
-     }).collect(Collectors.toList());
-     return new PageImpl<>(results,pageable,results.size());
+     }).toList();
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end), pageable, results.size());
     }
 
     public DayOffResponseDto getOneDayOff(Long dayOffRequestId) {
@@ -91,9 +93,9 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         List<DayOff>others=new ArrayList<>();
         List<DayOff> allDayOffs = new ArrayList<>();
         Pageable pageable = PageRequest.of(currentPage,4,null);
-        dayOffRepository.findAllByPersonalId(personalId).forEach(x-> allDayOffs.add(x));
-        allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat));
-        allDayOffs.forEach(x->{
+        dayOffRepository.findAllByPersonalId(personalId).forEach(allDayOffs::add);
+        List<DayOff> sortedList = allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
+        sortedList.forEach(x->{
             if (x.getStatus().equals(EStatus.PENDING)){
                 pending.add(x);
             }else {
