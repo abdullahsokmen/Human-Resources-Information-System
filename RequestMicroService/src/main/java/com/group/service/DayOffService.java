@@ -74,6 +74,8 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
         if (dayOff.isEmpty())
             throw new RequestException(EErrorType.DAYOFF_NOT_EXIST);
+        if (!dayOff.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         dayOff.get().setStatus(EStatus.CONFIRMED);
         dayOff.get().setConfirmDate(new Date());
         update(dayOff.get());
@@ -84,6 +86,8 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
         if (dayOff.isEmpty())
             throw new RequestException(EErrorType.DAYOFF_NOT_EXIST);
+        if (!dayOff.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         dayOff.get().setStatus(EStatus.DECLINED);
         update(dayOff.get());
         dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));

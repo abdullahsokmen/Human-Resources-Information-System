@@ -24,6 +24,7 @@ public enum EErrorType {
     EXPENDITURE_NOT_EXIST(203,"Expenditure request Not Exist", BAD_REQUEST),
     SALARY_PRICE_ERROR(5000,"Advance payment request cannot be more than 3x your salary", BAD_REQUEST),
     USER_NOT_ACTIVE(1105,"User not active", BAD_REQUEST),
+    PENDING_ERROR(1106,"Can not be requested", BAD_REQUEST),
 
 
 

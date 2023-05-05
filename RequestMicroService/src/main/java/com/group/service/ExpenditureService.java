@@ -77,6 +77,8 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         Optional<Expenditure>expenditure=findById(id);
         if (expenditure.isEmpty())
             throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
+        if (!expenditure.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         expenditure.get().setStatus(EStatus.CONFIRMED);
         expenditure.get().setConfirmDate(new Date());
         update(expenditure.get());
@@ -88,6 +90,8 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
         Optional<Expenditure>expenditure=findById(id);
         if (expenditure.isEmpty())
             throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
+        if (!expenditure.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         expenditure.get().setStatus(EStatus.DECLINED);
         update(expenditure.get());
         expenditureManager.updateExpenditure(expenditureDayOffMapper.fromExpenditureElasticUpdate(expenditure.get()));

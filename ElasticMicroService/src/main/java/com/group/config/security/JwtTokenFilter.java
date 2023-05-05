@@ -4,14 +4,13 @@ package com.group.config.security;
 
 import com.group.exception.EErrorType;
 import com.group.exception.ElasticServiceException;
-import com.group.exception.RequestException;
+
 import com.group.utility.JwtTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
