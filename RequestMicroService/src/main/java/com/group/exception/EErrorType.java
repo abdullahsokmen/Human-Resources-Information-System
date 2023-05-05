@@ -22,6 +22,11 @@ public enum EErrorType {
     TOKEN_NOT_CREATED(1007,"Token can not be created", INTERNAL_SERVER_ERROR),
     UNEXPECTED_ERROR(1008,"Unexpected Error Occured", INTERNAL_SERVER_ERROR),
     COMPANY_ADMIN_NOT_EXIST(3000,"Company Admin Not Exist", INTERNAL_SERVER_ERROR),
+    PERSONAL_NOT_EXIST(200,"Personal Not Exist", BAD_REQUEST),
+    ADVANCE_PAYMENT_NOT_EXIST(201,"Advance Payment Not Exist", BAD_REQUEST),
+    DAYOFF_NOT_EXIST(202,"DayOff request Not Exist", BAD_REQUEST),
+    EXPENDITURE_NOT_EXIST(203,"Expenditure request Not Exist", BAD_REQUEST),
+    SALARY_PRICE_ERROR(5000,"Advance payment request cannot be more than 3x your salary", BAD_REQUEST),
 
 
 

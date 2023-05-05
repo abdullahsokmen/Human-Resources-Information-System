@@ -40,7 +40,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     public Boolean createExpenditure(CreateExpenditureRequestDto dto) {
         PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
         if (Objects.isNull(personalDto))
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.PERSONAL_NOT_EXIST);
         Expenditure expenditure= IExpenditureDayOffMapper.INSTANCE.toExpenditure(dto);
         expenditure.setPersonalName(personalDto.getName());
         expenditure.setPersonalLastName(personalDto.getLastname());
@@ -53,7 +53,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     public Boolean deleteExpenditure(Long id) {
         Optional<Expenditure>expenditure=findById(id);
         if (expenditure.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
         delete(expenditure.get());
         expenditureManager.deleteExpenditure(id);
         return true;
@@ -62,7 +62,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     public Boolean updateExpenditure(UpdateExpenditureRequestDto dto) {
         Optional<Expenditure>expenditure=findById(dto.getId());
         if (expenditure.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
         Expenditure toUpdate=expenditure.get();
         toUpdate.setExpenditureType(ExpenditureType.valueOf(dto.getExpenditureType()));
         toUpdate.setAmount(dto.getAmount());
@@ -76,7 +76,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     public Boolean confirmExpenditure(Long id) {
         Optional<Expenditure>expenditure=findById(id);
         if (expenditure.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
         expenditure.get().setStatus(EStatus.CONFIRMED);
         expenditure.get().setConfirmDate(new Date());
         update(expenditure.get());
@@ -87,7 +87,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,Long> {
     public Boolean declineExpenditure(Long id) {
         Optional<Expenditure>expenditure=findById(id);
         if (expenditure.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.EXPENDITURE_NOT_EXIST);
         expenditure.get().setStatus(EStatus.DECLINED);
         update(expenditure.get());
         expenditureManager.updateExpenditure(expenditureDayOffMapper.fromExpenditureElasticUpdate(expenditure.get()));

@@ -40,9 +40,9 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     public Boolean requestAdvancePayment(CreateAdvancePaymentRequestDto dto) {
         PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(dto.getPersonalId()).getBody();
         if (Objects.isNull(personalDto))
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.PERSONAL_NOT_EXIST);
         if (dto.getAmount()>=personalDto.getSalary()*3)
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.SALARY_PRICE_ERROR);
         AdvancePayment advancePayment= IAdvancePaymentMapper.INSTANCE.toAdvancePayment(dto);
         advancePayment.setPersonalName(personalDto.getName());
         advancePayment.setPersonalLastName(personalDto.getLastname());
@@ -57,7 +57,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     public Boolean updateAdvancePayment(UpdateAdvancePaymentRequestDto dto) {
         Optional<AdvancePayment>advancePayment=findById(dto.getId());
         if (advancePayment.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
         AdvancePayment toUpdate=advancePayment.get();
         toUpdate.setAdvanceDetails(dto.getAdvanceDetails());
         toUpdate.setAmount(dto.getAmount());
@@ -70,7 +70,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     public Boolean confirmAdvancePayment(Long id) {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
         advancePayment.get().setStatus(EStatus.CONFIRMED);
         advancePayment.get().setConfirmDate(new Date());
         update(advancePayment.get());
@@ -81,7 +81,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     public Boolean deletePayment(Long id) {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
         delete(advancePayment.get());
         advancePaymentManager.deleteAdvancePayment(id);
         return true;
@@ -90,7 +90,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
     public Boolean declineAdvancePayment(Long id) {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
-            throw new RequestException(EErrorType.INVALID_PARAMETER);
+            throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
         advancePayment.get().setStatus(EStatus.DECLINED);
         update(advancePayment.get());
         advancePaymentManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(advancePayment.get()));
