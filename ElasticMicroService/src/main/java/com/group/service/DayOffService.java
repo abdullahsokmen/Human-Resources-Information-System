@@ -63,7 +63,7 @@ public class DayOffService extends ServiceManager<DayOff,String> {
      List<DayOff> pending = new ArrayList<>();
      List<DayOff> others = new ArrayList<>();
      List<DayOff> allDayOffs = new ArrayList<>();
-     Pageable pageable = PageRequest.of(currentPage,10);
+     Pageable pageable = PageRequest.of(currentPage,5);
      findAll().forEach(allDayOffs::add);
      List<DayOff> sortedList = allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
         sortedList.forEach(x->{
@@ -92,7 +92,7 @@ public class DayOffService extends ServiceManager<DayOff,String> {
         List<DayOff>pending=new ArrayList<>();
         List<DayOff>others=new ArrayList<>();
         List<DayOff> allDayOffs = new ArrayList<>();
-        Pageable pageable = PageRequest.of(currentPage,4,null);
+        Pageable pageable = PageRequest.of(currentPage,5);
         dayOffRepository.findAllByPersonalId(personalId).forEach(allDayOffs::add);
         List<DayOff> sortedList = allDayOffs.stream().sorted(Comparator.comparing(BaseEntity::getCreateat)).toList();
         sortedList.forEach(x->{
