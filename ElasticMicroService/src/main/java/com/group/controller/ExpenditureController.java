@@ -2,9 +2,11 @@ package com.group.controller;
 
 import com.group.dto.request.CreateExpenditureRequestElasticDto;
 import com.group.dto.request.UpdateExpenditureRequestElasticDto;
+import com.group.dto.response.ExpenditureResponseDto;
 import com.group.repository.entity.Expenditure;
 import com.group.service.ExpenditureService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +34,17 @@ public class ExpenditureController {
         expenditureService.updateExpenditure(dto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping()
-    public ResponseEntity<Iterable<Expenditure>>testMethod(){
-        return ResponseEntity.ok(expenditureService.findAll());
+    @GetMapping(GETONE)
+    public ResponseEntity<ExpenditureResponseDto> getOneExpenditure(@RequestParam Long expenditureRequestId){
+        return ResponseEntity.ok(expenditureService.getOneExpenditure(expenditureRequestId));
+    }
+    @GetMapping(GETALL)
+    public ResponseEntity<Page<ExpenditureResponseDto>> getAllExpenditure(@RequestParam Integer currentPage){
+        return ResponseEntity.ok(expenditureService.getAllExpenditure(currentPage));
+    }
+    @GetMapping(GETALL+BYPERSONALID)
+    public ResponseEntity<Page<ExpenditureResponseDto>> getAllByPersonalId(@PathVariable Long personalId,
+                                                                           @RequestParam Integer currentPage){
+        return ResponseEntity.ok(expenditureService.getAllByPersonalId(personalId,currentPage));
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
-public class IExpenditureDayOffMapperImpl implements IExpenditureDayOffMapper {
+public class IExpenditureMapperImpl implements IExpenditureMapper {
 
     @Override
     public Expenditure toExpenditure(CreateExpenditureRequestElasticDto dto) {

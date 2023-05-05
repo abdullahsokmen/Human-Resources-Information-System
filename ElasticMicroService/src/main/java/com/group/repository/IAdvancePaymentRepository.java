@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface IAdvancePaymentRepository extends ElasticsearchRepository<AdvancePayment,String> {
 
     Optional<AdvancePayment>findByPaymentRequestId(Long id);
+
+    Iterable<AdvancePayment> findAllByPersonalId(Long personalId);
 }
