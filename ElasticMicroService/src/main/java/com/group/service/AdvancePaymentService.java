@@ -42,7 +42,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     public void updateAdvancePayment(UpdateAdvancePaymentRequestElasticDto dto) {
         Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentRequestId(dto.getPaymentRequestId());
         if(advancePayment.isEmpty())
-            throw new ElasticServiceException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
+            throw new ElasticServiceException(EErrorType.METHOD_MIS_MATCH_ERROR);
         AdvancePayment toUpdate = advancePayment.get();
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setAdvanceDetails(dto.getAdvanceDetails());
@@ -55,7 +55,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
     public void deletePayment(Long id) {
         Optional<AdvancePayment> advancePayment = advancePaymentRepository.findByPaymentRequestId(id);
         if(advancePayment.isEmpty())
-            throw new ElasticServiceException(EErrorType.LOGIN_ERROR_USERNAME_PASSWORD);
+            throw new ElasticServiceException(EErrorType.PERSONAL_NOT_FOUND);
         delete(advancePayment.get());
     }
 

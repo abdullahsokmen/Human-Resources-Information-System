@@ -41,14 +41,14 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
     public void deleteExpenditure(Long id) {
         Optional<Expenditure> expenditure = expenditureRepository.findByExpenditureRequestId(id);
         if(expenditure.isEmpty())
-            throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
+            throw new ElasticServiceException(EErrorType.PERSONAL_NOT_FOUND);
         delete(expenditure.get());
     }
 
     public void updateExpenditure(UpdateExpenditureRequestElasticDto dto) {
         Optional<Expenditure> expenditure = expenditureRepository.findByExpenditureRequestId(dto.getExpenditureRequestId());
         if(expenditure.isEmpty())
-            throw new ElasticServiceException(EErrorType.MUSTERI_BULUNAMADI);
+            throw new ElasticServiceException(EErrorType.PERSONAL_NOT_FOUND);
         Expenditure toUpdate = expenditure.get();
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setExpendDetails(dto.getExpendDetails());

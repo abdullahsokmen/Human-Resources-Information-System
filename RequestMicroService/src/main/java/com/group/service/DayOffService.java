@@ -50,6 +50,8 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
 
     public Boolean deleteDayOff(Long id) {
         Optional<DayOff> dayOff = findById(id);
+        if (dayOff.isEmpty())
+            throw new RequestException(EErrorType.DAYOFF_NOT_EXIST);
         delete(dayOff.get());
         dayOffManager.deleteDayOff(id);
         return true;
@@ -70,6 +72,8 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
 
     public Boolean acceptDayOffRequest(Long id) {
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
+        if (dayOff.isEmpty())
+            throw new RequestException(EErrorType.DAYOFF_NOT_EXIST);
         dayOff.get().setStatus(EStatus.CONFIRMED);
         dayOff.get().setConfirmDate(new Date());
         update(dayOff.get());
@@ -78,6 +82,8 @@ public class DayOffService extends ServiceManager<DayOff,Long> {
     }
     public Boolean declineDayOffRequest(Long id) {
         Optional<DayOff> dayOff = dayOffRepository.findById(id);
+        if (dayOff.isEmpty())
+            throw new RequestException(EErrorType.DAYOFF_NOT_EXIST);
         dayOff.get().setStatus(EStatus.DECLINED);
         update(dayOff.get());
         dayOffManager.updateDayOff(dayOffMapper.fromDayOffElasticUpdate(dayOff.get()));
