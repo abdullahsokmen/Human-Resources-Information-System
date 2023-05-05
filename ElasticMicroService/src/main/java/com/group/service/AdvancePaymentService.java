@@ -61,7 +61,7 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
 
     public AdvancePaymentResponseDto getOneAdvancePayment(Long paymentRequestId) {
         return mapper.fromAdvancePayment(advancePaymentRepository.findByPaymentRequestId(paymentRequestId)
-                .orElseThrow(()-> new ElasticServiceException(EErrorType.INVALID_PARAMETER)));
+                .orElseThrow(()-> new ElasticServiceException(EErrorType.ADVANCE_PAYMENT_NOT_FOUND)));
     }
 
     public Page<AdvancePaymentResponseDto> getAllAdvancePayment(Integer currentPage) {
@@ -85,7 +85,9 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
             dto.setCurrency(x.getCurrency().name());
             return dto;
         }).toList();
-        return new PageImpl<>(results,pageable,results.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end),pageable,results.size());
     }
 
     public Page<AdvancePaymentResponseDto> getAllByPersonalId(Long personalId, Integer currentPage) {
@@ -109,6 +111,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,String>
             dto.setCurrency(x.getCurrency().name());
             return dto;
         }).toList();
-        return new PageImpl<>(results,pageable,results.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end),pageable,results.size());
     }
 }

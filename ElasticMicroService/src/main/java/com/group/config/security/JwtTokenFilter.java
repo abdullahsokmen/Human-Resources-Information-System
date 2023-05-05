@@ -1,8 +1,10 @@
 package com.group.config.security;
 
 
-import com.group.exception.CompanyManagerException;
+
 import com.group.exception.EErrorType;
+import com.group.exception.ElasticServiceException;
+import com.group.exception.RequestException;
 import com.group.utility.JwtTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,15 +38,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             String token=authHeader.substring(7);
             Optional<String>userRole=jwtTokenManager.getRoleFromToken(token);
             if (userRole.isEmpty())
-                throw new CompanyManagerException(EErrorType.INVALID_TOKEN);
+                throw new ElasticServiceException(EErrorType.INVALID_TOKEN);
             Optional<String> userStatus = jwtTokenManager.getStatusFromToken(token);
 //            if (userStatus.isEmpty())
-//                throw new CompanyManagerException(EErrorType.INVALID_TOKEN);
+//                throw new RequestException(EErrorType.INVALID_TOKEN);
 //            if (!userStatus.get().equals("ACTIVE"))
-//                throw new CompanyManagerException(EErrorType.USER_NOT_ACTIVE);
+//                throw new RequestException(EErrorType.USER_NOT_ACTIVE);
             UserDetails userDetails=jwtUserDetails.loadUserByRole(userRole.get());
             if (Objects.isNull(userDetails))
-                throw new CompanyManagerException(EErrorType.INVALID_TOKEN);
+                throw new ElasticServiceException(EErrorType.INVALID_TOKEN);
             UsernamePasswordAuthenticationToken authenticationToken=
                     new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

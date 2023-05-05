@@ -15,14 +15,17 @@ public class AdvancePaymentController {
     private final AdvancePaymentService advancePaymentService;
 
     @PostMapping(SAVE)
+    /*@PreAuthorize("hasAuthority('PERSONAL')")*/
     public ResponseEntity<Boolean>requestAdvancePayment(@RequestBody CreateAdvancePaymentRequestDto dto){
         return ResponseEntity.ok(advancePaymentService.requestAdvancePayment(dto));
     }
     @PutMapping(UPDATE)
+    /*@PreAuthorize("hasAuthority('PERSONAL')")*/
     public ResponseEntity<Boolean>updateAdvancePayment(@RequestBody UpdateAdvancePaymentRequestDto dto){
         return ResponseEntity.ok(advancePaymentService.updateAdvancePayment(dto));
     }
     @PostMapping(CONFIRM)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean>confirmAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.confirmAdvancePayment(id));
     }
@@ -32,6 +35,7 @@ public class AdvancePaymentController {
         return ResponseEntity.ok(advancePaymentService.deletePayment(id));
     }
     @PostMapping(DECLINE)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean>declineAdvancePayment(@RequestParam Long id){
         return ResponseEntity.ok(advancePaymentService.declineAdvancePayment(id));
     }

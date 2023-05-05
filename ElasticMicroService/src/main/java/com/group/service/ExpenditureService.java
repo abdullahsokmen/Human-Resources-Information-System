@@ -60,7 +60,7 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
 
     public ExpenditureResponseDto getOneExpenditure(Long expenditureRequestId) {
         return IExpenditureMapper.INSTANCE.fromExpenditure(expenditureRepository.findByExpenditureRequestId(expenditureRequestId)
-                .orElseThrow(()-> new ElasticServiceException(EErrorType.INVALID_PARAMETER)));
+                .orElseThrow(()-> new ElasticServiceException(EErrorType.EXPENDITURE_NOT_FOUND)));
     }
 
     public Page<ExpenditureResponseDto> getAllExpenditure(Integer currentPage) {
@@ -84,7 +84,9 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
             dto.setStatus(x.getStatus().name());
             return dto;
         }).toList();
-        return new PageImpl<>(results,pageable,results.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end),pageable,results.size());
     }
 
     public Page<ExpenditureResponseDto> getAllByPersonalId(Long personalId, Integer currentPage) {
@@ -108,6 +110,8 @@ public class ExpenditureService extends ServiceManager<Expenditure,String> {
             dto.setStatus(x.getStatus().name());
             return dto;
         }).toList();
-        return new PageImpl<>(results,pageable,results.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end),pageable,results.size());
     }
 }

@@ -39,6 +39,7 @@ public class ExpenditureController {
         return ResponseEntity.ok(expenditureService.getOneExpenditure(expenditureRequestId));
     }
     @GetMapping(GETALL)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Page<ExpenditureResponseDto>> getAllExpenditure(@RequestParam Integer currentPage){
         return ResponseEntity.ok(expenditureService.getAllExpenditure(currentPage));
     }

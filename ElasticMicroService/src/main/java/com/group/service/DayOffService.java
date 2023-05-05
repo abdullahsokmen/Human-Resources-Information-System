@@ -86,7 +86,7 @@ public class DayOffService extends ServiceManager<DayOff,String> {
 
     public DayOffResponseDto getOneDayOff(Long dayOffRequestId) {
         return IDayOffMapper.INSTANCE.toDayOffResponseDto(dayOffRepository.findByDayOffRequestId(dayOffRequestId)
-                .orElseThrow(()-> new ElasticServiceException(EErrorType.INVALID_PARAMETER)));
+                .orElseThrow(()-> new ElasticServiceException(EErrorType.DAY_OFF_NOT_FOUND)));
     }
     public Page<DayOffResponseDto> getAllByPersonalId(Long personalId,Integer currentPage) {
         List<DayOff>pending=new ArrayList<>();
@@ -108,6 +108,8 @@ public class DayOffService extends ServiceManager<DayOff,String> {
             dto.setStatus(x.getStatus().name());
             return dto;
         }).collect(Collectors.toList());
-        return new PageImpl<>(results,pageable,results.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), results.size());
+        return new PageImpl<>(results.subList(start,end),pageable,results.size());
     }
 }

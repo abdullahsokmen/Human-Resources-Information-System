@@ -17,6 +17,7 @@ public class DayOffController {
 
 
     @PostMapping(SAVE)
+    /*@PreAuthorize("hasAuthority('PERSONAL')")*/
     public ResponseEntity<Boolean> requestDayOff(@RequestBody DayOffSaveRequestDto dto){
         return ResponseEntity.ok(dayOffService.requestDayOff(dto));
     }
@@ -27,15 +28,18 @@ public class DayOffController {
     }
 
     @PostMapping(UPDATE)
+    /*@PreAuthorize("hasAuthority('PERSONAL')")*/
     public ResponseEntity<Boolean> updateDayOff(@RequestBody DayOffUpdateRequestDto dto){
         return ResponseEntity.ok(dayOffService.updateDayOff(dto));
     }
 
     @PostMapping(ACCEPT)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> acceptDayOffRequest(@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.acceptDayOffRequest(id));
     }
     @PostMapping(DECLINE)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Boolean> declineDayOffRequest(@RequestParam Long id){
         return ResponseEntity.ok(dayOffService.declineDayOffRequest(id));
     }
