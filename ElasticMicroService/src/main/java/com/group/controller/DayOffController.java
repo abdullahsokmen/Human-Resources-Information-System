@@ -26,6 +26,7 @@ public class DayOffController {
         return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
     }
     @GetMapping(GETALL)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Page<DayOffResponseDto>> getAllDayOff(@RequestParam Integer currentPage){
         return ResponseEntity.ok(dayOffService.getAllDayOff(currentPage));
     }

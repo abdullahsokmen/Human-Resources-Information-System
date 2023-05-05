@@ -39,6 +39,7 @@ public class AdvancePaymentController {
         return ResponseEntity.ok(advancePaymentService.getOneAdvancePayment(paymentRequestId));
     }
     @GetMapping(GETALL)
+    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
     public ResponseEntity<Page<AdvancePaymentResponseDto>> getAllAdvancePayment(@RequestParam Integer currentPage){
         return ResponseEntity.ok(advancePaymentService.getAllAdvancePayment(currentPage));
     }

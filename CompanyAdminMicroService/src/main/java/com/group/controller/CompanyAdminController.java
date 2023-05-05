@@ -25,7 +25,7 @@ public class CompanyAdminController {
     private final CompanyAdminService companyAdminService;
 
     @PostMapping(SAVE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> register(@RequestBody @Valid CompanyAdminRegisterRequestDto dto){
         return ResponseEntity.ok(companyAdminService.register(dto));
     }
@@ -35,7 +35,7 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.updateAdmin(dto));
     }
     @DeleteMapping(DELETE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteCompany(@RequestParam Long id){
         return ResponseEntity.ok(companyAdminService.deleteAdmin(id));
     }
@@ -57,7 +57,7 @@ public class CompanyAdminController {
         return ResponseEntity.ok(companyAdminService.deActivateById(id));
     }
     @DeleteMapping(HARDDELETE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> hardDeleteById(@RequestParam Long id){
         return ResponseEntity.ok(companyAdminService.hardDeleteById(id));
     }

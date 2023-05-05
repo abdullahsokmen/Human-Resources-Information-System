@@ -30,33 +30,34 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(SAVE)
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> createAdmin(@RequestBody @Valid SaveRequestDto dto){
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
     @GetMapping(GETALLDETAIL)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetAllResponseDto>getAllDetail(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getAllDetail(id));
     }
     @GetMapping(GETMINOR)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetMinorInfoResponseDto> getMinorInformation(@RequestParam Long id){
         return ResponseEntity.ok(adminService.getMinorInformation(id));
     }
 
     @PutMapping(UPDATE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> update(@RequestBody @Valid UpdateRequestDto dto){
         return ResponseEntity.ok(adminService.updateDto(dto));
     }
     @PutMapping(EDITPROFILE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean>editProfile(@RequestBody EditProfileRequestDto dto){
         return ResponseEntity.ok(adminService.editProfile(dto));
     }
 
     @DeleteMapping(DELETE+BYID)
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteAdminById(@PathVariable Long id){
         return ResponseEntity.ok(adminService.deleteAdminById(id));
     }

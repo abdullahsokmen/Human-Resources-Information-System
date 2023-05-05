@@ -19,7 +19,13 @@ public enum EErrorType {
     LOGIN_ERROR_USERNAME_PASSWORD(1006,"Username or password is incorrect." ,BAD_REQUEST),
     INVALID_TOKEN(1007,"Invalid token." ,BAD_REQUEST),
     METHOD_MIS_MATCH_ERROR(2002,"The value you entered does not match the desired value.",BAD_REQUEST),
-    INVALID_PARAMETER(3001, "Invalid parameter entered", BAD_REQUEST);
+    INVALID_PARAMETER(3001, "Invalid parameter entered", BAD_REQUEST),
+    NOT_DECODED(1008,"Token can not decoded", INTERNAL_SERVER_ERROR),
+    DAY_OFF_NOT_FOUND(1009,"Day off not found", BAD_REQUEST),
+    ADVANCE_PAYMENT_NOT_FOUND(1010,"Advance payment not found", BAD_REQUEST),
+    EXPENDITURE_NOT_FOUND(1011,"Expenditure not found", BAD_REQUEST),
+
+    ;
     private int code;
     private String message;
     private HttpStatus httpStatus;
