@@ -58,6 +58,9 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         Optional<AdvancePayment>advancePayment=findById(dto.getId());
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
+        PersonalInfoResponseDto personalDto=personalManager.getPersonalInfo(advancePayment.get().getPersonalId()).getBody();
+        if (dto.getAmount()>=personalDto.getSalary()*3)
+            throw new RequestException(EErrorType.SALARY_PRICE_ERROR);
         AdvancePayment toUpdate=advancePayment.get();
         toUpdate.setAdvanceDetails(dto.getAdvanceDetails());
         toUpdate.setAmount(dto.getAmount());
@@ -71,6 +74,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
+        if (!advancePayment.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         advancePayment.get().setStatus(EStatus.CONFIRMED);
         advancePayment.get().setConfirmDate(new Date());
         update(advancePayment.get());
@@ -91,6 +96,8 @@ public class AdvancePaymentService extends ServiceManager<AdvancePayment,Long> {
         Optional<AdvancePayment>advancePayment=findById(id);
         if (advancePayment.isEmpty())
             throw new RequestException(EErrorType.ADVANCE_PAYMENT_NOT_EXIST);
+        if (!advancePayment.get().getStatus().equals(EStatus.PENDING))
+            throw new RequestException(EErrorType.PENDING_ERROR);
         advancePayment.get().setStatus(EStatus.DECLINED);
         update(advancePayment.get());
         advancePaymentManager.updateAdvancePayment(advancePaymentMapper.fromAdvancePaymentElasticUpdate(advancePayment.get()));
