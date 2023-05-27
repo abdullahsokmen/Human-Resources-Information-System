@@ -22,17 +22,17 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping(SAVE)
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> saveCompany(@RequestBody @Valid CompanySaveRequestDto dto){
         return ResponseEntity.ok(companyService.saveCompany(dto));
     }
     @PutMapping(UPDATE)
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> updateCompany(@RequestBody @Valid CompanyUpdateRequestDto dto){
         return ResponseEntity.ok(companyService.updateCompany(dto));
     }
     @DeleteMapping(DELETE)
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deleteCompany(@RequestParam String id){
         return ResponseEntity.ok(companyService.deleteCompany(id));
     }
@@ -43,13 +43,13 @@ public class CompanyController {
     }
 
     @PutMapping(DEACTIVATE)
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Boolean> deactivateCompany(@RequestParam String id){
         return ResponseEntity.ok(companyService.deactivateCompany(id));
     }
 
     @GetMapping(GETALLDETAILS)
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<GetAllCompanyDetailsResponseDto> getAllDetails(@RequestParam String id){
         return ResponseEntity.ok(companyService.getAllDetails(id));
     }

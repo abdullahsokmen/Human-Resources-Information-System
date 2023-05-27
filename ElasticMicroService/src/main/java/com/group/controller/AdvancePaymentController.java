@@ -8,6 +8,7 @@ import com.group.service.AdvancePaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.group.constants.EndPoints.*;
@@ -39,7 +40,7 @@ public class AdvancePaymentController {
         return ResponseEntity.ok(advancePaymentService.getOneAdvancePayment(paymentRequestId));
     }
     @GetMapping(GETALL)
-    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
+    @PreAuthorize("hasAuthority('COMPANYADMIN')")
     public ResponseEntity<Page<AdvancePaymentResponseDto>> getAllAdvancePayment(@RequestParam Integer currentPage){
         return ResponseEntity.ok(advancePaymentService.getAllAdvancePayment(currentPage));
     }
