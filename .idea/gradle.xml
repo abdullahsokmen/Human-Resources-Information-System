@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/AdminMicroService" />
             <option value="$PROJECT_DIR$/ApiGatewayService" />
             <option value="$PROJECT_DIR$/AuthMicroService" />
-            <option value="$PROJECT_DIR$/AuthMicroService/RequestMicroService" />
             <option value="$PROJECT_DIR$/CompanyAdminMicroService" />
             <option value="$PROJECT_DIR$/CompanyMicroService" />
             <option value="$PROJECT_DIR$/ConfigServerGit" />
