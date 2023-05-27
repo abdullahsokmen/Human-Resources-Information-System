@@ -56,9 +56,15 @@ The flowchart above illustrates the high-level process flow within the HRIS syst
 
 ## Database Diagram
 
-![Database Diagram](./img/appDatabaseFlowChart.png | width=250x250)<br>
 <p align="center">
   <img width="600" height="400" src="./img/appDatabaseFlowChart.png ">
+</p>
+
+The database diagram provides an overview of the HRIS database structure, including the relationships between different entities and their attributes.
+## Kubernetes Diagram
+
+<p align="center">
+  <img width="600" height="400" src="./img/CloudScheme.png ">
 </p>
 
 The database diagram provides an overview of the HRIS database structure, including the relationships between different entities and their attributes.
