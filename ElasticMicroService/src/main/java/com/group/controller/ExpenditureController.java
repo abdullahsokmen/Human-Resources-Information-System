@@ -8,6 +8,7 @@ import com.group.service.ExpenditureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.group.constants.EndPoints.*;
@@ -39,7 +40,7 @@ public class ExpenditureController {
         return ResponseEntity.ok(expenditureService.getOneExpenditure(expenditureRequestId));
     }
     @GetMapping(GETALL)
-    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
+    @PreAuthorize("hasAuthority('COMPANYADMIN')")
     public ResponseEntity<Page<ExpenditureResponseDto>> getAllExpenditure(@RequestParam Integer currentPage){
         return ResponseEntity.ok(expenditureService.getAllExpenditure(currentPage));
     }

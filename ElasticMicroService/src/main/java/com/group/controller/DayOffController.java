@@ -7,6 +7,7 @@ import com.group.service.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.group.constants.EndPoints.*;
@@ -26,7 +27,7 @@ public class DayOffController {
         return ResponseEntity.ok(dayOffService.getOneDayOff(dayOffRequestId));
     }
     @GetMapping(GETALL)
-    /*@PreAuthorize("hasAuthority('COMPANYADMIN')")*/
+    @PreAuthorize("hasAuthority('COMPANYADMIN')")
     public ResponseEntity<Page<DayOffResponseDto>> getAllDayOff(@RequestParam Integer currentPage){
         return ResponseEntity.ok(dayOffService.getAllDayOff(currentPage));
     }
