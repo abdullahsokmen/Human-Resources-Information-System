@@ -67,7 +67,7 @@ The database diagram provides an overview of the HRIS database structure, includ
   <img width="1100" height="400" src="./img/CloudScheme.jpg ">
 </p>
 
-The database diagram provides an overview of the HRIS database structure, including the relationships between different entities and their attributes.
+The HRIS project utilizes a Kubernetes system for deployment and scalability, while the database diagram provides an overview of the HRIS database structure, including the relationships between different entities and their attributes.
 
 ## Documentation
 
