@@ -56,7 +56,7 @@ The flowchart above illustrates the high-level process flow within the HRIS syst
 
 ## Database Diagram
 
-![Database Diagram](./img/appDatabaseFlowChart.png)<br>
+![Database Diagram](./img/appDatabaseFlowChart.png =250x250)<br>
 
 The database diagram provides an overview of the HRIS database structure, including the relationships between different entities and their attributes.
 
