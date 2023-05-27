@@ -50,7 +50,7 @@ To set up the HRIS project locally, follow these steps:
 
 ## Flowchart
 
-![Flowchart](path/to/flowchart.png)
+![Flowchart](./img/appFlowChart.png)<br>
 
 The flowchart above illustrates the high-level process flow within the HRIS system.
 
